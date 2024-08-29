@@ -1,32 +1,41 @@
-pyproject
+in development
+
+epaper telegram
 ===================
 
-A template for a python project that can be build into a package and published on Pypi. It follows this `tutorial <https://packaging.python.org/en/latest/tutorials/packaging-projects/>`_ for packaging python projects.
+communicate between 2 rasperry pi with a touch epaper display (waveshare). Draw something nice, and it will be sent to the other device!
+
 
 Installation
 ============
 
-.. code-block:: bash
+run install.sh
+* clone
+* env
+* pip
+* create env
+* activate
+* pip install
+* symbolic link in bin
+* crontab at startup
+(method to pair a device?)
+(cloud, link? pass?)
 
-    pip install pyproject
+hardware requirements
+=======================
+* rpi
+* waveshare
 
 Usage
 =====
 
 
-This is an example:
-
-.. code-block:: python
-
-    import pyproject
-    pyproject.main()  # comments are usefull here
-
 
 Features
 ========
 
-* this
-* and that...
+* receive messages
+* draw and send
 
 
 License
