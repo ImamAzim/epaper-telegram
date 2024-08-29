@@ -19,7 +19,7 @@ classifiers = [
 ]
 description = "send and receive message on a rpi with epaper display"
 dependencies = [
-	'git+https://github.com/ImamAzim/waveshare-touch-epaper.git',
+	'waveshare-touch-epaper @ git+https://github.com/ImamAzim/waveshare-touch-epaper.git',
 ]
 
 [project.optional-dependencies]
