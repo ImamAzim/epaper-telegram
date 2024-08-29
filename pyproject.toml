@@ -3,7 +3,7 @@ requires = ['setuptools>=61.0', 'wheel']
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyproject"
+name = "epaper_telegram"
 version = "0.1"
 authors = [
     {name="Imam Usmani"},
@@ -17,8 +17,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: POSIX :: Linux",
 ]
-description = "template for python package project"
+description = "send and receive message on a rpi with epaper display"
 dependencies = [
+	'git+https://github.com/ImamAzim/waveshare-touch-epaper.git',
 ]
 
 [project.optional-dependencies]
@@ -33,5 +34,5 @@ dev = [
 ]
 
 [project.urls]
-"Source Code" = "https://github.com/ImamAzim/pyproject"
-"Documentation" = "https://pyproject.readthedocs.io/en/latest/index.html"
+"Source Code" = "https://github.com/ImamAzim/epaper-telegram"
+#"Documentation" = "https://epaper-telegram.readthedocs.io/en/latest/index.html"
