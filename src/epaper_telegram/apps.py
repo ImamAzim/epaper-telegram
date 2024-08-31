@@ -1,6 +1,9 @@
 import logging
 
 
+from waveshare_touch_epaper import gt1151, epd2in13_V4
+
+
 class EpaperTelgramApp(object):
 
     """app to launch the main app of the project"""
