@@ -1,6 +1,9 @@
 import logging
 
 
+from gpiozero.pins.native import NativeFactory
+from gpiozero import Device
+Device.pin_factory = NativeFactory()
 from waveshare_touch_epaper import gt1151, epd2in13_V4
 
 
