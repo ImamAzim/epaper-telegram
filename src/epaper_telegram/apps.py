@@ -15,6 +15,7 @@ class EpaperTelgramApp(object):
     def __init__(self):
         self._flag_t = 1
 
+        self._epd = epd2in13_V4.EPD()
         self._gt = gt1151.GT1151()
         self._GT_Dev = gt1151.GT_Development()
         self._GT_Old = gt1151.GT_Development()
