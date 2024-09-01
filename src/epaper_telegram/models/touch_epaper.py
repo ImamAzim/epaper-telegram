@@ -5,6 +5,10 @@ import logging
 from waveshare_touch_epaper import gt1151, epd2in13_V4
 
 
+class TouchEpaperException(Exception):
+    pass
+
+
 class Epd2In13Display(object):
 
     """display part of the 2.13 inch touch epaper display"""
@@ -65,6 +69,11 @@ class EGT1151(object):
             self._thread_gt.start()
             self._gt.GT_Init()
             self._ready = True
+        else:
+            logging.exception(
+                    'touch screen has been stopped.',
+                    'you must recreate and instance of EGT1151 and start it.')
+            raise TouchEpaperException()
 
     def stop(self):
         """close the port for the touch and finish thread
@@ -76,3 +85,7 @@ class EGT1151(object):
             flag_t = 0
             self._thread_gtt.join()
             self._stopped = True
+        else:
+            logging.exception(
+                    'touch screen has already been stopped.')
+            raise TouchEpaperException()
