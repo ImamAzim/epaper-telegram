@@ -84,7 +84,7 @@ class GT1151(object):
         """
 
         if not self._stopped:
-            flag_t = 0
+            self._flag_t = 0
             self._thread_gt.join()
             self._stopped = True
         else:
