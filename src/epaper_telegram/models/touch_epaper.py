@@ -83,11 +83,11 @@ class GT1151(object):
 
         """
 
-        if not self._stopped:
+        if not self._stopped and not self._ready:
             self._flag_t = 0
             self._thread_gt.join()
             self._stopped = True
         else:
             logging.exception(
-                    'touch screen has already been stopped.')
+                    'touch screen has already been stopped or not yet started.')
             raise TouchEpaperException()
