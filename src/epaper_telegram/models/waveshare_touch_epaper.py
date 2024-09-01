@@ -28,10 +28,10 @@ class EpdTouch2In13(object):
         self._thread_gt.setDaemon(True)
 
     def _pthread_irq() :
-        print("pthread running")
+        logging.info("pthread running")
         while self._flag_t == 1 :
             if(gt.digital_read(gt.INT) == 0) :
                 GT_Dev.Touch = 1
             else :
                 GT_Dev.Touch = 0
-        print("thread:exit")
+        logging.info("thread:exit")
