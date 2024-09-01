@@ -21,6 +21,7 @@ description = "send and receive message on a rpi with epaper display"
 dependencies = [
 	'waveshare-touch-epaper @ git+https://github.com/ImamAzim/waveshare-touch-epaper.git',
 	'gpiozero',
+	'rpi.gpio',
 ]
 
 [project.optional-dependencies]

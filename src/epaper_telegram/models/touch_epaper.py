@@ -1,10 +1,12 @@
 import threading
 import logging
+import os
 
 
-from gpiozero.pins.native import NativeFactory
-from gpiozero import Device
-Device.pin_factory = NativeFactory()
+os.environ['GPIOZERO_PIN_FACTORY'] = 'native'
+# from gpiozero.pins.native import NativeFactory
+# from gpiozero import Device
+# Device.pin_factory = NativeFactory()
 from waveshare_touch_epaper import gt1151, epd2in13_V4
 
 
