@@ -18,11 +18,15 @@ class EpaperTelgramApp(object):
         logging.info('start')
         logging.debug('debug mode')
 
-        logging.info('main mode')
-        with GT1151() as gt:
-            gt.input()
-        logging.info('touch detected')
-        logging.info('open draw mode...')
+        try:
+            with GT1151() as gt:
+                while True:
+                    logging.info('main mode')
+                    gt.input()
+                    logging.info('touch detected')
+                    logging.info('open draw mode...')
+        except KeyboardInterrupt:
+            logging.info('app stopped by keyboard interrupt')
 
 
 if __name__ == '__main__':
