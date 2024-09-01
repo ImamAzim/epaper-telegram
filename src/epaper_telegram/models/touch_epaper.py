@@ -108,4 +108,4 @@ class GT1151(object):
             self._gt.GT_Scan(self._gt_dev, self._gt_old)
             if not (self._gt_dev.X == self._gt_old.X and self._gt_dev.Y == self._gt_old.Y and self._gt_dev.S == self._gt_old.S):
                 new_position = True
-        return self._gt_dev.X, self._gt_dev.Y, self._gt_dev.S
+        return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
