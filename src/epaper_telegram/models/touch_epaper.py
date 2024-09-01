@@ -33,3 +33,26 @@ class EpdTouch2In13(object):
             else:
                 self._GT_Dev.Touch = 0
         logging.info("thread:exit")
+
+    def turn_on(self):
+        """switch on device
+        :returns: TODO
+
+        """
+        self._thread_gt.start()
+        self._epd.init(self._epd.FULL_UPDATE)
+        self._gt.GT_Init()
+        self._epd.Clear(0xFF)
+
+        self._epd.init(self._epd.PART_UPDATE)
+
+    def turn_off(self):
+        """sleep mode and close all port
+        :returns: TODO
+
+        """
+        flag_t = 0
+        self._epd.sleep()
+        time.sleep(2)
+        self._thread_gtt.join()
+        self._epd.Dev_exit()
