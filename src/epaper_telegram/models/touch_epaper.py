@@ -94,9 +94,9 @@ class GT1151(object):
             self._thread_gt.join()
             logging.info('close connection to touch screen')
             gt1151.config.bus.close()
-            GPIO_TRST.off()
-            GPIO_TRST.close()
-            GPIO_INT.close()
+            gt1151.config.GPIO_TRST.off()
+            gt1151.config.GPIO_TRST.close()
+            gt1151.config.GPIO_INT.close()
             self._stopped = True
         else:
             logging.exception(
