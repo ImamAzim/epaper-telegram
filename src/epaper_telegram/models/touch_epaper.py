@@ -45,9 +45,6 @@ class GT1151(object):
         self._gt_dev = gt1151.GT_Development()
         self._gt_old = gt1151.GT_Development()
 
-        logging.info("init touch screen")
-
-        self._gt.GT_Init()
         self._thread_gt = threading.Thread(target=self._pthread_irq)
         self._thread_gt.setDaemon(True)
 
@@ -77,6 +74,7 @@ class GT1151(object):
         """
         if not self._stopped:
             self._thread_gt.start()
+            logging.info("init touch screen")
             self._gt.GT_Init()
             self._ready = True
         else:
