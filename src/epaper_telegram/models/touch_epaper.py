@@ -58,9 +58,9 @@ class GT1151(object):
         logging.info("pthread running")
         while self._flag_t == 1:
             if self._gt.digital_read(self._gt.INT) == 0:
-                self._GT_Dev.Touch = 1
+                self._gt_dev.Touch = 1
             else:
-                self._GT_Dev.Touch = 0
+                self._gt_dev.Touch = 0
         logging.info("thread:exit")
 
     def start(self):
