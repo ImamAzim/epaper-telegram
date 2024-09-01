@@ -1,7 +1,7 @@
 import logging
 
 
-from epaper_telegram.models.touch_epaper import EpdTouch2In13
+from epaper_telegram.models.touch_epaper import GT1115
 
 class EpaperTelgramApp(object):
 
@@ -17,6 +17,11 @@ class EpaperTelgramApp(object):
         """
         logging.info('start')
         logging.debug('debug mode')
+
+        with GT1151() as gt:
+            x, y, s = gt.input()
+        logging.info('touch detected at %s, %s, %s', x, y, s)
+        logging.info('open draw mode...')
 
 
 if __name__ == '__main__':
