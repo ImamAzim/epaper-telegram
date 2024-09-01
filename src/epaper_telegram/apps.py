@@ -8,7 +8,7 @@ class EpaperTelgramApp(object):
     """app to launch the main app of the project"""
 
     def __init__(self):
-        epd_touch = EpdTouch2In13()
+        pass
 
     def start(self):
         """method to start the app.
