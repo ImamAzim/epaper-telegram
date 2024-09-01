@@ -97,3 +97,15 @@ class GT1151(object):
             logging.exception(
                     'touch screen has already been stopped or not yet started.')
             raise TouchEpaperException()
+
+    def input(self):
+        """scan until a touch has been detected at a new position
+        :returns: X, Y, S coordinates of touch
+
+        """
+        new_position = False
+        while not new_position:
+            self._gt.GT_Scan(self._gt_dev, self._gt_old)
+            if not (self._gt_dev.X == self._gt_old.X and self._gt_dev.Y == self._gt_old.Y and self._gt_dev.S == self._gt_old.S):
+                new_position = True
+        return self._gt_dev.X, self._gt_dev.Y, self._gt_dev.S

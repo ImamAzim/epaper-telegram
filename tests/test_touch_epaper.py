@@ -18,6 +18,7 @@ def touch_screen():
     print('test with context manager')
     with GT1151() as gt:
         print('touch has started')
+        gt.input()
         time.sleep(2)
     print('touch should be closed')
 
