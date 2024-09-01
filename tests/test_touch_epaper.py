@@ -1,7 +1,11 @@
 import time
+import logging
 
 
 from epaper_telegram.models.touch_epaper import GT1151
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 def touch_screen():
