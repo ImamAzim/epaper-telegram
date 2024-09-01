@@ -18,9 +18,10 @@ class EpaperTelgramApp(object):
         logging.info('start')
         logging.debug('debug mode')
 
+        logging.info('main mode')
         with GT1151() as gt:
-            x, y, s = gt.input()
-        logging.info('touch detected at %s, %s, %s', x, y, s)
+            gt.input()
+        logging.info('touch detected')
         logging.info('open draw mode...')
 
 
