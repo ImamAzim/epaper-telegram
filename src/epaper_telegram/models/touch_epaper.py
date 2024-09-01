@@ -54,6 +54,13 @@ class GT1151(object):
         self._ready = False
         self._stopped = False
 
+    def __enter__(self):
+        self.start()
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        if not self._stopped():
+            self.stop()
+
     def _pthread_irq(self):
         logging.info("pthread running")
         while self._flag_t == 1:
