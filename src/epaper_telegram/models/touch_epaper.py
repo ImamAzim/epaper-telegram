@@ -64,8 +64,10 @@ class GT1151(object):
         while self._flag_t == 1:
             if self._gt.digital_read(self._gt.INT) == 0:
                 self._gt_dev.Touch = 1
+                # logging.debug('switch dev.touch to 1')
             else:
                 self._gt_dev.Touch = 0
+                # logging.debug('switch dev.touch to 0')
         logging.info("thread:exit")
 
     def start(self):
@@ -109,8 +111,12 @@ class GT1151(object):
 
         """
         new_position = False
+        logging.debug('gt_dev.touch=%s', self._gt_dev.Touch)
+        logging.debug('old pos=%s %s %s, dev pos=%s %s %s', self._gt_old.X[0], self._gt_old.Y[0], self._gt_old.S[0], self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0])
         while not new_position:
             self._gt.GT_Scan(self._gt_dev, self._gt_old)
             if not (self._gt_dev.X == self._gt_old.X and self._gt_dev.Y == self._gt_old.Y and self._gt_dev.S == self._gt_old.S):
                 new_position = True
+        if self._gt_dev.TouchpointFlag:
+            self._gt_dev.TouchpointFlag = 0
         return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
