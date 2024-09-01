@@ -58,7 +58,7 @@ class GT1151(object):
         self.start()
 
     def __exit__(self, ex_type, ex_value, ex_traceback):
-        if not self._stopped():
+        if not self._stopped:
             self.stop()
 
     def _pthread_irq(self):
