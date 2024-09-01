@@ -1,7 +1,7 @@
 import logging
 
 
-from epaper_telegram.models.waveshare_touch_epaper import EpdTouch2In13
+from epaper_telegram.models.touch_epaper import EpdTouch2In13
 
 class EpaperTelgramApp(object):
 
