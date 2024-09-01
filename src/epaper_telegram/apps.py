@@ -1,7 +1,7 @@
 import logging
 
 
-from epaper_telegram.models.touch_epaper import GT1115
+from epaper_telegram.models.touch_epaper import GT1151
 
 class EpaperTelgramApp(object):
 
