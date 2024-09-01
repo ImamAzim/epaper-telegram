@@ -33,7 +33,7 @@ class Epd2In13Display(object):
         self._epd.Dev_exit()
 
 
-class EGT1151(object):
+class GT1151(object):
 
     """touch screen part of the 2.13 inch touch epaper display"""
 
@@ -41,13 +41,13 @@ class EGT1151(object):
 
         self._flag_t = 1
 
-        self._gt = gt1151.gt1151()
-        self._gt_dev = gt1151.gt_development()
-        self._gt_old = gt1151.gt_development()
+        self._gt = gt1151.GT1151()
+        self._gt_dev = gt1151.GT_Development()
+        self._gt_old = gt1151.GT_Development()
 
         logging.info("init touch screen")
 
-        self._gt.gt_init()
+        self._gt.GT_Init()
         self._thread_gt = threading.Thread(target=self._pthread_irq)
         self._thread_gt.setDaemon(True)
 
@@ -65,7 +65,6 @@ class EGT1151(object):
 
     def start(self):
         """start the thread and init the touch device
-        :returns: TODO
 
         """
         if not self._stopped:
@@ -86,7 +85,7 @@ class EGT1151(object):
 
         if not self._stopped:
             flag_t = 0
-            self._thread_gtt.join()
+            self._thread_gt.join()
             self._stopped = True
         else:
             logging.exception(
