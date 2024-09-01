@@ -5,6 +5,9 @@ import logging
 from waveshare_touch_epaper import gt1151, epd2in13_V4
 
 
+gt1151.config.address = 0x14 # for i2c write and read. the module will work only for 2in13
+
+
 class TouchEpaperException(Exception):
     pass
 
