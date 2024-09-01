@@ -56,6 +56,7 @@ class GT1151(object):
 
     def __enter__(self):
         self.start()
+        return self
 
     def __exit__(self, ex_type, ex_value, ex_traceback):
         if not self._stopped:
