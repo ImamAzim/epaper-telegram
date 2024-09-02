@@ -18,10 +18,16 @@ class Epd2In13Display(object):
 
     def __init__(self):
         self._epd = epd2in13_v4.EPD()
+        self._ready = False
+        self._stopped = False
 
     def __enter__(self):
         self.start()
         return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        if not self._stopped:
+            self.stop()
 
     def start(self):
         """switch on(full update) and clear the device
@@ -31,7 +37,7 @@ class Epd2In13Display(object):
         self._epd.init(self._epd.FULL_UPDATE)
         self._epd.Clear(0xFF)
 
-    def turn_off(self):
+    def stop(self):
         """sleep mode and close all port
         :returns: TODO
 
@@ -39,6 +45,20 @@ class Epd2In13Display(object):
         self._epd.sleep()
         # time.sleep(2)
         self._epd.Dev_exit()
+
+        if not self._stopped and self._ready:
+            self._flag_t = 0
+            self._thread_gt.join()
+            logging.info('close connection to touch screen')
+            gt1151.config.bus.close()
+            gt1151.config.GPIO_TRST.off()
+            gt1151.config.GPIO_TRST.close()
+            gt1151.config.GPIO_INT.close()
+            self._stopped = True
+        else:
+            msg = 'touch screen has already been stopped or not yet started.'
+            logging.exception(msg)
+            raise TouchEpaperException()
 
 
 class GT1151(object):
@@ -118,28 +138,33 @@ class GT1151(object):
         :returns: X, Y, S coordinates of touch
 
         """
-        new_position = False
-        logging.debug('gt_dev.touch=%s', self._gt_dev.Touch)
-        logging.debug(
-                'old pos=%s %s %s, dev pos=%s %s %s',
-                self._gt_old.X[0],
-                self._gt_old.Y[0],
-                self._gt_old.S[0],
-                self._gt_dev.X[0],
-                self._gt_dev.Y[0],
-                self._gt_dev.S[0],
-                )
+        if self._ready:
+            new_position = False
+            logging.debug('gt_dev.touch=%s', self._gt_dev.Touch)
+            logging.debug(
+                    'old pos=%s %s %s, dev pos=%s %s %s',
+                    self._gt_old.X[0],
+                    self._gt_old.Y[0],
+                    self._gt_old.S[0],
+                    self._gt_dev.X[0],
+                    self._gt_dev.Y[0],
+                    self._gt_dev.S[0],
+                    )
 
-        while not new_position:
-            self._gt.GT_Scan(self._gt_dev, self._gt_old)
-            if self._gt_dev.TouchpointFlag:
-                if not (
-                        self._gt_dev.X == self._gt_old.X
-                        and self._gt_dev.Y == self._gt_old.Y
-                        ):
-                    new_position = True
-        self._gt_dev.TouchpointFlag = 0
-        return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
+            while not new_position:
+                self._gt.GT_Scan(self._gt_dev, self._gt_old)
+                if self._gt_dev.TouchpointFlag:
+                    if not (
+                            self._gt_dev.X == self._gt_old.X
+                            and self._gt_dev.Y == self._gt_old.Y
+                            ):
+                        new_position = True
+            self._gt_dev.TouchpointFlag = 0
+            return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
+        else:
+            msg = 'start the touch screen first'
+            logging.exception(msg)
+            raise TouchEpaperException()
 
 
 if __name__ == '__main__':
