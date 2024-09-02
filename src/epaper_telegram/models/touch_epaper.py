@@ -122,14 +122,19 @@ class GT1151(object):
                 self._gt_dev.Y[0],
                 self._gt_dev.S[0],
                 )
+
         while not new_position:
             self._gt.GT_Scan(self._gt_dev, self._gt_old)
-            if not (
-                    self._gt_dev.X == self._gt_old.X
-                    and self._gt_dev.Y == self._gt_old.Y
-                    and self._gt_dev.S == self._gt_old.S
-                    ):
-                new_position = True
-        if self._gt_dev.TouchpointFlag:
-            self._gt_dev.TouchpointFlag = 0
+            if self._gt_dev.TouchpointFlag:
+                if not (
+                        self._gt_dev.X == self._gt_old.X
+                        and self._gt_dev.Y == self._gt_old.Y
+                        and self._gt_dev.S == self._gt_old.S
+                        ):
+                    new_position = True
+        self._gt_dev.TouchpointFlag = 0
         return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
+
+
+if __name__ == '__main__':
+    pass
