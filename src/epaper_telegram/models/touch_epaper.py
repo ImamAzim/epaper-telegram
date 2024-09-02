@@ -129,7 +129,6 @@ class GT1151(object):
                 if not (
                         self._gt_dev.X == self._gt_old.X
                         and self._gt_dev.Y == self._gt_old.Y
-                        and self._gt_dev.S == self._gt_old.S
                         ):
                     new_position = True
         self._gt_dev.TouchpointFlag = 0
