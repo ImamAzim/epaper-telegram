@@ -3,6 +3,8 @@ import logging
 
 
 from waveshare_touch_epaper import gt1151, epd2in13_V4
+from smbus3 import SMBus
+import gpiozero
 
 
 gt1151.config.address = 0x14  # for i2c, work only for 2.13 inch dev
@@ -66,6 +68,10 @@ class GT1151(object):
     """touch screen part of the 2.13 inch touch epaper display"""
 
     def __init__(self):
+
+        # gt1151.config.bus = SMBus(1)
+        # gt1151.config.GPIO_TRST = gpiozero.LED(gt1151.config.TRST)
+        # gt1151.config.GPIO_INT = gpiozero.Button(gt1151.config.INT, pull_up = False)
 
         self._flag_t = 1
 
@@ -138,7 +144,7 @@ class GT1151(object):
         :returns: X, Y, S coordinates of touch
 
         """
-        if self._ready:
+        if not self._stopped and self._ready:
             new_position = False
             logging.debug('gt_dev.touch=%s', self._gt_dev.Touch)
             logging.debug(
@@ -162,7 +168,7 @@ class GT1151(object):
             self._gt_dev.TouchpointFlag = 0
             return self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0]
         else:
-            msg = 'start the touch screen first'
+            msg = 'touch screen has already been stopped or not yet started.'
             logging.exception(msg)
             raise TouchEpaperException()
 

@@ -14,13 +14,22 @@ def touch_screen():
     gt.start()
     time.sleep(2)
     gt.stop()
+    time.sleep(2)
 
-    print('test with context manager')
-    with GT1151() as gt:
-        print('touch has started')
-        x, y, s = gt.input()
-    print(f'detected touch at {x}, {y},{s}')
-    print('touch should be closed')
+
+    print('2nd test')
+    gt = GT1151()
+    gt.start()
+    time.sleep(2)
+    gt.stop()
+    time.sleep(2)
+
+    # print('test with context manager')
+    # with GT1151() as gt:
+        # print('touch has started')
+        # x, y, s = gt.input()
+    # print(f'detected touch at {x}, {y},{s}')
+    # print('touch should be closed')
 
 
 if __name__ == '__main__':
