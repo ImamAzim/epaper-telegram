@@ -2,10 +2,10 @@ import threading
 import logging
 
 
-from waveshare_touch_epaper import gt1151, epd2in13_V4
+from waveshare_touch_epaper import gt1151
 
 
-gt1151.config.address = 0x14 # for i2c write and read. the module will work only for 2in13
+gt1151.config.address = 0x14  # for i2c, work only for 2.13 inch dev
 
 
 class TouchEpaperException(Exception):
@@ -17,11 +17,12 @@ class Epd2In13Display(object):
     """display part of the 2.13 inch touch epaper display"""
 
     def __init__(self):
-        self._epd = epd2in13_v4.epd()
+        pass
+        # self._epd = epd2in13_v4.epd()
 
-        self._epd.init(self._epd.FULL_UPDATE)
-        self._epd.Clear(0xFF)
-        self._epd.init(self._epd.PART_UPDATE)
+        # self._epd.init(self._epd.FULL_UPDATE)
+        # self._epd.Clear(0xFF)
+        # self._epd.init(self._epd.PART_UPDATE)
 
     def turn_off(self):
         """sleep mode and close all port
@@ -29,7 +30,7 @@ class Epd2In13Display(object):
 
         """
         self._epd.sleep()
-        time.sleep(2)
+        # time.sleep(2)
         self._epd.Dev_exit()
 
 
@@ -101,8 +102,8 @@ class GT1151(object):
             gt1151.config.GPIO_INT.close()
             self._stopped = True
         else:
-            logging.exception(
-                    'touch screen has already been stopped or not yet started.')
+            msg = 'touch screen has already been stopped or not yet started.'
+            logging.exception(msg)
             raise TouchEpaperException()
 
     def input(self):
@@ -112,10 +113,22 @@ class GT1151(object):
         """
         new_position = False
         logging.debug('gt_dev.touch=%s', self._gt_dev.Touch)
-        logging.debug('old pos=%s %s %s, dev pos=%s %s %s', self._gt_old.X[0], self._gt_old.Y[0], self._gt_old.S[0], self._gt_dev.X[0], self._gt_dev.Y[0], self._gt_dev.S[0])
+        logging.debug(
+                'old pos=%s %s %s, dev pos=%s %s %s',
+                self._gt_old.X[0],
+                self._gt_old.Y[0],
+                self._gt_old.S[0],
+                self._gt_dev.X[0],
+                self._gt_dev.Y[0],
+                self._gt_dev.S[0],
+                )
         while not new_position:
             self._gt.GT_Scan(self._gt_dev, self._gt_old)
-            if not (self._gt_dev.X == self._gt_old.X and self._gt_dev.Y == self._gt_old.Y and self._gt_dev.S == self._gt_old.S):
+            if not (
+                    self._gt_dev.X == self._gt_old.X
+                    and self._gt_dev.Y == self._gt_old.Y
+                    and self._gt_dev.S == self._gt_old.S
+                    ):
                 new_position = True
         if self._gt_dev.TouchpointFlag:
             self._gt_dev.TouchpointFlag = 0
