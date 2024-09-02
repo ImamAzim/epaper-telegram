@@ -2,7 +2,7 @@ import threading
 import logging
 
 
-from waveshare_touch_epaper import gt1151
+from waveshare_touch_epaper import gt1151, epd2in13_V4
 
 
 gt1151.config.address = 0x14  # for i2c, work only for 2.13 inch dev
@@ -17,12 +17,19 @@ class Epd2In13Display(object):
     """display part of the 2.13 inch touch epaper display"""
 
     def __init__(self):
-        pass
-        # self._epd = epd2in13_v4.epd()
+        self._epd = epd2in13_v4.EPD()
 
-        # self._epd.init(self._epd.FULL_UPDATE)
-        # self._epd.Clear(0xFF)
-        # self._epd.init(self._epd.PART_UPDATE)
+    def __enter__(self):
+        self.start()
+        return self
+
+    def start(self):
+        """switch on(full update) and clear the device
+
+        """
+
+        self._epd.init(self._epd.FULL_UPDATE)
+        self._epd.Clear(0xFF)
 
     def turn_off(self):
         """sleep mode and close all port

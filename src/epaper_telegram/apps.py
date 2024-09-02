@@ -1,4 +1,5 @@
 import logging
+import time
 
 
 from epaper_telegram.models.touch_epaper import GT1151
@@ -25,6 +26,7 @@ class EpaperTelgramApp(object):
                     gt.input()
                     logging.info('touch detected')
                     logging.info('open draw mode...')
+                    time.sleep(0.1)
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
 
