@@ -1,0 +1,3 @@
+[submodule "waveshare-touch-epaper"]
+	path = waveshare-touch-epaper
+	url = https://github.com/ImamAzim/waveshare-touch-epaper
