@@ -2,7 +2,7 @@ import logging
 import time
 
 
-from epaper_telegram.models.touch_epaper import GT1151
+from waveshare_touch_epaper.touch_screen import GT1151
 
 class EpaperTelgramApp(object):
 
