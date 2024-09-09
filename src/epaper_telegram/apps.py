@@ -1,5 +1,6 @@
 import logging
 import time
+from threading import Thread
 
 
 from waveshare_touch_epaper.touch_screen import GT1151
