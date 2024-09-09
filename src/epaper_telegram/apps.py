@@ -19,16 +19,28 @@ class EpaperTelgramApp(object):
         logging.info('start')
         logging.debug('debug mode')
 
+        thread_hello.start()
+
         try:
-            with GT1151() as gt:
-                while True:
-                    logging.info('main mode')
-                    gt.input()
-                    logging.info('touch detected')
-                    logging.info('open draw mode...')
-                    time.sleep(0.1)
+            while True:
+                logging.info('home')
+                with GT1151() as gt:
+                    gt.wait_for_gesture()
+                logging.info('open draw mode...')
+                _draw_mode()
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
+
+
+def _say_hello():
+    print('hello')
+    time.sleep(1)
+
+thread_hello = Thread(target=_say_hello)
+
+def _draw_mode():
+    with GT1151() as gt:
+        gt.input()
 
 
 if __name__ == '__main__':
