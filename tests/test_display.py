@@ -24,6 +24,9 @@ class TestMyClass(unittest.TestCase):
         rlock = self.displayer.rlock
         self.assertIsInstance(rlock, type(RLock()))
 
+    def test_wait(self):
+        self.displayer.wait_for_ready()
+
 
 """ script tests """
 
