@@ -9,11 +9,18 @@ class Displayer(object):
     def display_img(self, img, sleep_after=True, block=True, timeout=None):
         """the img will we put in a queue and display once the worker is ready.
         to avoid being blocked, one can use the wait_for_ready method
+        there is only one slot available in the queue.
 
         :img: array of dim (250, 122) to be displayed
         :sleep_after: bool, put the display to sleep after task done
         :block: bool, same function as in a queue object
         :timeout: bool or positive number, same function as in a queue object
+
+        """
+        pass
+
+    def wait_for_ready(self):
+        """block until the displayer has finished his job and is ready to accept an img
 
         """
         pass
