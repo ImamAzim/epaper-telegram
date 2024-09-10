@@ -1,4 +1,4 @@
-from threading import RLock
+from threading import RLock, Thread
 import queue
 
 
@@ -10,6 +10,9 @@ class Displayer(object):
     def __init__(self):
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
+        self._thread = Thread()
+        self._thread_should_run = 
+        self._thread.start()
 
     @property
     def rlock(self):
@@ -39,3 +42,11 @@ class Displayer(object):
 
         """
         pass
+
+    def _process_img_loop(self):
+        while True:
+            img, sleep_after = self._queue.get()
+            print('TODO: display img')
+            if sleep_after:
+                print('TODO: put display to sleep')
+            self._queue.task_done()
