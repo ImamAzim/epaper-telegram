@@ -37,13 +37,11 @@ def display_img():
     img = Image.new('1', (250, 122), 255)
     draw = ImageDraw.Draw(img)
     draw.text((8, 12), 'hello world', fill=255)
-    displayer.wait_for_ready()
     displayer.display_img(img, sleep_after=False)
     time.sleep(3)
     draw.text((30, 12), 'zzz...', fill=255)
-    displayer.wait_for_ready()
     displayer.display_img(img)
-    time.sleep(1)
+    displayer.wait_for_ready()
 
 
 if __name__ == '__main__':
