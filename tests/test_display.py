@@ -42,6 +42,8 @@ def display_img():
     draw.text((30, 12), 'zzz...', fill=255)
     displayer.display_img(img)
     displayer.wait_for_ready()
+    print('I will terminate after a timeout. press CTRL-C to finish earlier (that is safe)')
+    displayer.terminate()
 
 
 if __name__ == '__main__':

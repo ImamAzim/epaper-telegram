@@ -10,7 +10,7 @@ class Displayer(object):
     def __init__(self):
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
-        self._thread = Thread(target=self._process_img_loop, daemon=True)
+        self._thread = Thread(target=self._process_img_loop, daemon=None)
         self._running = Event()
         self._running.set()
         self._thread.start()
@@ -53,9 +53,13 @@ class Displayer(object):
     def _process_img_loop(self):
         while self._running.is_set():
             try:
-                img, sleep_after = self._queue.get(timeout=5)
+                img, sleep_after = self._queue.get(timeout=10)
             except queue.Empty:
                 msg = 'no img received for a long time. go to sleep.'
+                print(msg)
+                print('TODO: got to sleep')
+            except KeyboardInterrupt:
+                msg = 'interrupted. go to sleep.'
                 print(msg)
                 print('TODO: got to sleep')
             else:
@@ -63,3 +67,4 @@ class Displayer(object):
                 if sleep_after:
                     print('TODO: put display to sleep')
                 self._queue.task_done()
+        print('go to sleep because thread terminated')
