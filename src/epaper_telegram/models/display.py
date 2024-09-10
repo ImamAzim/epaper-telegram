@@ -10,7 +10,7 @@ class Displayer(object):
     def __init__(self):
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
-        self._thread = Thread()
+        self._thread = Thread(target=self._process_img_loop)
         self._thread.start()
 
     @property
