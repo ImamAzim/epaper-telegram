@@ -1,12 +1,12 @@
-#!/usr/bin/env python
-
-
 """
-test all the tools in...
+test display module
 """
 
 import os
 import unittest
+
+
+from epaper_telegram.models.display import Displayer
 
 
 class TestMyClass(unittest.TestCase):
@@ -21,6 +21,9 @@ class TestMyClass(unittest.TestCase):
 
 """ script tests """
 
+def display_img():
+    displayer = Displayer()
+
 
 if __name__ == '__main__':
-    pass
+    display_img()
