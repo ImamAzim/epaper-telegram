@@ -30,6 +30,7 @@ class Displayer(object):
         there is only one slot available in the queue.
 
         :img: array of dim (250, 122) to be displayed
+        (img=None will be accepted and is used internally to terminate)
         :sleep_after: bool, put the display to sleep after task done
         :block: bool, same function as in a queue object
         :timeout: bool or positive number, same function as in a queue object
@@ -49,6 +50,7 @@ class Displayer(object):
 
         """
         self._running.clear()
+        self.display_img(None)
 
     def _process_img_loop(self):
         while self._running.is_set():
@@ -58,13 +60,10 @@ class Displayer(object):
                 msg = 'no img received for a long time. go to sleep.'
                 print(msg)
                 print('TODO: got to sleep')
-            except KeyboardInterrupt:
-                msg = 'interrupted. go to sleep.'
-                print(msg)
-                print('TODO: got to sleep')
             else:
-                print('TODO: display img')
-                if sleep_after:
-                    print('TODO: put display to sleep')
+                if img is not None:
+                    print('TODO: display img')
+                    if sleep_after:
+                        print('TODO: put display to sleep')
                 self._queue.task_done()
         print('go to sleep because thread terminated')
