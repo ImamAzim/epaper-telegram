@@ -6,6 +6,15 @@ class Displayer(object):
     def __init__(self):
         pass
 
+    @property
+    def rlock(self):
+        """a re-entrant lock than can be used to prevent other threads
+        to use the displayer at the same time
+        :returns: rlock
+
+        """
+        pass
+
     def display_img(self, img, sleep_after=True, block=True, timeout=None):
         """the img will we put in a queue and display once the worker is ready.
         to avoid being blocked, one can use the wait_for_ready method
@@ -20,7 +29,8 @@ class Displayer(object):
         pass
 
     def wait_for_ready(self):
-        """block until the displayer has finished his job and is ready to accept an img
+        """block until the displayer has finished his job and is ready to
+        accept an img.
 
         """
         pass
