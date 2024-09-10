@@ -22,7 +22,7 @@ class TestMyClass(unittest.TestCase):
 
     def test_lock(self):
         rlock = self.displayer
-        self.assertIsInstance(rlock, RLock)
+        self.assertIsInstance(rlock, type(RLock()))
 
 
 """ script tests """
