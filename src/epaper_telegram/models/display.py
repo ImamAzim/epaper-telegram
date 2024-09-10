@@ -11,7 +11,6 @@ class Displayer(object):
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
         self._thread = Thread()
-        self._thread_should_run = 
         self._thread.start()
 
     @property
