@@ -40,6 +40,7 @@ def display_img():
     displayer.display_img(img, sleep_after=False)
     time.sleep(3)
     draw.text((30, 12), 'zzz...', fill=255)
+    displayer.display_img(img)
 
 
 if __name__ == '__main__':
