@@ -3,6 +3,7 @@ test display module
 """
 
 import unittest
+from threading import RLock
 
 
 from PIL import Image, ImageDraw
@@ -17,9 +18,11 @@ class TestMyClass(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        pass
+        cls.displayer = Displayer()
 
-    pass
+    def test_lock(self):
+        rlock = self.displayer
+        self.assertIsInstance(rlock, RLock)
 
 
 """ script tests """
