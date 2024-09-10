@@ -1,4 +1,5 @@
 from threading import RLock
+import queue
 
 
 class Displayer(object):
@@ -8,6 +9,7 @@ class Displayer(object):
 
     def __init__(self):
         self._rlock = RLock()
+        self._queue = queue.Queue(maxsize=1)
 
     @property
     def rlock(self):
