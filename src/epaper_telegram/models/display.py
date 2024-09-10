@@ -40,7 +40,7 @@ class Displayer(object):
         accept an img.
 
         """
-        pass
+        self._queue.join()
 
     def _process_img_loop(self):
         while True:
