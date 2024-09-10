@@ -21,6 +21,10 @@ class TestMyClass(unittest.TestCase):
     def setUpClass(cls):
         cls.displayer = Displayer()
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.displayer.terminate()
+
     def test_lock(self):
         rlock = self.displayer.rlock
         self.assertIsInstance(rlock, type(RLock()))
