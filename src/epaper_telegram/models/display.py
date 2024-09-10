@@ -44,8 +44,14 @@ class Displayer(object):
 
     def _process_img_loop(self):
         while True:
-            img, sleep_after = self._queue.get()
-            print('TODO: display img')
-            if sleep_after:
-                print('TODO: put display to sleep')
-            self._queue.task_done()
+            try:
+                img, sleep_after = self._queue.get(timeout=5)
+            except queue.Empty:
+                msg = 'no img received for a long time. go to sleep.'
+                print(msg)
+                print('TODO: got to sleep')
+            else:
+                print('TODO: display img')
+                if sleep_after:
+                    print('TODO: put display to sleep')
+                self._queue.task_done()
