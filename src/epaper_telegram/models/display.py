@@ -1,4 +1,4 @@
-from threading import RLock, Thread
+from threading import RLock, Thread, Event
 import queue
 
 
@@ -11,6 +11,8 @@ class Displayer(object):
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
         self._thread = Thread(target=self._process_img_loop, daemon=True)
+        self._running = Event()
+        self._running.set()
         self._thread.start()
 
     @property
@@ -42,8 +44,14 @@ class Displayer(object):
         """
         self._queue.join()
 
+    def terminate(self):
+        """terminate the thread and put the epd to sleep
+
+        """
+        self._running.clear()
+
     def _process_img_loop(self):
-        while True:
+        while self._running.is_set():
             try:
                 img, sleep_after = self._queue.get(timeout=5)
             except queue.Empty:
