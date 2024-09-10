@@ -6,6 +6,7 @@ class Displayer(object):
 
     """object that will take img array and display on epaper (epd waveshare).
     Should be the only one to use this resource"""
+    _TIMEOUT = 120
 
     def __init__(self):
         self._rlock = RLock()
@@ -55,7 +56,7 @@ class Displayer(object):
     def _process_img_loop(self):
         while self._running.is_set():
             try:
-                img, sleep_after = self._queue.get(timeout=10)
+                img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
             except queue.Empty:
                 msg = 'no img received for a long time. go to sleep.'
                 print(msg)
