@@ -21,7 +21,7 @@ class TestMyClass(unittest.TestCase):
         cls.displayer = Displayer()
 
     def test_lock(self):
-        rlock = self.displayer
+        rlock = self.displayer.rlock
         self.assertIsInstance(rlock, type(RLock()))
 
 

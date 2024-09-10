@@ -1,10 +1,13 @@
+from threading import RLock
+
+
 class Displayer(object):
 
     """object that will take img array and display on epaper (epd waveshare).
     Should be the only one to use this resource"""
 
     def __init__(self):
-        pass
+        self._rlock = RLock()
 
     @property
     def rlock(self):
@@ -13,7 +16,7 @@ class Displayer(object):
         :returns: rlock
 
         """
-        pass
+        return self._rlock
 
     def display_img(self, img, sleep_after=True, block=True, timeout=None):
         """the img will we put in a queue and display once the worker is ready.
