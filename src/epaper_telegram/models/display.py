@@ -33,7 +33,7 @@ class Displayer(object):
         :timeout: bool or positive number, same function as in a queue object
 
         """
-        pass
+        self._queue.put((img, sleep_after), block=block, timeout=timeout)
 
     def wait_for_ready(self):
         """block until the displayer has finished his job and is ready to
