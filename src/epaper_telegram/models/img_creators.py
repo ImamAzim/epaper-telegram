@@ -1,3 +1,7 @@
+from threading import Thread
+from queue import Queue
+
+
 class DrawTool(object):
 
     """this class will take coordinates, draw them and send it to a displayer.
@@ -8,6 +12,14 @@ class DrawTool(object):
         :displayer: Displayer objet that uses the epd
         """
         self._displayer = displayer
+        self._img = None
+
+        self._queue = queue.Queue()
+        self._thread = Thread(target=self._process_coordinates_loop, daemon=True)
+        self._thread.start()
+
+        self._reset_img()
+
 
     def point_to(self, x, y):
         """
@@ -29,3 +41,10 @@ class DrawTool(object):
 
         """
         pass
+
+    def _reset_img(self):
+        pass
+
+    def _process_coordinates_loop(self):
+        while True:
+            pass
