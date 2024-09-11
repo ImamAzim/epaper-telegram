@@ -1,5 +1,10 @@
 from threading import RLock, Thread, Event
 import queue
+import logging
+
+
+class DisplayerError(Exception):
+    pass
 
 
 class Displayer(object):
@@ -14,6 +19,32 @@ class Displayer(object):
         self._thread = Thread(target=self._process_img_loop, daemon=None)
         self._running = Event()
         self._running.set()
+
+    def _check_started(self):
+        if self._thread.is_alive() is not True:
+            msg = (
+                    'thread has not started or has been terminated.',
+                    'use start method or context manager',
+                    )
+            logging.exception(msg)
+            raise DisplayerError(msg)
+
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        if self._thread.is_alive():
+            self.terminate()
+
+    def start(self):
+        """start thread that will allow to display img.
+
+        """
+        if self._thread.is_alive():
+            msg = 'thread has already started'
+            logging.exception(msg)
+            raise DisplayerError(msg)
         self._thread.start()
 
     @property
@@ -37,6 +68,7 @@ class Displayer(object):
         :timeout: bool or positive number, same function as in a queue object
 
         """
+        self._check_started()
         self._queue.put((img, sleep_after), block=block, timeout=timeout)
 
     def wait_for_ready(self):
@@ -44,12 +76,14 @@ class Displayer(object):
         accept an img.
 
         """
+        self._check_started()
         self._queue.join()
 
     def terminate(self):
         """terminate the thread and put the epd to sleep
 
         """
+        self._check_started()
         self._running.clear()
         self.display_img(None)
 
@@ -67,4 +101,4 @@ class Displayer(object):
                     if sleep_after:
                         print('TODO: put display to sleep')
                 self._queue.task_done()
-        print('go to sleep because thread terminated')
+        print('sleep and close connection to epd because thread terminated')

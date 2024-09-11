@@ -37,16 +37,15 @@ class TestMyClass(unittest.TestCase):
 
 
 def display_img():
-    displayer = Displayer()
-    img = Image.new('1', (250, 122), 255)
-    draw = ImageDraw.Draw(img)
-    draw.text((8, 12), 'hello world', fill=255)
-    displayer.display_img(img, sleep_after=False)
-    time.sleep(3)
-    draw.text((30, 12), 'zzz...', fill=255)
-    displayer.display_img(img)
-    displayer.wait_for_ready()
-    displayer.terminate()
+    with Displayer() as displayer:
+        img = Image.new('1', (250, 122), 255)
+        draw = ImageDraw.Draw(img)
+        draw.text((8, 12), 'hello world', fill=255)
+        displayer.display_img(img, sleep_after=False)
+        time.sleep(3)
+        draw.text((30, 12), 'zzz...', fill=255)
+        displayer.display_img(img)
+        displayer.wait_for_ready()
 
 
 if __name__ == '__main__':
