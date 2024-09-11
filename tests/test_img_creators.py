@@ -6,6 +6,7 @@ def draw_tool():
     with Displayer() as displayer:
         drawtool = DrawTool(displayer)
         drawtool.clear_img()
+        input()
 
 
 if __name__ == "__main__":

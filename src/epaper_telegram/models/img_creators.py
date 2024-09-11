@@ -1,3 +1,4 @@
+import time
 from threading import Thread
 from queue import Queue
 
@@ -59,4 +60,4 @@ class DrawTool(object):
 
     def _process_coordinates_loop(self):
         while True:
-            pass
+            time.sleep(1)
