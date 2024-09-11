@@ -2,7 +2,7 @@ from threading import Thread
 from queue import Queue
 
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 class DrawTool(object):
@@ -52,7 +52,10 @@ class DrawTool(object):
         self._displayer.display_img(img_for_displayer, sleep_after=False)
 
     def _reset_img(self):
-        self._img = Image.new()
+        img = Image.new('1', (250, 122), 255)
+        draw = ImageDraw.Draw(img)
+        draw.text((8, 12), 'hello world', fill=0)
+        self._img = img
 
     def _process_coordinates_loop(self):
         while True:
