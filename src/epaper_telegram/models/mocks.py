@@ -11,3 +11,19 @@ class EPD2in13():
 
         """
         img.show()
+
+class GT1151():
+
+    def input(self):
+        x_str = input('x=')
+        y_str = input('y=')
+        return int(x_str), int(y_str)
+
+    def wait_for_gesture(self):
+        input('press enter to sim a gesture:\n')
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        pass

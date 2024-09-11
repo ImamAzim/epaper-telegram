@@ -3,7 +3,8 @@ import time
 from threading import Thread
 
 
-from waveshare_touch_epaper.touch_screen import GT1151
+# from waveshare_touch_epaper.touch_screen import GT1151
+from epaper_telegram.models.mocks import GT1151
 
 class EpaperTelgramApp(object):
 
