@@ -20,6 +20,7 @@ class TestMyClass(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.displayer = Displayer()
+        cls.displayer.start()
 
     @classmethod
     def tearDownClass(cls):
