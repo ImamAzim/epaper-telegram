@@ -2,6 +2,9 @@ from threading import Thread
 from queue import Queue
 
 
+from PIL import Image
+
+
 class DrawTool(object):
 
     """this class will take coordinates, draw them and send it to a displayer.
