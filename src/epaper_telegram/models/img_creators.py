@@ -12,13 +12,20 @@ class DrawTool(object):
     def point_to(self, x, y):
         """
         points the pen to coordinate x, y. If it is in the drawing area, it will be drawn on the image.
-        When the displayer is ready, will update the img with all
-        the points and send it to be displayed on the displayer queue.
+        When the displayer is ready, will update and the img with all
+        the points will be sent to the displayer.
         if the point is on a menu, it can clear the image, or ask to stop (and ev return the img)
 
         :x: x coordinates to point on the display
         :y: y coordinates to point on the display
         :returns: continue (boolean) and img (None or array)
+
+        """
+        pass
+
+    def clear_img(self):
+        """will create a fresh img (with menu) and send it to the displayer
+        :returns: TODO
 
         """
         pass
