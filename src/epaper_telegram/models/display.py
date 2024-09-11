@@ -3,8 +3,22 @@ import queue
 import logging
 
 
+from PIL import Image
+
+
 class DisplayerError(Exception):
     pass
+
+class EpdMock():
+
+    def display(self, img):
+        """
+
+        :img: TODO
+        :returns: TODO
+
+        """
+        img.show()
 
 
 class Displayer(object):
@@ -89,6 +103,7 @@ class Displayer(object):
 
     def _process_img_loop(self):
         while self._running.is_set():
+            epd = EpdMock()
             try:
                 img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
             except queue.Empty:
@@ -98,6 +113,7 @@ class Displayer(object):
             else:
                 if img is not None:
                     print('TODO: display img')
+                    epd.display(img)
                     if sleep_after:
                         print('TODO: put display to sleep')
                 self._queue.task_done()
