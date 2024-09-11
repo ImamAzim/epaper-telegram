@@ -3,22 +3,12 @@ import queue
 import logging
 
 
-from PIL import Image
+from epaper_telegram.models.mocks import EPD2in13
 
 
 class DisplayerError(Exception):
     pass
 
-class EpdMock():
-
-    def display(self, img):
-        """
-
-        :img: TODO
-        :returns: TODO
-
-        """
-        img.show()
 
 
 class Displayer(object):
@@ -33,6 +23,7 @@ class Displayer(object):
         self._thread = Thread(target=self._process_img_loop, daemon=None)
         self._running = Event()
         self._running.set()
+        self._epd = EPD2in13()
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -103,7 +94,6 @@ class Displayer(object):
 
     def _process_img_loop(self):
         while self._running.is_set():
-            epd = EpdMock()
             try:
                 img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
             except queue.Empty:
@@ -113,7 +103,7 @@ class Displayer(object):
             else:
                 if img is not None:
                     print('TODO: display img')
-                    epd.display(img)
+                    self._epd.display(img)
                     if sleep_after:
                         print('TODO: put display to sleep')
                 self._queue.task_done()
