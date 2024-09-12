@@ -42,7 +42,9 @@ class GT1151Mock():
         input('press enter to sim a gesture:\n')
 
     def __enter__(self):
+        logging.info('reset GT')
         return self
 
     def __exit__(self, ex_type, ex_value, ex_traceback):
+        logging.info('close connection of GT and sleep')
         pass
