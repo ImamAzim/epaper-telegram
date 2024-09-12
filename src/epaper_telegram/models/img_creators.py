@@ -52,9 +52,9 @@ class DrawTool(object):
         self._reset_img()
         self._send_image_to_displayer()
 
-    def _send_image_to_displayer(self):
+    def _send_image_to_displayer(self, sleep_after=False):
         img_for_displayer = self._img.copy()
-        self._displayer.display_img(img_for_displayer, sleep_after=False)
+        self._displayer.display_img(img_for_displayer, sleep_after=sleep_after)
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
