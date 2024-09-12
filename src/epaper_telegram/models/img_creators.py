@@ -87,6 +87,7 @@ class DrawTool(object):
         """
         self._check_started()
         self._running.clear()
+        self._queue.put(None)
 
     def _reset_img(self):
         img = Image.new('1', (250, 122), 255)
@@ -97,5 +98,7 @@ class DrawTool(object):
     def _process_coordinates_loop(self):
         while self._running.is_set():
             self._displayer.wait_for_ready()
-            self._queue.get()
+            coordinates = self._queue.get()
+            if coordinates is not None:
+                pass
         logging.info('terminates drawtool thread')
