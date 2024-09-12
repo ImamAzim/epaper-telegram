@@ -1,3 +1,6 @@
+import logging
+
+
 from PIL import Image
 
 
@@ -11,6 +14,12 @@ class EPD2in13Mock():
 
         """
         img.show()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        logging.info('close connection of epd and deep sleep')
 
 class GT1151Mock():
 

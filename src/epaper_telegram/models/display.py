@@ -101,17 +101,18 @@ class Displayer(object):
     def _process_img_loop(self):
         while self._running.is_set():
             self._epd = self._EPD()
-            try:
-                img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
-            except queue.Empty:
-                msg = 'no img received for a long time. go to sleep.'
-                print(msg)
-                print('TODO: got to sleep')
-            else:
-                if img is not None:
-                    print('TODO: display img')
-                    self._epd.display(img)
-                    if sleep_after:
-                        print('TODO: put display to sleep')
-                self._queue.task_done()
+            with self._EPD() as epd:
+                try:
+                    img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
+                except queue.Empty:
+                    msg = 'no img received for a long time. go to sleep.'
+                    print(msg)
+                    print('TODO: got to sleep')
+                else:
+                    if img is not None:
+                        print('TODO: display img')
+                        epd.display(img)
+                        if sleep_after:
+                            print('TODO: put display to sleep')
+                    self._queue.task_done()
         print('sleep and close connection to epd because thread terminated')
