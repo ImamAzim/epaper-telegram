@@ -99,7 +99,8 @@ class DrawTool(object):
         self._img = img
 
     def _draw_point_on_img(self, x, y):
-        self._img[x, y] = 0
+        draw = ImageDraw.Draw(self._img)
+        draw.rectangle((x, y, x+5, y+5), fill=0)
 
     def _process_coordinates_loop(self):
         while self._running.is_set():
