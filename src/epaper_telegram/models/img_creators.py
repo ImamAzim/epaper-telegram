@@ -43,7 +43,7 @@ class DrawTool(object):
 
         """
         self._check_started()
-        pass
+        self._queue.put((x, y))
 
     def clear_img(self):
         """will create a fresh img (with menu) and send it to the displayer
