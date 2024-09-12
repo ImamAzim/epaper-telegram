@@ -6,6 +6,9 @@ from PIL import Image
 
 class EPD2in13Mock():
 
+    def __init__(self):
+        logging.info('open connections of edp')
+
     def display(self, img):
         """
 
@@ -16,10 +19,17 @@ class EPD2in13Mock():
         img.show()
 
     def __enter__(self):
+        logging.info('reset epd')
         return self
 
     def __exit__(self, ex_type, ex_value, ex_traceback):
         logging.info('close connection of epd and deep sleep')
+
+    def sleep(self):
+        logging.info('sleep')
+
+    def deep_sleep(self):
+        logging.info('deep_sleep')
 
 class GT1151Mock():
 

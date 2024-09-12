@@ -5,6 +5,7 @@ test display module
 import unittest
 from threading import RLock
 import time
+import logging
 
 
 from PIL import Image, ImageDraw
@@ -38,6 +39,7 @@ class TestMyClass(unittest.TestCase):
 
 
 def display_img():
+    logging.basicConfig(level=logging.INFO)
     with Displayer(mock_mode=True) as displayer:
         img = Image.new('1', (250, 122), 255)
         draw = ImageDraw.Draw(img)
