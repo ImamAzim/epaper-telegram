@@ -34,7 +34,7 @@ def launch_epaper_telegram():
         logging_config_kwargs['filename'] = 'epaper-telegram.log'
     logging.basicConfig(**logging_config_kwargs)
 
-    app = EpaperTelgramApp(mock=args.mock)
+    app = EpaperTelgramApp(mock_mode=args.mock)
     app.start()
 
 
