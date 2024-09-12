@@ -1,6 +1,6 @@
 import time
 from threading import Thread, Event
-from queue import Queue
+from queue import Queue, Empty
 import logging
 
 
@@ -95,10 +95,23 @@ class DrawTool(object):
         draw.text((8, 12), 'hello world', fill=0)
         self._img = img
 
+    def _draw_point_on_img(self, x, y):
+        self._img[x, y] = 0
+
     def _process_coordinates_loop(self):
         while self._running.is_set():
             self._displayer.wait_for_ready()
             coordinates = self._queue.get()
             if coordinates is not None:
+                self._draw_point_on_img(*coordinates)
+                for i in range(self._queue.qsize()):
+                    try:
+                        coordinates = self._queue.get(block=False)
+                    except Empty:
+                        logging.warning('queue of coordinates was empty, size test failed')
+                    else:
+                        if coordinates is not None:
+                            self._draw_point_on_img(*coordinates)
+
                 pass
         logging.info('terminates drawtool thread')
