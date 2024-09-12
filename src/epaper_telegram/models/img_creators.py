@@ -50,6 +50,9 @@ class DrawTool(object):
 
         """
         self._reset_img()
+        self._send_image_to_displayer()
+
+    def _send_image_to_displayer(self):
         img_for_displayer = self._img.copy()
         self._displayer.display_img(img_for_displayer, sleep_after=False)
 
@@ -112,6 +115,5 @@ class DrawTool(object):
                     else:
                         if coordinates is not None:
                             self._draw_point_on_img(*coordinates)
-
-                pass
+                self._send_image_to_displayer()
         logging.info('terminates drawtool thread')
