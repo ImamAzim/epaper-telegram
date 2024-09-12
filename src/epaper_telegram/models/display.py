@@ -3,12 +3,11 @@ import queue
 import logging
 
 
-from epaper_telegram.models.mocks import EPD2in13
+from epaper_telegram.models.mocks import EPD2in13Mock
 
 
 class DisplayerError(Exception):
     pass
-
 
 
 class Displayer(object):
@@ -17,13 +16,20 @@ class Displayer(object):
     Should be the only one to use this resource"""
     _TIMEOUT = 120
 
-    def __init__(self):
+    def __init__(self, mock_mode=False):
+        """
+        :mock_mode: boolean. use a mock epd display if True
+        """
         self._rlock = RLock()
         self._queue = queue.Queue(maxsize=1)
         self._thread = Thread(target=self._process_img_loop, daemon=None)
         self._running = Event()
         self._running.set()
-        self._epd = EPD2in13()
+
+        if mock_mode:
+            self._EPD = EPD2in13Mock
+        else:
+            self._EPD = EPD2in13
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -94,6 +100,7 @@ class Displayer(object):
 
     def _process_img_loop(self):
         while self._running.is_set():
+            self._epd = self._EPD()
             try:
                 img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
             except queue.Empty:

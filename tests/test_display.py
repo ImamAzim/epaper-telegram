@@ -19,7 +19,7 @@ class TestMyClass(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.displayer = Displayer()
+        cls.displayer = Displayer(mock_mode=True)
         cls.displayer.start()
 
     @classmethod
@@ -38,7 +38,7 @@ class TestMyClass(unittest.TestCase):
 
 
 def display_img():
-    with Displayer() as displayer:
+    with Displayer(mock_mode=True) as displayer:
         img = Image.new('1', (250, 122), 255)
         draw = ImageDraw.Draw(img)
         draw.text((8, 12), 'hello world', fill=0)

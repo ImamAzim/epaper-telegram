@@ -1,7 +1,7 @@
 from PIL import Image
 
 
-class EPD2in13():
+class EPD2in13Mock():
 
     def display(self, img):
         """
@@ -12,7 +12,7 @@ class EPD2in13():
         """
         img.show()
 
-class GT1151():
+class GT1151Mock():
 
     def input(self):
         x_str = input('x=')
