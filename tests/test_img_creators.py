@@ -3,7 +3,7 @@ from epaper_telegram.models.display import Displayer
 
 
 def draw_tool():
-    with Displayer() as displayer:
+    with Displayer(mock_mode=True) as displayer:
         drawtool = DrawTool(displayer)
         drawtool.clear_img()
         input()

@@ -60,4 +60,4 @@ class DrawTool(object):
 
     def _process_coordinates_loop(self):
         while True:
-            time.sleep(1)
+            self._queue.get()
