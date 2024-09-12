@@ -10,6 +10,8 @@ def draw_tool():
     with Displayer(mock_mode=True) as displayer:
         with DrawTool(displayer) as draw_tool:
             input()
+            draw_tool.point_to(60, 30)
+            input()
 
 
 if __name__ == "__main__":
