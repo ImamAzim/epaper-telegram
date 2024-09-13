@@ -28,7 +28,7 @@ class DrawTool(object):
         self._running = Event()
         self._running.set()
 
-    def point_to(self, x, y):
+    def point_to(self, x, y, s):
         """
         points the pen to coordinate x, y. If it is in the drawing area, it
         will be drawn on the image.
@@ -43,7 +43,7 @@ class DrawTool(object):
 
         """
         self._check_started()
-        self._queue.put((x, y))
+        self._queue.put((x, y, s))
 
     def clear_img(self):
         """will create a fresh img (with menu) and send it to the displayer
@@ -98,9 +98,11 @@ class DrawTool(object):
         draw.text((8, 12), 'hello world', fill=0)
         self._img = img
 
-    def _draw_point_on_img(self, x, y):
+    def _draw_point_on_img(self, x, y, s):
+        length = s ** 0.5
+        dx = length / 2
         draw = ImageDraw.Draw(self._img)
-        draw.rectangle((x, y, x+5, y+5), fill=0)
+        draw.rectangle((x - dx, y - dx, x + dx, y + dx), fill=0)
 
     def _process_coordinates_loop(self):
         while self._running.is_set():
