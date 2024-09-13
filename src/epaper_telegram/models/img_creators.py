@@ -17,7 +17,7 @@ class DrawTool(object):
     it includes a menu for the user, so that it can ask for more coordinates
     or not"""
     _PIC_FOLDER = os.path.join(
-            os.path.basename(__file__),
+            os.path.dirname(__file__),
             '..',
             'pics'
             )
