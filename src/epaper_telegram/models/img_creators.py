@@ -26,13 +26,15 @@ class DrawTool(object):
             )
     _AREAS = dict()
     i = 0
+    _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS)
     for name, img_fn in _BUTTONS.items():
         _AREAS[name] = (
                 0,
-                0 + _IMG_HEIGHT / 3 * i,
+                _BUTTON_HEIGHT * i,
                 _MENU_WIDTH,
-                _IMG_HEIGHT / 3 * (i + 1),
+                _BUTTON_HEIGHT * (i + 1),
                 )
+
         i += 1
 
     def __init__(self, displayer):
@@ -115,8 +117,17 @@ class DrawTool(object):
         img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
         draw.rectangle(self._DRAW_AREA, fill=255, outline=0)
+        i = 0
         for name, area in self._AREAS.items():
             draw.rectangle(area, fill=255, outline=0)
+            max_size = self._MENU_WIDTH, self._BUTTON_HEIGHT
+            button_img = Image.new('1', (20, 10))
+            button_img.thumbnail(max_size)
+            w, h = button_img.size
+            center = self._MENU_WIDTH / 2, self._BUTTON_HEIGHT * (i + 1 / 2)
+            top_left_corner = int(center[0]- w / 2), int(center[1] - h / 2)
+            img.paste(button_img, top_left_corner)
+            i += 1
         self._img = img
 
     def _draw_point_on_img(self, x, y, s):
