@@ -128,8 +128,7 @@ class DrawTool(object):
             draw.rectangle(area, fill=255, outline=0)
             max_size = self._MENU_WIDTH, self._BUTTON_HEIGHT
             path = os.path.join(self._PIC_FOLDER, self._BUTTONS[name])
-            with open(path) as myfile:
-                button_img = Image.open(myfile)
+            button_img = Image.open(path)
             button_img.thumbnail(max_size)
             w, h = button_img.size
             center = self._MENU_WIDTH / 2, self._BUTTON_HEIGHT * (i + 1 / 2)
