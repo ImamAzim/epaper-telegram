@@ -2,6 +2,7 @@ import time
 from threading import Thread, Event
 from queue import Queue, Empty
 import logging
+import os
 
 
 from PIL import Image, ImageDraw
@@ -15,6 +16,11 @@ class DrawTool(object):
     """this class will take coordinates, draw them and send it to a displayer.
     it includes a menu for the user, so that it can ask for more coordinates
     or not"""
+    _PIC_FOLDER = os.path.join(
+            os.path.basename(__file__),
+            '..',
+            'pics'
+            )
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
     _MENU_WIDTH = 60
@@ -121,7 +127,9 @@ class DrawTool(object):
         for name, area in self._AREAS.items():
             draw.rectangle(area, fill=255, outline=0)
             max_size = self._MENU_WIDTH, self._BUTTON_HEIGHT
-            button_img = Image.new('1', (20, 10))
+            path = os.path.join(self._PIC_FOLDER, self._BUTTONS[name])
+            with open(path) as myfile:
+                button_img = Image.open(myfile)
             button_img.thumbnail(max_size)
             w, h = button_img.size
             center = self._MENU_WIDTH / 2, self._BUTTON_HEIGHT * (i + 1 / 2)
