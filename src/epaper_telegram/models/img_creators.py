@@ -19,9 +19,21 @@ class DrawTool(object):
     _IMG_HEIGHT = 122
     _MENU_WIDTH = 60
     _DRAW_AREA = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
-    _SEND_AREA = (0, 0, _MENU_WIDTH, _IMG_HEIGHT / 3)
-    _ERASE_AREA = (0, _IMG_HEIGHT / 3, _MENU_WIDTH, _IMG_HEIGHT * 2 / 3)
-    _CANCEL_AREA = (0,  _IMG_HEIGHT / 3 * 2,_MENU_WIDTH, _IMG_HEIGHT * 3 / 3)
+    _BUTTONS = dict(
+            send='send.jpg',
+            erase='erase.jpg',
+            cancel='cancel.jpg'
+            )
+    _AREAS = dict()
+    i = 0
+    for name, img_fn in _BUTTONS.items():
+        _AREAS[name] = (
+                0,
+                0 + _IMG_HEIGHT / 3 * i,
+                _MENU_WIDTH,
+                _IMG_HEIGHT / 3 * (i + 1),
+                )
+        i += 1
 
     def __init__(self, displayer):
         """
@@ -100,12 +112,11 @@ class DrawTool(object):
         self._queue.put(None)
 
     def _reset_img(self):
-        img = Image.new('L', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
+        img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
         draw.rectangle(self._DRAW_AREA, fill=255, outline=0)
-        draw.rectangle(self._SEND_AREA, fill=255, outline=0)
-        draw.rectangle(self._ERASE_AREA, fill=255, outline=0)
-        draw.rectangle(self._CANCEL_AREA, fill=255, outline=0)
+        for name, area in self._AREAS.items():
+            draw.rectangle(area, fill=255, outline=0)
         self._img = img
 
     def _draw_point_on_img(self, x, y, s):
