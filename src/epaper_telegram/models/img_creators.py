@@ -15,6 +15,8 @@ class DrawTool(object):
     """this class will take coordinates, draw them and send it to a displayer.
     it includes a menu for the user, so that it can ask for more coordinates
     or not"""
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
 
     def __init__(self, displayer):
         """
@@ -93,7 +95,7 @@ class DrawTool(object):
         self._queue.put(None)
 
     def _reset_img(self):
-        img = Image.new('1', (250, 122), 255)
+        img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
         draw.text((8, 12), 'hello world', fill=0)
         self._img = img
