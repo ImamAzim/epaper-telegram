@@ -1,4 +1,3 @@
-import time
 from threading import Thread, Event
 from queue import Queue, Empty
 import logging
@@ -8,7 +7,8 @@ import os
 from PIL import Image, ImageDraw
 
 
-class DrawToolError(Exception): pass
+class DrawToolError(Exception):
+    pass
 
 
 class DrawTool(object):
@@ -79,7 +79,6 @@ class DrawTool(object):
         logging.warning('coordinates are not in any expected area')
         return True, None
 
-
     def _send_button(self):
         to_continue = False
         img = self._img.copy()
@@ -130,7 +129,7 @@ class DrawTool(object):
         if self._thread.is_alive():
             msg = 'thread has already started'
             logging.exception(msg)
-            raise DisplayerError(msg)
+            raise DrawToolError(msg)
         self.clear_img()
         self._thread.start()
 
@@ -155,7 +154,7 @@ class DrawTool(object):
             button_img.thumbnail(max_size)
             w, h = button_img.size
             center = self._MENU_WIDTH / 2, self._BUTTON_HEIGHT * (i + 1 / 2)
-            top_left_corner = int(center[0]- w / 2), int(center[1] - h / 2)
+            top_left_corner = int(center[0] - w / 2), int(center[1] - h / 2)
             img.paste(button_img, top_left_corner)
             i += 1
         self._img = img
@@ -176,7 +175,10 @@ class DrawTool(object):
                     try:
                         coordinates = self._queue.get(block=False)
                     except Empty:
-                        logging.warning('queue of coordinates was empty, size test failed')
+                        msg = (
+                                'queue of coordinates was empty',
+                                ', size test failed')
+                        logging.warning(msg)
                     else:
                         if coordinates is not None:
                             self._draw_point_on_img(*coordinates)
