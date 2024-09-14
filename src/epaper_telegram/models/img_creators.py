@@ -66,15 +66,26 @@ class DrawTool(object):
 
         """
         self._check_started()
-        to_continue = None
-        img = None
 
         (x1, y1, x2, y2) = self._DRAW_AREA_COORDINATES
         if x >= x1 and x <= x2 and y >= y1 and y <= y2:
             self._queue.put((x, y, s))
-            to_continue = True
+            return True, None
+        for key, el in self._BUTTONS_AREAS.items():
+            coordinates = el['coordinates']
+            if x >= x1 and x <= x2 and y >= y1 and y <= y2:
+                to_continue, img = getattr(self, f'_{key}_button')()
+                return to_continue, img
 
-        return to_continue, img
+
+    def _send_button(self):
+        pass
+
+    def _cancel_button(self):
+        pass
+
+    def _erase_button(self):
+        pass
 
     def clear_img(self):
         """will create a fresh img (with menu) and send it to the displayer
