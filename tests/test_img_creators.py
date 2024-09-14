@@ -3,6 +3,9 @@ import unittest
 import time
 
 
+from PIL import Image
+
+
 from epaper_telegram.models.img_creators import DrawTool
 from epaper_telegram.models.display import Displayer
 
@@ -29,6 +32,20 @@ class TestMyClass(unittest.TestCase):
         center = self._IMG_WIDTH / 2, self._IMG_HEIGHT / 2
         to_continue, img = self.draw_tool.point_to(*center, 1)
         self.assertIs(to_continue, True)
+        x = 0
+        # send button
+        y = self._IMG_HEIGHT * int(1/6)
+        to_continue, img = self.draw_tool.point_to(x, y, 1)
+        self.assertIs(to_continue, False)
+        self.assertIsInstance(img, Image.Image)
+        # erase button
+        y = self._IMG_HEIGHT * int(3/6)
+        to_continue, img = self.draw_tool.point_to(x, y, 1)
+        self.assertIs(to_continue, True)
+        # cancel button
+        y = self._IMG_HEIGHT * int(5/6)
+        to_continue, img = self.draw_tool.point_to(x, y, 1)
+        self.assertIs(to_continue, False)
 
     def test_clear_img(self):
         self.draw_tool.clear_img()
