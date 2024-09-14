@@ -34,16 +34,16 @@ class TestMyClass(unittest.TestCase):
         self.assertIs(to_continue, True)
         x = 0
         # send button
-        y = self._IMG_HEIGHT * int(1/6)
+        y = int(self._IMG_HEIGHT * 1/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
         self.assertIsInstance(img, Image.Image)
         # erase button
-        y = self._IMG_HEIGHT * int(3/6)
+        y = int(self._IMG_HEIGHT * 3/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, True)
         # cancel button
-        y = self._IMG_HEIGHT * int(5/6)
+        y = int(self._IMG_HEIGHT * 5/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
         self.assertIs(img, None)
