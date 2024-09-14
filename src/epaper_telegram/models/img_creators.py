@@ -24,23 +24,21 @@ class DrawTool(object):
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
     _MENU_WIDTH = 60
-    _DRAW_AREA = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
-    _BUTTONS = dict(
-            send='send.jpg',
-            erase='erase.bmp',
-            cancel='cancel.jpg'
+    _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
+    _BUTTONS_AREAS = dict(
+            send=dict(icon='send.jpg'),
+            erase=dict(icon='erase.bmp'),
+            cancel=dict(icon='cancel.jpg'),
             )
-    _AREAS = dict()
     i = 0
-    _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS)
-    for name, img_fn in _BUTTONS.items():
-        _AREAS[name] = (
+    _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS_AREAS)
+    for key, el in _BUTTONS_AREAS.items():
+        el['coordinates'] = (
                 0,
                 _BUTTON_HEIGHT * i,
                 _MENU_WIDTH,
                 _BUTTON_HEIGHT * (i + 1),
                 )
-
         i += 1
 
     def __init__(self, displayer):
@@ -122,12 +120,12 @@ class DrawTool(object):
     def _reset_img(self):
         img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
-        draw.rectangle(self._DRAW_AREA, fill=255, outline=0)
+        draw.rectangle(self._DRAW_AREA_COORDINATES, fill=255, outline=0)
         i = 0
-        for name, area in self._AREAS.items():
-            draw.rectangle(area, fill=255, outline=0)
+        for button_name, button_dict in self._BUTTONS_AREAS.items():
+            draw.rectangle(button_dict['coordinates'], fill=255, outline=0)
             max_size = self._MENU_WIDTH, self._BUTTON_HEIGHT
-            path = os.path.join(self._PIC_FOLDER, self._BUTTONS[name])
+            path = os.path.join(self._PIC_FOLDER, button_dict['icon'])
             button_img = Image.open(path)
             button_img.thumbnail(max_size)
             w, h = button_img.size
