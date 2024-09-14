@@ -113,11 +113,9 @@ class DrawTool(object):
         """terminate the thread
 
         """
-        logging.info('i will terminate')
         self._check_started()
         self._running.clear()
         self._queue.put(None)
-        logging.info('end of terminate func')
 
     def _reset_img(self):
         img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
@@ -145,9 +143,7 @@ class DrawTool(object):
 
     def _process_coordinates_loop(self):
         while self._running.is_set():
-            logging.info('waiting...)')
             self._displayer.wait_for_ready()
-            logging.info('ready')
             coordinates = self._queue.get()
             if coordinates is not None:
                 self._draw_point_on_img(*coordinates)
