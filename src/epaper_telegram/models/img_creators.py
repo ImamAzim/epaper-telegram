@@ -77,7 +77,8 @@ class DrawTool(object):
             if x >= x1 and x <= x2 and y >= y1 and y <= y2:
                 to_continue, img = getattr(self, f'_{key}_button')()
                 return to_continue, img
-        raise DrawToolError('coordinates are not in any expected area')
+        logging.warning('coordinates are not in any expected area')
+        return True, None
 
 
     def _send_button(self):
