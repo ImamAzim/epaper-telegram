@@ -79,13 +79,19 @@ class DrawTool(object):
 
 
     def _send_button(self):
-        pass
+        to_continue = False
+        img = self._img.copy()
+        return to_continue, img
 
     def _cancel_button(self):
-        pass
+        to_continue = False
+        img = None
+        return to_continue, img
 
     def _erase_button(self):
-        pass
+        to_continue = True
+        img = None
+        return to_continue, img
 
     def clear_img(self):
         """will create a fresh img (with menu) and send it to the displayer

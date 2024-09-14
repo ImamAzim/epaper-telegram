@@ -46,6 +46,7 @@ class TestMyClass(unittest.TestCase):
         y = self._IMG_HEIGHT * int(5/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
+        self.assertIs(img, None)
 
     def test_clear_img(self):
         self.draw_tool.clear_img()
