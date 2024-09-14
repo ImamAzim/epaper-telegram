@@ -26,20 +26,18 @@ class DrawTool(object):
     _MENU_WIDTH = 60
     _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
     _BUTTONS_AREAS = dict(
-            send=dict(icon='send.jpg'),
-            erase=dict(icon='erase.bmp'),
-            cancel=dict(icon='cancel.jpg'),
+            send=dict(icon='send.jpg', row=0),
+            erase=dict(icon='erase.bmp', row=1),
+            cancel=dict(icon='cancel.jpg', row=2),
             )
-    i = 0
     _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS_AREAS)
     for key, el in _BUTTONS_AREAS.items():
         el['coordinates'] = (
                 0,
-                _BUTTON_HEIGHT * i,
+                _BUTTON_HEIGHT * el['row'],
                 _MENU_WIDTH,
-                _BUTTON_HEIGHT * (i + 1),
+                _BUTTON_HEIGHT * (el['row'] + 1),
                 )
-        i += 1
 
     def __init__(self, displayer):
         """
