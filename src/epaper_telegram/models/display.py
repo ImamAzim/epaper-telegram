@@ -96,7 +96,11 @@ class Displayer(object):
         """
         self._check_started()
         self._running.clear()
-        self.display_img(None)
+        try:
+            self.display_img(None, timeout=1)
+        except queue.Full:
+            logging.debug('process_img_loop has probably exited the loop')
+            self._queue.task_done()
 
     def _process_img_loop(self):
         with self._EPD() as epd:

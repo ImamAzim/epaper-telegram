@@ -31,7 +31,7 @@ class TestMyClass(unittest.TestCase):
 
 
 def draw_tool():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     with Displayer(mock_mode=True) as displayer:
         with DrawTool(displayer) as draw_tool:
             draw_tool.clear_img()
