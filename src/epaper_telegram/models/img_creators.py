@@ -34,10 +34,11 @@ class DrawTool(object):
     for key, el in _BUTTONS_AREAS.items():
         el['coordinates'] = (
                 0,
-                _BUTTON_HEIGHT * el['row'],
-                _MENU_WIDTH,
-                _BUTTON_HEIGHT * (el['row'] + 1),
+                int(_BUTTON_HEIGHT * el['row']),
+                int(_MENU_WIDTH),
+                int(_BUTTON_HEIGHT * (el['row'] + 1)),
                 )
+    print(_BUTTONS_AREAS)
 
     def __init__(self, displayer):
         """
