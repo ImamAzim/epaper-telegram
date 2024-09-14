@@ -38,7 +38,6 @@ class DrawTool(object):
                 int(_MENU_WIDTH),
                 int(_BUTTON_HEIGHT * (el['row'] + 1)),
                 )
-    print(_BUTTONS_AREAS)
 
     def __init__(self, displayer):
         """
@@ -73,7 +72,7 @@ class DrawTool(object):
             self._queue.put((x, y, s))
             return True, None
         for key, el in self._BUTTONS_AREAS.items():
-            coordinates = el['coordinates']
+            (x1, y1, x2, y2) = el['coordinates']
             if x >= x1 and x <= x2 and y >= y1 and y <= y2:
                 to_continue, img = getattr(self, f'_{key}_button')()
                 return to_continue, img
