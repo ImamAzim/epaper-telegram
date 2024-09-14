@@ -68,7 +68,15 @@ class DrawTool(object):
 
         """
         self._check_started()
-        self._queue.put((x, y, s))
+        to_continue = None
+        img = None
+
+        (x1, y1, x2, y2) = self._DRAW_AREA_COORDINATES
+        if x >= x1 and x <= x2 and y >= y1 and y <= y2:
+            self._queue.put((x, y, s))
+            to_continue = True
+
+        return to_continue, img
 
     def clear_img(self):
         """will create a fresh img (with menu) and send it to the displayer

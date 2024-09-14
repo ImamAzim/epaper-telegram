@@ -10,6 +10,8 @@ from epaper_telegram.models.display import Displayer
 class TestMyClass(unittest.TestCase):
 
     """all test concerning my class. """
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
 
     @classmethod
     def setUpClass(cls):
@@ -23,8 +25,10 @@ class TestMyClass(unittest.TestCase):
         cls.draw_tool.terminate()
         cls.displayer.terminate()
 
-    # def test_point_to(self):
-        # pass
+    def test_point_to(self):
+        center = self._IMG_WIDTH / 2, self._IMG_HEIGHT / 2
+        to_continue, img = self.draw_tool.point_to(*center, 1)
+        self.assertIs(to_continue, True)
 
     def test_clear_img(self):
         self.draw_tool.clear_img()
