@@ -26,9 +26,9 @@ class DrawTool(object):
     _MENU_WIDTH = 60
     _DRAW_AREA = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
     _BUTTONS = dict(
-            send='send.jpeg',
+            send='send.jpg',
             erase='erase.bmp',
-            cancel='cancel.bmp'
+            cancel='cancel.jpg'
             )
     _AREAS = dict()
     i = 0

@@ -10,9 +10,9 @@ def draw_tool():
     logging.basicConfig(level=logging.INFO)
     with Displayer(mock_mode=True) as displayer:
         with DrawTool(displayer) as draw_tool:
-            time.sleep(1)
+            time.sleep(2)
             draw_tool.point_to(125, 61, 9)
-            time.sleep(1)
+            time.sleep(2)
 
 
 if __name__ == "__main__":
