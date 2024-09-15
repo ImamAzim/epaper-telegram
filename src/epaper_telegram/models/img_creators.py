@@ -95,6 +95,7 @@ class DrawTool(object):
     def _erase_button(self):
         to_continue = True
         img = None
+        self.clear_img()
         return to_continue, img
 
     def clear_img(self):
