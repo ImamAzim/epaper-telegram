@@ -14,6 +14,10 @@ class DrawToolError(Exception):
     pass
 
 
+class OnlineImageDownloaderError(Exception):
+    pass
+
+
 class DrawTool(object):
 
     """this class will take coordinates, draw them and send it to a displayer.
@@ -191,3 +195,66 @@ class DrawTool(object):
                             self._draw_point_on_img(*coordinates)
                 self._send_image_to_displayer()
         logging.info('terminates drawtool thread')
+
+
+class OnlineImageDownloader(object):
+
+    """this class will run a thread continuously and regulary check online if a new
+    image is available. when it is, it will send it to the display"""
+
+    _MENU_WIDTH = 60
+    _MENU_HEIGHT = 122
+
+    def __init__(self, displayer):
+        """
+        :displayer: Displayer objet that uses the epd
+        """
+        self._displayer = displayer
+        self._img = None
+
+        self._queue = Queue()
+        self._thread = Thread(target=self._check_online_img)
+        self._running = Event()
+        self._running.set()
+
+    def _check_started(self):
+        if self._thread.is_alive() is not True:
+            msg = (
+                    'thread has not started or has been terminated.',
+                    'use start method or context manager',
+                    )
+            logging.exception(msg)
+            raise OnlineImageDownloaderError(msg)
+
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        if self._thread.is_alive():
+            self.terminate()
+
+    def start(self):
+        """start thread that will take handles coordinates input to display
+
+        """
+        if self._thread.is_alive():
+            msg = 'thread has already started'
+            logging.exception(msg)
+            raise OnlineImageDownloaderError(msg)
+        self._thread.start()
+
+    def terminate(self):
+        """terminate the thread
+
+        """
+        self._check_started()
+        self._running.clear()
+
+    def _check_online_img(self):
+        while self._running.is_set():
+            logging.debug('check online...')
+            with self._displayer.rlock
+                logging.debug('send image to displayer if new img')
+            time.sleep(60)
+        logging.info('terminates online image downloader thread')
