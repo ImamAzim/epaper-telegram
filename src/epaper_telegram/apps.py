@@ -1,6 +1,4 @@
 import logging
-import time
-from threading import Thread
 
 
 from waveshare_touch_epaper.touch_screen import GT1151
@@ -28,7 +26,6 @@ class EpaperTelgramApp(object):
 
         logging.info('start')
         logging.debug('debug mode')
-
 
         try:
             with (
