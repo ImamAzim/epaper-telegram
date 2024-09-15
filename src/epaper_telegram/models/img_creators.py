@@ -256,6 +256,7 @@ class OnlineImageDownloader(object):
 
     def _check_online_img(self):
         while self._running.is_set():
+            self._regular_check.clear()
             logging.debug('check online...')
             with self._displayer.rlock
                 logging.debug('send image to displayer if new img')
