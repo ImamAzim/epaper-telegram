@@ -32,7 +32,6 @@ class EpaperTelgramApp(object):
                     self._GT() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
-                logging.info('TODO: start thread download img and display')
                 with OnlineImageDownloader(displayer):
                     while True:
                         logging.info('home')

@@ -142,6 +142,7 @@ class DrawTool(object):
             msg = 'thread has already started'
             logging.exception(msg)
             raise DrawToolError(msg)
+        self._displayer.rlock.acquire()
         self.clear_img()
         self._thread.start()
 
@@ -152,6 +153,7 @@ class DrawTool(object):
         self._check_started()
         self._running.clear()
         self._queue.put(None)
+        self._displayer.rlock.release()
 
     def _reset_img(self):
         img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
