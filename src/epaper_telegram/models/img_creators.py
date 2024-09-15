@@ -265,6 +265,14 @@ class OnlineImageDownloader(object):
         self._running.clear()
         self._regular_check.set()
 
+    def display_now(self):
+        """a method to use if the display was cleared and we want to redisplay
+        the online img even if it has not been changed
+        :returns: TODO
+
+        """
+        pass
+
     def _check_online_img(self):
         while self._running.is_set():
             self._regular_check.clear()
