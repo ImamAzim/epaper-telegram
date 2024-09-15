@@ -36,7 +36,8 @@ class GT1151Mock():
     def input(self):
         x_str = input('x=')
         y_str = input('y=')
-        return int(x_str), int(y_str)
+        s_str = input('s=')
+        return int(x_str), int(y_str), int(s_str)
 
     def wait_for_gesture(self):
         input('press enter to sim a gesture:\n')
