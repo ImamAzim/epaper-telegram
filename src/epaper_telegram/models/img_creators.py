@@ -7,6 +7,9 @@ import os
 from PIL import Image, ImageDraw
 
 
+from epaper_telegram.models.display import DisplayerError
+
+
 class DrawToolError(Exception):
     pass
 
@@ -103,7 +106,10 @@ class DrawTool(object):
 
     def _send_image_to_displayer(self, sleep_after=False):
         img_for_displayer = self._img.copy()
-        self._displayer.display_img(img_for_displayer, sleep_after=sleep_after)
+        try:
+            self._displayer.display_img(img_for_displayer, sleep_after=sleep_after)
+        except DisplayerError:
+            logging.warning('did not success to display img')
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
