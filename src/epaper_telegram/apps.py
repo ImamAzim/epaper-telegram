@@ -32,7 +32,7 @@ class EpaperTelgramApp(object):
                     self._GT() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
-                with OnlineImageDownloader(displayer):
+                with OnlineImageDownloader(displayer) as online_image_downloader:
                     while True:
                         logging.info('home')
                         gt.wait_for_gesture()
@@ -44,6 +44,7 @@ class EpaperTelgramApp(object):
                                 to_continue, img = draw_tool.point_to(*coordinates)
                             if img is not None:
                                 logging.info('TODO: upload image')
+                        online_image_downloader.display_now()
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
 
