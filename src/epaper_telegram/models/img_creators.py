@@ -1,3 +1,4 @@
+import time
 from threading import Thread, Event
 from queue import Queue, Empty
 import logging
@@ -204,6 +205,7 @@ class OnlineImageDownloader(object):
 
     _MENU_WIDTH = 60
     _MENU_HEIGHT = 122
+    _CHECK_INTERVAL = 1
 
     def __init__(self, displayer):
         """
@@ -214,6 +216,7 @@ class OnlineImageDownloader(object):
 
         self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
+        self._clock_thread = Thread(target=self._clock, daemon=True)
         self._running = Event()
         self._running.set()
         self._regular_check = Event()
@@ -245,6 +248,12 @@ class OnlineImageDownloader(object):
             logging.exception(msg)
             raise OnlineImageDownloaderError(msg)
         self._thread.start()
+        self._clock_thread.start()
+
+    def _clock(self):
+        while True:
+            time.sleep(self._CHECK_INTERVAL)
+            self._regular_check.set()
 
     def terminate(self):
         """terminate the thread
