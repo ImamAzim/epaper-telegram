@@ -216,6 +216,8 @@ class OnlineImageDownloader(object):
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
         self._running.set()
+        self._regular_check = Event()
+        self._regular_check.clear()
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -250,11 +252,12 @@ class OnlineImageDownloader(object):
         """
         self._check_started()
         self._running.clear()
+        self._regular_check.set()
 
     def _check_online_img(self):
         while self._running.is_set():
             logging.debug('check online...')
             with self._displayer.rlock
                 logging.debug('send image to displayer if new img')
-            time.sleep(60)
+            self._regular_check.wait()
         logging.info('terminates online image downloader thread')
