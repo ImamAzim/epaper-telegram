@@ -48,7 +48,10 @@ class OnlineImg(object):
         :img: PIL img object
 
         """
-        pass
+        if mock_mode:
+            pass
+        else:
+            logging.debug('TODO: upload img')
 
     def download(self):
         """download img from the cloud
