@@ -270,7 +270,6 @@ class OnlineImageDownloader(object):
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
         the online img even if it has not been changed
-        :returns: TODO
 
         """
         img = self._adapt_img()
@@ -285,14 +284,6 @@ class OnlineImageDownloader(object):
             else:
                 self._img_hash = self._online_img_hash
 
-    def _check_online_img(self):
-        logging.debug('TODO: get online img hash')
-        self._online_img_hash = 1
-        online_img_has_been_updated = self._online_img_hash != self._img_hash
-        if online_img_has_been_updated:
-            logging.debug('TODO: download online img if updated and store in _img')
-        return online_img_has_been_updated
-
     def _adapt_img(self):
         logging.debug('TODO: make copy of img with changed menu')
         img = self._img.copy()
@@ -301,9 +292,13 @@ class OnlineImageDownloader(object):
     def _check_online_img(self):
         while self._running.is_set():
             self._next_check_flag.clear()
-            online_img_has_been_updated = self._check_online_img()
-            if online_img_has_been_updated:
+
+            logging.debug('TODO: get online img hash')
+            self._online_img_hash = 1
+            if self._online_img_hash != self._img_hash:
+                logging.debug('TODO: download online img if updated and store in _img')
                 self.display_now()
+
             self._timer = Timer(
                     self._INTERVAL_BETWEEN_CHECKS,
                     lambda: self._next_check_flag.set()
