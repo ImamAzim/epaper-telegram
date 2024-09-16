@@ -18,6 +18,7 @@ class OnlineImg(object):
             upload_url=None,
             upload_username=None,
             upload_password=None,
+            download_url=None,
             download_username=None,
             download_password=None,
             mock_mode=False,
