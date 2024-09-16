@@ -209,6 +209,8 @@ class OnlineImageDownloader(object):
 
     _MENU_WIDTH = 60
     _MENU_HEIGHT = 122
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
     _INTERVAL_BETWEEN_CHECKS = 1
 
     def __init__(self, displayer):
@@ -216,7 +218,7 @@ class OnlineImageDownloader(object):
         :displayer: Displayer objet that uses the epd
         """
         self._displayer = displayer
-        self._img = None
+        self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
 
         self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
@@ -269,14 +271,28 @@ class OnlineImageDownloader(object):
         :returns: TODO
 
         """
-        pass
+        img = self._adapt_img()
+        with self._displayer.rlock:
+            logging.debug('TODO: send img to display')
+
+    def _check_online_img(self):
+        logging.debug('TODO: check if online image has been updated')
+        online_img_has_been_updated = False
+        if online_img_has_been_updated:
+            logging.debug('TODO: download online img if updated and store in _img')
+        return online_img_has_been_updated
+
+    def _adapt_img(self):
+        logging.debug('TODO: make copy of img with changed menu')
+        img = self._img.copy()
+        return img
 
     def _check_online_img(self):
         while self._running.is_set():
             self._next_check_flag.clear()
-            logging.debug('check online...')
-            with self._displayer.rlock:
-                logging.debug('send image to displayer if new img')
+            online_img_has_been_updated = self._check_online_img()
+            if online_img_has_been_updated:
+                self.display_now()
             self._timer = Timer(
                     self._INTERVAL_BETWEEN_CHECKS,
                     lambda: self._next_check_flag.set()
