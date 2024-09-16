@@ -278,7 +278,7 @@ class OnlineImageDownloader(object):
             with self._displayer.rlock:
                 logging.debug('send image to displayer if new img')
             self._timer = Timer(
-                    self._CHECK_INTERVAL,
+                    self._INTERVAL_BETWEEN_CHECKS,
                     lambda: self._next_check_flag.set()
                     )
             self._timer.start()
