@@ -78,6 +78,12 @@ class TestOnlineImg(unittest.TestCase):
     def test_display_now(self):
         self.online_img_down.display_now()
 
+    def test_upload(self):
+        width = 250
+        height = 122
+        img = Image.new('1', (width, height), 255)
+        self.online_img_down.upload(img)
+
 
 def draw_tool():
     logging.basicConfig(level=logging.INFO)
