@@ -220,6 +220,7 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_hash = None
+        self._online_img_hash = None
 
         self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
@@ -281,11 +282,13 @@ class OnlineImageDownloader(object):
                         )
             except DisplayerError:
                 logging.warning('did not success to display img')
+            else:
+                self._img_hash = self._online_img_hash
 
     def _check_online_img(self):
         logging.debug('TODO: get online img hash')
-        online_img_hash = 1
-        online_img_has_been_updated = online_img_hash != self._img_hash
+        self._online_img_hash = 1
+        online_img_has_been_updated = self._online_img_hash != self._img_hash
         if online_img_has_been_updated:
             logging.debug('TODO: download online img if updated and store in _img')
         return online_img_has_been_updated
