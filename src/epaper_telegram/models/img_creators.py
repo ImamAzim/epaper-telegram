@@ -1,4 +1,3 @@
-import time
 from threading import Thread, Event, Timer
 from queue import Queue, Empty
 import logging
@@ -113,7 +112,10 @@ class DrawTool(object):
     def _send_image_to_displayer(self, sleep_after=False):
         img_for_displayer = self._img.copy()
         try:
-            self._displayer.display_img(img_for_displayer, sleep_after=sleep_after)
+            self._displayer.display_img(
+                    img_for_displayer,
+                    sleep_after=sleep_after,
+                    )
         except DisplayerError:
             logging.warning('did not success to display img')
 
@@ -202,8 +204,8 @@ class DrawTool(object):
 
 class OnlineImageDownloader(object):
 
-    """this class will run a thread continuously and regulary check online if a new
-    image is available. when it is, it will send it to the display"""
+    """this class will run a thread continuously and regulary check online
+    if a new image is available. when it is, it will send it to the display"""
 
     _MENU_WIDTH = 60
     _MENU_HEIGHT = 122
@@ -287,4 +289,3 @@ class OnlineImageDownloader(object):
 if __name__ == '__main__':
     timer = Timer(10, lambda: print('ok'))
     timer.cancel()
-    
