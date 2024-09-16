@@ -285,7 +285,7 @@ class OnlineImageDownloader(object):
     def _check_online_img(self):
         logging.debug('TODO: get online img hash')
         online_img_hash = 1
-        online_img_has_been_updated = online_img_hash = self._img_hash
+        online_img_has_been_updated = online_img_hash != self._img_hash
         if online_img_has_been_updated:
             logging.debug('TODO: download online img if updated and store in _img')
         return online_img_has_been_updated
