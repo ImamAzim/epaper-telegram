@@ -8,6 +8,7 @@ from PIL import Image, ImageDraw
 
 
 from epaper_telegram.models.display import DisplayerError
+from epaper_telegram.models.online_tools import OnlineImgError
 
 
 class DrawToolError(Exception):
@@ -213,14 +214,16 @@ class OnlineImageDownloader(object):
     _IMG_HEIGHT = 122
     _INTERVAL_BETWEEN_CHECKS = 1
 
-    def __init__(self, displayer):
+    def __init__(self, displayer, online_img_tool):
         """
         :displayer: Displayer objet that uses the epd
+        :online_img_tool: OnlineImg object to upload and download img
         """
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_hash = None
         self._online_img_hash = None
+        self._online_img_tool = online_img_tool
 
         self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
@@ -294,7 +297,13 @@ class OnlineImageDownloader(object):
             self._next_check_flag.clear()
 
             logging.debug('TODO: get online img hash')
-            self._online_img_hash = 1
+            try:
+                online_img_hash = self._online_img_tool.get_hash()
+            except OnlineImgError:
+                msg = 'could not get hash of online img'
+                logging.exception(msg)
+            else:
+                self._online_img_hash = online_img_hash
             if self._online_img_hash != self._img_hash:
                 logging.debug('TODO: download online img if updated and store in _img')
                 self.display_now()

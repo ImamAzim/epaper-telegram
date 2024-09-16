@@ -1,3 +1,7 @@
+class OnlineImgError(Exception):
+    pass
+
+
 class OnlineImg(object):
 
     """manage online img"""
@@ -50,8 +54,3 @@ class OnlineImg(object):
 
         """
         pass
-
-class OnlineImage(object):
-
-    """manage online img on the cloud"""
-
