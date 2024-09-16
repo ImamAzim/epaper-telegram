@@ -1,4 +1,4 @@
-import loggin
+import logging
 
 
 from PIL import Image
@@ -66,4 +66,8 @@ class OnlineImg(object):
         :returns: hash
 
         """
-        pass
+        if self._mock_mode:
+            img_hash = 1
+        else:
+            logging.debug('TODO: get hash of online img')
+        return img_hash
