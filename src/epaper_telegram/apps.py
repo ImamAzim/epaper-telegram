@@ -5,6 +5,7 @@ from waveshare_touch_epaper.touch_screen import GT1151
 from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
+from epaper_telegram.models.online_tools import OnlineImg
 
 
 class EpaperTelgramApp(object):
@@ -17,6 +18,12 @@ class EpaperTelgramApp(object):
         else:
             self._GT = GT1151
         self._mock_mode = mock_mode
+        if mock_mode:
+            self._online_img_tool = OnlineImg(mock_mode=mock_mode)
+        else:
+            logging.debug('TODO: get credentials')
+            credentials = dict()
+            self._online_img_tool = OnlineImg(**credentials)
 
     def start(self):
         """method to start the app.
@@ -32,7 +39,7 @@ class EpaperTelgramApp(object):
                     self._GT() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
-                with OnlineImageDownloader(displayer) as online_image_downloader:
+                with OnlineImageDownloader(displayer, self._online_img_tool) as online_image_downloader:
                     while True:
                         logging.info('home')
                         gt.wait_for_gesture()

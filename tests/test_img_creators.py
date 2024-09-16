@@ -8,6 +8,7 @@ from PIL import Image
 
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
+from epaper_telegram.models.online_tools import OnlineImg
 
 
 class TestDrawToo(unittest.TestCase):
@@ -60,9 +61,13 @@ class TestOnlineImg(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        online_img_tool = OnlineImg(mock_mode=True)
         cls.displayer = Displayer(mock_mode=True)
         cls.displayer.start()
-        cls.online_img_down = OnlineImageDownloader(cls.displayer)
+        cls.online_img_down = OnlineImageDownloader(
+                cls.displayer,
+                online_img_tool,
+                )
         cls.online_img_down.start()
 
     @classmethod
@@ -86,7 +91,7 @@ def draw_tool():
 def online_image_downloader():
     logging.basicConfig(level=logging.DEBUG)
     with Displayer(mock_mode=True) as displayer:
-        with OnlineImageDownloader(displayer):
+        with OnlineImageDownloader(displayer, OnlineImg(mock_mode=True)):
             time.sleep(5)
 
 
