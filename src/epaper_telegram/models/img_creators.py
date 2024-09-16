@@ -274,7 +274,13 @@ class OnlineImageDownloader(object):
         """
         img = self._adapt_img()
         with self._displayer.rlock:
-            logging.debug('TODO: send img to display')
+            try:
+                self._displayer.display_img(
+                        img,
+                        sleep_after=True,
+                        )
+            except DisplayerError:
+                logging.warning('did not success to display img')
 
     def _check_online_img(self):
         logging.debug('TODO: get online img hash')
