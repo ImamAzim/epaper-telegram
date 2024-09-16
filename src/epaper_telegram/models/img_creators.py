@@ -1,5 +1,5 @@
 import time
-from threading import Thread, Event
+from threading import Thread, Event, Timer
 from queue import Queue, Empty
 import logging
 import os
@@ -207,7 +207,7 @@ class OnlineImageDownloader(object):
 
     _MENU_WIDTH = 60
     _MENU_HEIGHT = 122
-    _CHECK_INTERVAL = 1
+    _INTERVAL_BETWEEN_CHECKS = 1
 
     def __init__(self, displayer):
         """
@@ -218,11 +218,11 @@ class OnlineImageDownloader(object):
 
         self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
-        self._clock_thread = Thread(target=self._clock, daemon=True)
         self._running = Event()
         self._running.set()
-        self._regular_check = Event()
-        self._regular_check.clear()
+        self._next_check_flag = Event()
+        self._next_check_flag.clear()
+        self._timer = None
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -250,12 +250,6 @@ class OnlineImageDownloader(object):
             logging.exception(msg)
             raise OnlineImageDownloaderError(msg)
         self._thread.start()
-        self._clock_thread.start()
-
-    def _clock(self):
-        while True:
-            time.sleep(self._CHECK_INTERVAL)
-            self._regular_check.set()
 
     def terminate(self):
         """terminate the thread
@@ -263,7 +257,9 @@ class OnlineImageDownloader(object):
         """
         self._check_started()
         self._running.clear()
-        self._regular_check.set()
+        if self._timer:
+            self._timer.cancel()
+        self._next_check_flag.set()
 
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
@@ -275,9 +271,20 @@ class OnlineImageDownloader(object):
 
     def _check_online_img(self):
         while self._running.is_set():
-            self._regular_check.clear()
+            self._next_check_flag.clear()
             logging.debug('check online...')
             with self._displayer.rlock:
                 logging.debug('send image to displayer if new img')
-            self._regular_check.wait()
+            self._timer = Timer(
+                    self._CHECK_INTERVAL,
+                    lambda: self._next_check_flag.set()
+                    )
+            self._timer.start()
+            self._next_check_flag.wait()
         logging.info('terminates online image downloader thread')
+
+
+if __name__ == '__main__':
+    timer = Timer(10, lambda: print('ok'))
+    timer.cancel()
+    
