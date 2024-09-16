@@ -1,8 +1,17 @@
+import loggin
+
+
+from PIL import Image
+
+
 class OnlineImgError(Exception):
     pass
 
 
 class OnlineImg(object):
+
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
 
     """manage online img"""
     def __init__(self,
@@ -46,7 +55,11 @@ class OnlineImg(object):
         :returns: PIL Image
 
         """
-        pass
+        if self._mock_mode:
+            img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
+        else:
+            logging.debug('TODO: download img')
+        return img
 
     def get_hash(self):
         """get the hash function of online img to verify if a new img is available
