@@ -291,10 +291,9 @@ class OnlineImageDownloader(object):
         """upload img online
 
         :img: Image PIL object
-        :returns: TODO
 
         """
-        self._online_img_tool.upload(img)
+        Thread(target=self._online_img_tool.upload, args=[img]).start()
 
     def _adapt_img(self):
         logging.debug('TODO: make copy of img with changed menu')
