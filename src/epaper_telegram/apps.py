@@ -50,7 +50,7 @@ class EpaperTelgramApp(object):
                                 coordinates = gt.input()
                                 to_continue, img = draw_tool.point_to(*coordinates)
                             if img is not None:
-                                logging.info('TODO: upload image')
+                                online_image_downloader.upload(img)
                         online_image_downloader.display_now()
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
