@@ -50,7 +50,7 @@ class OnlineImg(object):
 
         """
         if self._mock_mode:
-            pass
+            logging.info('mock upload img')
         else:
             logging.debug('TODO: upload img')
 
