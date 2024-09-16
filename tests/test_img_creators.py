@@ -10,9 +10,9 @@ from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 
 
-class TestMyClass(unittest.TestCase):
+class TestDrawToo(unittest.TestCase):
 
-    """all test concerning my class. """
+    """all test concerning Draw Tool. """
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
 
@@ -52,6 +52,28 @@ class TestMyClass(unittest.TestCase):
         self.draw_tool.clear_img()
 
 
+class TestOnlineImg(unittest.TestCase):
+
+    """all test concerning Online Image Downloader. """
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
+
+    @classmethod
+    def setUpClass(cls):
+        cls.displayer = Displayer(mock_mode=True)
+        cls.displayer.start()
+        cls.online_img_down = OnlineImageDownloader(cls.displayer)
+        cls.online_img_down.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.online_img_down.terminate()
+        cls.displayer.terminate()
+
+    def test_display_now(self):
+        self.online_img_down.display_now()
+
+
 def draw_tool():
     logging.basicConfig(level=logging.INFO)
     with Displayer(mock_mode=True) as displayer:
@@ -59,6 +81,7 @@ def draw_tool():
             time.sleep(2)
             draw_tool.point_to(125, 61, 9)
             time.sleep(2)
+
 
 def online_image_downloader():
     logging.basicConfig(level=logging.DEBUG)
