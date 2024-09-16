@@ -296,7 +296,6 @@ class OnlineImageDownloader(object):
         while self._running.is_set():
             self._next_check_flag.clear()
 
-            logging.debug('TODO: get online img hash')
             try:
                 online_img_hash = self._online_img_tool.get_hash()
             except OnlineImgError:
@@ -305,8 +304,14 @@ class OnlineImageDownloader(object):
             else:
                 self._online_img_hash = online_img_hash
             if self._online_img_hash != self._img_hash:
-                logging.debug('TODO: download online img if updated and store in _img')
-                self.display_now()
+                try:
+                    online_img = self._online_img_tool.download()
+                except OnlineImgError:
+                    msg = 'could not download img'
+                    logging.exception(msg)
+                else:
+                    self._img = online_img
+                    self.display_now()
 
             self._timer = Timer(
                     self._INTERVAL_BETWEEN_CHECKS,
