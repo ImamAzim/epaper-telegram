@@ -49,7 +49,7 @@ class OnlineImg(object):
         :img: PIL img object
 
         """
-        if mock_mode:
+        if self._mock_mode:
             pass
         else:
             logging.debug('TODO: upload img')

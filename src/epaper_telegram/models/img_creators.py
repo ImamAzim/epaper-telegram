@@ -287,6 +287,15 @@ class OnlineImageDownloader(object):
             else:
                 self._img_hash = self._online_img_hash
 
+    def upload(self, img):
+        """upload img online
+
+        :img: Image PIL object
+        :returns: TODO
+
+        """
+        self._online_img_tool.upload(img)
+
     def _adapt_img(self):
         logging.debug('TODO: make copy of img with changed menu')
         img = self._img.copy()
