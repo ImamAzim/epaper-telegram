@@ -285,8 +285,20 @@ class OnlineImageDownloader(object):
         Thread(target=self._online_img_tool.upload, args=[img]).start()
 
     def _adapt_img(self):
-        logging.debug('TODO: make copy of img with changed menu')
         img = self._img.copy()
+        draw = ImageDraw.Draw(img)
+        draw.rectangle(
+                (0, 0, self._MENU_WIDTH, self._MENU_HEIGHT),
+                outline=0,
+                fill=255,
+                )
+        start = self._MENU_WIDTH / 2, 0.9 * self._MENU_HEIGHT
+        end = self._MENU_WIDTH / 2, 0.1 * self._MENU_HEIGHT
+        draw.line((start, end))
+        x1 = end
+        x2 = end[0] - 5, end[1] + 5
+        x3 = end[0] + 5, end[1] + 5
+        draw.polygon((x1, x2, x3), fill=0)
         return img
 
     def _get_latest_img(self):
