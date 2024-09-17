@@ -258,6 +258,8 @@ class OnlineImageDownloader(object):
             msg = 'thread has already started'
             logging.exception(msg)
             raise OnlineImageDownloaderError(msg)
+        self._get_latest_img()
+        self.display_now()
         self._thread.start()
 
     def terminate(self):
@@ -300,6 +302,15 @@ class OnlineImageDownloader(object):
         img = self._img.copy()
         return img
 
+    def _get_latest_img(self):
+        try:
+            online_img = self._online_img_tool.download()
+        except OnlineImgError:
+            msg = 'could not download img'
+            logging.exception(msg)
+        else:
+            self._img = online_img
+
     def _check_online_img(self):
         while self._running.is_set():
             self._next_check_flag.clear()
@@ -311,15 +322,10 @@ class OnlineImageDownloader(object):
                 logging.exception(msg)
             else:
                 self._online_img_hash = online_img_hash
+
             if self._online_img_hash != self._img_hash:
-                try:
-                    online_img = self._online_img_tool.download()
-                except OnlineImgError:
-                    msg = 'could not download img'
-                    logging.exception(msg)
-                else:
-                    self._img = online_img
-                    self.display_now()
+                self._get_latest_img()
+                self.display_now()
 
             self._timer = Timer(
                     self._INTERVAL_BETWEEN_CHECKS,
