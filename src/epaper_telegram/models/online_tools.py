@@ -1,4 +1,5 @@
 import logging
+from threading import Event, Timer
 
 
 from PIL import Image
@@ -12,6 +13,7 @@ class OnlineImg(object):
 
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
+    # _INTERVAL_BETWEEN_CHECKS = 1
 
     """manage online img"""
     def __init__(self,
@@ -43,6 +45,26 @@ class OnlineImg(object):
         self._download_password = download_password
         self._mock_mode = mock_mode
 
+        self._img_received = Event()
+
+    def wait_for_next_update(self):
+        """will block until online img is new
+
+        """
+        self._img_received.clear()
+        # self._timer = Timer(
+                # self._INTERVAL_BETWEEN_CHECKS,
+                # lambda: self._img_received.set()
+                # )
+        # self._timer.start()
+        self._img_received.wait()
+
+    def stop_waiting(self):
+        """stop the blocking wait even if there is no updated img
+
+        """
+        self._img_received.set()
+
     def upload(self, img):
         """upload img on the cloud
 
@@ -64,14 +86,3 @@ class OnlineImg(object):
         else:
             logging.debug('TODO: download img')
         return img
-
-    def get_hash(self):
-        """get the hash function of online img to verify if a new img is available
-        :returns: hash
-
-        """
-        if self._mock_mode:
-            img_hash = 1
-        else:
-            logging.debug('TODO: get hash of online img')
-        return img_hash

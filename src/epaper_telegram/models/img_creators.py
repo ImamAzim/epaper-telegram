@@ -212,7 +212,6 @@ class OnlineImageDownloader(object):
     _MENU_HEIGHT = 122
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
-    _INTERVAL_BETWEEN_CHECKS = 1
 
     def __init__(self, displayer, online_img_tool):
         """
@@ -221,17 +220,11 @@ class OnlineImageDownloader(object):
         """
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
-        self._img_hash = None
-        self._online_img_hash = None
         self._online_img_tool = online_img_tool
 
-        self._queue = Queue()
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
         self._running.set()
-        self._next_check_flag = Event()
-        self._next_check_flag.clear()
-        self._timer = None
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -258,8 +251,6 @@ class OnlineImageDownloader(object):
             msg = 'thread has already started'
             logging.exception(msg)
             raise OnlineImageDownloaderError(msg)
-        self._get_latest_img()
-        self.display_now()
         self._thread.start()
 
     def terminate(self):
@@ -268,9 +259,7 @@ class OnlineImageDownloader(object):
         """
         self._check_started()
         self._running.clear()
-        if self._timer:
-            self._timer.cancel()
-        self._next_check_flag.set()
+        self._online_img_tool.stop_waiting()
 
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
@@ -285,9 +274,7 @@ class OnlineImageDownloader(object):
                         sleep_after=True,
                         )
             except DisplayerError:
-                logging.warning('did not success to display img')
-            else:
-                self._img_hash = self._online_img_hash
+                logging.exception('did not success to display img')
 
     def upload(self, img):
         """upload img online
@@ -313,26 +300,10 @@ class OnlineImageDownloader(object):
 
     def _check_online_img(self):
         while self._running.is_set():
-            self._next_check_flag.clear()
+            self._get_latest_img()
+            self.display_now()
+            self._online_img_tool.wait_for_next_update()
 
-            try:
-                online_img_hash = self._online_img_tool.get_hash()
-            except OnlineImgError:
-                msg = 'could not get hash of online img'
-                logging.exception(msg)
-            else:
-                self._online_img_hash = online_img_hash
-
-            if self._online_img_hash != self._img_hash:
-                self._get_latest_img()
-                self.display_now()
-
-            self._timer = Timer(
-                    self._INTERVAL_BETWEEN_CHECKS,
-                    lambda: self._next_check_flag.set()
-                    )
-            self._timer.start()
-            self._next_check_flag.wait()
         logging.info('terminates online image downloader thread')
 
 
