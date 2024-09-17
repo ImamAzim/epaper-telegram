@@ -35,8 +35,9 @@ class TestMyClass(unittest.TestCase):
 
 
 def download():
-    logging.basicconfig(level=logging.info)
+    logging.basicConfig(level=logging.INFO)
     online_img_tool = OnlineImg()
+    img = online_img_tool.download()
     img.show()
 
 
