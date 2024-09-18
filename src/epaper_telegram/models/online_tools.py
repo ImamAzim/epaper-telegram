@@ -54,6 +54,8 @@ class OnlineImg(object):
         self._download_password = download_password
         self._mock_mode = mock_mode
 
+        self._wait_interrupted = False
+
         self._img_received = Event()
         if self._mock_mode:
             self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
@@ -67,6 +69,7 @@ class OnlineImg(object):
         """will block until online img is new
 
         """
+        self._wait_interrupted = False
         self._img_received.clear()
         # self._timer = Timer(
                 # self._INTERVAL_BETWEEN_CHECKS,
@@ -74,11 +77,14 @@ class OnlineImg(object):
                 # )
         # self._timer.start()
         self._img_received.wait()
+        if not self._wait_interrupted:
+            self._save_received_img()
 
     def stop_waiting(self):
         """stop the blocking wait even if there is no updated img
 
         """
+        self._wait_interrupted = True
         self._img_received.set()
 
     def upload(self, img):
@@ -105,6 +111,5 @@ class OnlineImg(object):
             raise OnlineImgError(msg)
 
     def _save_received_img(self):
-        logging.debug('TODO: download or receive img')
-        logging.debug('TODO: save img to disk')
-        logging.debug('TODO: set _img attribute to the opened Image')
+        logging.debug('TODO: load img from disk')
+        logging.debug('TODO: set _img attribute')
