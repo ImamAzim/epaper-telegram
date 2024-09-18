@@ -61,7 +61,8 @@ class TestOnlineImg(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        online_img_tool = OnlineImg(mock_mode=True)
+        credentials = dict()
+        online_img_tool = OnlineImg(credentials, mock_mode=True)
         cls.displayer = Displayer(mock_mode=True)
         cls.displayer.start()
         cls.online_img_down = OnlineImageDownloader(

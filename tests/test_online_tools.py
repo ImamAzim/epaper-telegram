@@ -21,7 +21,8 @@ class TestMyClass(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.online_img_tool = OnlineImg(mock_mode=True)
+        credentials = dict()
+        cls.online_img_tool = OnlineImg(credentials, mock_mode=True)
 
     @classmethod
     def tearDownClass(cls):
@@ -36,7 +37,8 @@ class TestMyClass(unittest.TestCase):
 
 def download():
     logging.basicConfig(level=logging.INFO)
-    online_img_tool = OnlineImg()
+    credentials = dict()
+    online_img_tool = OnlineImg(credentials)
     img = online_img_tool.get_latest_update_of_img()
     img.show()
 
