@@ -1,8 +1,16 @@
 import logging
 from threading import Event, Timer
+import os
 
 
+import xdg_base_dirs
 from PIL import Image
+
+
+APP_NAME = 'epaper-telegram'
+DATA_DIR_PATH = os.path.join(xdg_base_dirs.xdg_data_home(), APP_NAME)
+if not os.path.exists(DATA_DIR_PATH):
+    os.makedirs(DATA_DIR_PATH)
 
 
 class OnlineImgError(Exception):
@@ -14,6 +22,7 @@ class OnlineImg(object):
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
     # _INTERVAL_BETWEEN_CHECKS = 1
+    _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
 
     """manage online img"""
     def __init__(self,
@@ -46,6 +55,10 @@ class OnlineImg(object):
         self._mock_mode = mock_mode
 
         self._img_received = Event()
+        try:
+            self._img = Image.open(self._IMG_FILE_PATH)
+        except FileNotFoundError:
+            self._img = None
 
     def wait_for_next_update(self):
         """will block until online img is new
