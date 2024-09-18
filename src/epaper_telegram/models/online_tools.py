@@ -7,6 +7,9 @@ import xdg_base_dirs
 from PIL import Image
 
 
+from epaper_telegram.models.xmpp import ImageTransferBot
+
+
 APP_NAME = 'epaper-telegram'
 DATA_DIR_PATH = os.path.join(xdg_base_dirs.xdg_data_home(), APP_NAME)
 if not os.path.exists(DATA_DIR_PATH):
@@ -47,6 +50,8 @@ class OnlineImg(object):
             except FileNotFoundError:
                 self._img = None
         self._img_received.clear()
+
+        self._image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=self._img_received)
 
     def wait_for_next_update(self):
         """will block until online img is new
