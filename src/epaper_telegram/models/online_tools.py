@@ -79,10 +79,7 @@ class OnlineImg(object):
         :img: PIL img object
 
         """
-        if self._mock_mode:
-            logging.info('mock upload img')
-        else:
-            logging.debug('TODO: upload img')
+        self._image_transfer_bot.send_img(img)
 
     def get_latest_update_of_img(self):
         """return the img that was previouseley downloaded when update was detected

@@ -1,3 +1,6 @@
+import logging
+
+
 class ImageTransferBot(object):
 
     """bot that will receive or send img on jabber"""
@@ -13,4 +16,4 @@ class ImageTransferBot(object):
         :returns: TODO
 
         """
-        pass
+        logging.debug('TODO: send img with xmpp')
