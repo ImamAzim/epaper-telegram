@@ -78,7 +78,8 @@ class OnlineImg(object):
         # self._timer.start()
         self._img_received.wait()
         if not self._wait_interrupted:
-            self._save_received_img()
+            logging.debug('TODO: load img from disk')
+            logging.debug('TODO: set _img attribute')
 
     def stop_waiting(self):
         """stop the blocking wait even if there is no updated img
@@ -109,7 +110,3 @@ class OnlineImg(object):
             msg = 'there is not last version of received img'
             logging.error(msg)
             raise OnlineImgError(msg)
-
-    def _save_received_img(self):
-        logging.debug('TODO: load img from disk')
-        logging.debug('TODO: set _img attribute')
