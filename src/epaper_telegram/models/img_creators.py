@@ -303,9 +303,9 @@ class OnlineImageDownloader(object):
 
     def _get_latest_img(self):
         try:
-            online_img = self._online_img_tool.download()
+            online_img = self._online_img_tool.get_latest_update_of_img()
         except OnlineImgError:
-            msg = 'could not download img'
+            msg = 'could not get a received img'
             logging.exception(msg)
         else:
             self._img = online_img
