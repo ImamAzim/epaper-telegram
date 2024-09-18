@@ -27,8 +27,8 @@ class TestMyClass(unittest.TestCase):
     def tearDownClass(cls):
         pass
 
-    def test_download(self):
-        img = self.online_img_tool.download()
+    def test_get_latest_img(self):
+        img = self.online_img_tool.get_latest_update_of_img()
         self.assertIsInstance(img, Image.Image)
 
 """ script tests """
@@ -37,7 +37,7 @@ class TestMyClass(unittest.TestCase):
 def download():
     logging.basicConfig(level=logging.INFO)
     online_img_tool = OnlineImg()
-    img = online_img_tool.download()
+    img = online_img_tool.get_latest_update_of_img()
     img.show()
 
 
