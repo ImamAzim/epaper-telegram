@@ -21,7 +21,6 @@ class OnlineImg(object):
 
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
-    # _INTERVAL_BETWEEN_CHECKS = 1
     _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
 
     """manage online img"""
@@ -64,22 +63,20 @@ class OnlineImg(object):
                 self._img = Image.open(self._IMG_FILE_PATH)
             except FileNotFoundError:
                 self._img = None
+        self._img_received.clear()
 
     def wait_for_next_update(self):
         """will block until online img is new
 
         """
         self._wait_interrupted = False
-        self._img_received.clear()
-        # self._timer = Timer(
-                # self._INTERVAL_BETWEEN_CHECKS,
-                # lambda: self._img_received.set()
-                # )
-        # self._timer.start()
         self._img_received.wait()
         if not self._wait_interrupted:
-            logging.debug('TODO: load img from disk')
-            logging.debug('TODO: set _img attribute')
+            try:
+                self._img = Image.open(self._IMG_FILE_PATH)
+            except FileNotFoundError:
+                self._img = None
+            self._img_received.clear()
 
     def stop_waiting(self):
         """stop the blocking wait even if there is no updated img
