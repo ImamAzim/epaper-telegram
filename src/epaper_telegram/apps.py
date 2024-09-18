@@ -18,12 +18,9 @@ class EpaperTelgramApp(object):
         else:
             self._GT = GT1151
         self._mock_mode = mock_mode
-        if mock_mode:
-            self._online_img_tool = OnlineImg(mock_mode=mock_mode)
-        else:
-            logging.debug('TODO: get credentials')
-            credentials = dict()
-            self._online_img_tool = OnlineImg(**credentials)
+        logging.debug('TODO: get credentials')
+        credentials = dict()
+        self._online_img_tool = OnlineImg(credentials, mock_mode=mock_mode)
 
     def start(self):
         """method to start the app.
