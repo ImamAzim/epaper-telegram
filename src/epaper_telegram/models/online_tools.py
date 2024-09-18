@@ -55,10 +55,13 @@ class OnlineImg(object):
         self._mock_mode = mock_mode
 
         self._img_received = Event()
-        try:
-            self._img = Image.open(self._IMG_FILE_PATH)
-        except FileNotFoundError:
-            self._img = None
+        if self._mock_mode:
+            self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
+        else:
+            try:
+                self._img = Image.open(self._IMG_FILE_PATH)
+            except FileNotFoundError:
+                self._img = None
 
     def wait_for_next_update(self):
         """will block until online img is new
@@ -89,13 +92,19 @@ class OnlineImg(object):
         else:
             logging.debug('TODO: upload img')
 
-    def download(self):
-        """download img from the cloud
+    def get_latest_update_of_img(self):
+        """return the img that was previouseley downloaded when update was detected
         :returns: PIL Image
 
         """
-        if self._mock_mode:
-            img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
+        if self._img is not None:
+            return self._img
         else:
-            logging.debug('TODO: download img')
-        return img
+            msg = 'there is not last version of received img'
+            logging.error(msg)
+            raise OnlineImgError(msg)
+
+    def _save_received_img(self):
+        logging.debug('TODO: download or receive img')
+        logging.debug('TODO: save img to disk')
+        logging.debug('TODO: set _img attribute to the opened Image')
