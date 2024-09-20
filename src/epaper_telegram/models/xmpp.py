@@ -12,6 +12,7 @@ import logging
 from epaper_telegram import DATA_DIR_PATH
 
 
+
 class ImageTransferBot(object):
 
     """bot that will receive or send img on jabber"""
