@@ -1,3 +1,5 @@
+import secrets
+import string
 import datetime
 import os
 import getpass
@@ -44,7 +46,9 @@ class CredentialsHandler(object):
         date = datetime.date.today()
         username = f'{user}_{host}_{date}_BOT'
         jabber_id = username + self._DOMAIN
-        password = 'pass'
+
+        alphabet = string.ascii_letters + string.digits
+        password = ''.join(secrets.choice(alphabet) for i in range(20))
         credentials = dict(
                 jabber_id=jabber_id,
                 password=password,
