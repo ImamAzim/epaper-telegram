@@ -143,4 +143,3 @@ if __name__ == '__main__':
     except FileNotFoundError:
         credential_handler.create_and_save_new_cred()
         credentials = credential_handler.load_credentials()
-    print(credentials)
