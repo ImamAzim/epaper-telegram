@@ -1,3 +1,4 @@
+import configparser
 import pickle
 from cryptography.fernet import Fernet
 import secrets
@@ -44,7 +45,10 @@ class CredentialsHandler(object):
         """will create new credentials. uses the user name, host and current day
 
         """
-        credentials = self._create_new_cred()
+        credentials, key = self._create_new_cred()
+        self._save_key(key)
+        self._save_credentials(credentials)
+
 
     def _decrypt_password(self, encrypted_pass, key):
         f = Fernet(key)
@@ -73,6 +77,7 @@ class CredentialsHandler(object):
         password = self._gen_password()
         key = Fernet.generate_key()
         encrypted_password = self._encrypt_password(password, key)
+        print(password)
 
         credentials = dict(
                 jabber_id=jabber_id,
@@ -91,12 +96,23 @@ class CredentialsHandler(object):
             key = pickle.load(keyfile).encode()
         return key
 
+    def _save_credentials(self, credentials):
+        path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
+        config = configparser.ConfigParser()
+        config['jabber'] = credentials
+        with open(path, 'w') as configfile:
+            config.write(configfile)
+
+    def _load_credentials(self):
+        path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
+        config = configparser.ConfigParser()
+        config.read(path)
+        credentials = config['jabber']
+        return credentials
+
+
 
 
 if __name__ == '__main__':
     credential_handler = CredentialsHandler()
-    credentials, key = credential_handler._create_new_cred()
-    print(key)
-    credential_handler._save_key(key)
-    key = credential_handler._load_key()
-    print(key)
+    credential_handler.create_and_save_new_cred()
