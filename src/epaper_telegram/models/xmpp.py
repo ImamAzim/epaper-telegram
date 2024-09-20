@@ -116,10 +116,10 @@ class CredentialsHandler(object):
         return key
 
     def _save_credentials(self, credentials):
+        path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
         if os.path.exists(path):
             msg = 'a credential file already exists'
             raise CredentialsHandlerError(msg)
-        path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
         config = configparser.ConfigParser()
         config['jabber'] = credentials
         with open(path, 'w') as configfile:
