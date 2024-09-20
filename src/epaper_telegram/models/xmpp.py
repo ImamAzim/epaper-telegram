@@ -49,6 +49,19 @@ class CredentialsHandler(object):
         self._save_key(key)
         self._save_credentials(credentials)
 
+    def load_credentials(self):
+        """load credentials from encrypted file
+        :returns: credentials
+
+        """
+        key = self._load_key()
+        credentials = self._load_credentials()
+        password = self._decrypt_password(
+                credentials['encrypted_password'],
+                key,
+                )
+        credentials['password'] = password
+        return credentials
 
     def _decrypt_password(self, encrypted_pass, key):
         f = Fernet(key)
@@ -111,8 +124,8 @@ class CredentialsHandler(object):
         return credentials
 
 
-
-
 if __name__ == '__main__':
     credential_handler = CredentialsHandler()
     credential_handler.create_and_save_new_cred()
+    credentials = credential_handler.load_credentials()
+    print(credentials)
