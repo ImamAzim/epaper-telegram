@@ -43,10 +43,10 @@ class RegisterBot(slixmpp.ClientXMPP):
           workflows will need to check for data forms, etc.
     """
 
-    def __init__(self, jid, password):
+    def __init__(self, jabber_id, password):
 
-        self._jid = jid
-        slixmpp.ClientXMPP.__init__(self, jid, password)
+        self._jabber_id = jabber_id
+        slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
         # The session_start event will be triggered when
         # the bot establishes its connection with the server
@@ -111,7 +111,7 @@ class RegisterBot(slixmpp.ClientXMPP):
             logging.info("Account created for %s!" % self.boundjid)
             path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
             config = configparser.ConfigParser()
-            config[self._jid] = {}
+            config[self._jabber_id] = {}
             with open(path, 'w') as configfile:
                 config.write(configfile)
             self.disconnect()
