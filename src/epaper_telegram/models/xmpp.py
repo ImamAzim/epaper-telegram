@@ -1,3 +1,4 @@
+import pickle
 from cryptography.fernet import Fernet
 import secrets
 import string
@@ -79,8 +80,23 @@ class CredentialsHandler(object):
                 )
         return credentials, key
 
+    def _save_key(self, key):
+        path = os.path.join(DATA_DIR_PATH, self._KEY_FILE)
+        with open (path, 'wb') as keyfile:
+            pickle.dump(key.decode(), keyfile)
+
+    def _load_key(self):
+        path = os.path.join(DATA_DIR_PATH, self._KEY_FILE)
+        with open (path, 'rb') as keyfile:
+            key = pickle.load(keyfile).encode()
+        return key
+
+
 
 if __name__ == '__main__':
     credential_handler = CredentialsHandler()
     credentials, key = credential_handler._create_new_cred()
-    print(credentials, key)
+    print(key)
+    credential_handler._save_key(key)
+    key = credential_handler._load_key()
+    print(key)

@@ -3,7 +3,6 @@ from threading import Event, Timer
 import os
 
 
-import xdg_base_dirs
 from PIL import Image
 
 
