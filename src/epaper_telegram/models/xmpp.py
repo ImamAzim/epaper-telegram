@@ -51,6 +51,7 @@ class CredentialsHandler(object):
         credentials, key = self._create_new_cred()
         self._save_key(key)
         self._save_credentials(credentials)
+        logging.info('new credentials created')
 
     def load_credentials(self):
         """load credentials from encrypted file
@@ -65,6 +66,7 @@ class CredentialsHandler(object):
                 )
         credentials['password'] = password
         del credentials['encrypted_password']
+        logging.info('credentials loaded')
         return credentials
 
     def _decrypt_password(self, encrypted_password, key):
@@ -134,7 +136,11 @@ class CredentialsHandler(object):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     credential_handler = CredentialsHandler()
-    credential_handler.create_and_save_new_cred()
-    credentials = credential_handler.load_credentials()
+    try:
+        credentials = credential_handler.load_credentials()
+    except FileNotFoundError:
+        credential_handler.create_and_save_new_cred()
+        credentials = credential_handler.load_credentials()
     print(credentials)
