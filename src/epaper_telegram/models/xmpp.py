@@ -29,6 +29,9 @@ class ImageTransferBot(object):
         """
         logging.debug('TODO: send img with xmpp')
 
+class CredentialsHandlerError(Exception):
+    pass
+
 
 class CredentialsHandler(object):
 
@@ -61,6 +64,7 @@ class CredentialsHandler(object):
                 key,
                 )
         credentials['password'] = password
+        del credentials['encrypted_password']
         return credentials
 
     def _decrypt_password(self, encrypted_password, key):
@@ -90,7 +94,6 @@ class CredentialsHandler(object):
         password = self._gen_password()
         key = Fernet.generate_key()
         encrypted_password = self._encrypt_password(password, key)
-        print(password)
 
         credentials = dict(
                 jabber_id=jabber_id,
@@ -100,6 +103,9 @@ class CredentialsHandler(object):
 
     def _save_key(self, key):
         path = os.path.join(DATA_DIR_PATH, self._KEY_FILE)
+        if os.path.exists(path):
+            msg = 'a key file already existsü'
+            raise CredentialsHandlerError(msg)
         with open (path, 'wb') as keyfile:
             pickle.dump(key.decode(), keyfile)
 
@@ -110,6 +116,9 @@ class CredentialsHandler(object):
         return key
 
     def _save_credentials(self, credentials):
+        if os.path.exists(path):
+            msg = 'a credential file already exists'
+            raise CredentialsHandlerError(msg)
         path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
         config = configparser.ConfigParser()
         config['jabber'] = credentials
