@@ -9,17 +9,19 @@ import getpass
 import logging
 
 
-from epaper_telegram import DATA_DIR_PATH
-
+from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
 
 
 class ImageTransferBot(object):
 
     """bot that will receive or send img on jabber"""
 
-    def __init__(self, msg_receive_event, jid='', password='', corresp_jid=''):
-        """TODO: to be defined. """
-        pass
+    def __init__(self, msg_receive_event, jabber_id='', password='', corresp_jid=''):
+        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+        config = configparser.ConfigParser()
+        config.read(path)
+        if jabber_id not in config:
+            logging.info('TODO: create an account')
 
     def send_img(self, img):
         """send an img file to the correspondant
@@ -144,3 +146,4 @@ if __name__ == '__main__':
     except FileNotFoundError:
         credential_handler.create_and_save_new_cred()
         credentials = credential_handler.load_credentials()
+    image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=None)
