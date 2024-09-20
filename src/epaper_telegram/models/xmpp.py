@@ -17,3 +17,36 @@ class ImageTransferBot(object):
 
         """
         logging.debug('TODO: send img with xmpp')
+
+
+class CredentialsHandler(object):
+
+    """a help to create, save and reload credentials for jabber account"""
+
+    _DOMAIN = '@jabber.fr'
+
+    def __init__(self):
+        pass
+
+    def create_and_save_new_cred(self):
+        """will create new credentials. uses the user name, host and current day
+
+        """
+        credentials = self._create_new_cred()
+
+
+    def _create_new_cred(self):
+        username = 'me'
+        jabber_id = username + self._DOMAIN
+        password = 'pass'
+        credentials = dict(
+                jabber_id=jabber_id,
+                password=password,
+                )
+        return credentials
+
+
+if __name__ == '__main__':
+    credential_handler = CredentialsHandler()
+    credentials = credential_handler._create_new_cred()
+    print(credentials)
