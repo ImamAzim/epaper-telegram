@@ -1,3 +1,6 @@
+import datetime
+import os
+import getpass
 import logging
 
 
@@ -36,7 +39,10 @@ class CredentialsHandler(object):
 
 
     def _create_new_cred(self):
-        username = 'me'
+        user = getpass.getuser()
+        host = os.uname()[1]
+        date = datetime.date.today()
+        username = f'{user}_{host}_{date}_BOT'
         jabber_id = username + self._DOMAIN
         password = 'pass'
         credentials = dict(
