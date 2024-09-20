@@ -1,3 +1,4 @@
+from cryptography.fernet import Fernet
 import secrets
 import string
 import datetime
@@ -39,6 +40,22 @@ class CredentialsHandler(object):
         """
         credentials = self._create_new_cred()
 
+    def _decrypt_password(self, encrypted_pass, key):
+        f = Fernet(key)
+        password = f.decrypt(encrypted_password.encode()).decode()
+        return password
+        del f
+
+    def _encrypt_password(self, password, key):
+        f = Fernet(key)
+        encrypted_pass= f.encrypt(password.encode()).decode()
+        del f
+        return encrypted_pass
+
+    def _gen_password(self):
+        alphabet = string.ascii_letters + string.digits
+        password = ''.join(secrets.choice(alphabet) for i in range(20))
+        return password
 
     def _create_new_cred(self):
         user = getpass.getuser()
@@ -47,16 +64,18 @@ class CredentialsHandler(object):
         username = f'{user}_{host}_{date}_BOT'
         jabber_id = username + self._DOMAIN
 
-        alphabet = string.ascii_letters + string.digits
-        password = ''.join(secrets.choice(alphabet) for i in range(20))
+        password = self._gen_password()
+        key = Fernet.generate_key()
+        encrypted_password = self._encrypt_password(password, key)
+
         credentials = dict(
                 jabber_id=jabber_id,
-                password=password,
+                encrypted_password=encrypted_password,
                 )
-        return credentials
+        return credentials, key
 
 
 if __name__ == '__main__':
     credential_handler = CredentialsHandler()
-    credentials = credential_handler._create_new_cred()
-    print(credentials)
+    credentials, key = credential_handler._create_new_cred()
+    print(credentials, key)
