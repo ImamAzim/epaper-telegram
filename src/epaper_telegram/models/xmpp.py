@@ -7,6 +7,9 @@ import getpass
 import logging
 
 
+from epaper_telegram import DATA_DIR_PATH
+
+
 class ImageTransferBot(object):
 
     """bot that will receive or send img on jabber"""
@@ -30,6 +33,8 @@ class CredentialsHandler(object):
     """a help to create, save and reload credentials for jabber account"""
 
     _DOMAIN = '@jabber.fr'
+    _CRED_FILE = 'cred.ini'
+    _KEY_FILE = '.key'
 
     def __init__(self):
         pass
