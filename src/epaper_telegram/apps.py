@@ -6,6 +6,7 @@ from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.online_tools import OnlineImg
+from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError
 
 
 class EpaperTelgramApp(object):
@@ -18,8 +19,12 @@ class EpaperTelgramApp(object):
         else:
             self._GT = GT1151
         self._mock_mode = mock_mode
-        logging.debug('TODO: get credentials')
-        credentials = dict()
+        credential_handler = CredentialsHandler()
+        try:
+            credentials = credential_handler.load_credentials()
+        except FileNotFoundError:
+            credential_handler.create_and_save_new_cred()
+            credentials = credential_handler.load_credentials()
         self._online_img_tool = OnlineImg(credentials, mock_mode=mock_mode)
 
     def start(self):
