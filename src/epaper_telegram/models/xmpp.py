@@ -20,6 +20,7 @@ class ImageTransferBot(object):
     """bot that will receive or send img on jabber"""
 
     def __init__(self, msg_receive_event, jabber_id='', password='', corresp_jid=''):
+        pass
 
     def send_img(self, img):
         """send an img file to the correspondant
