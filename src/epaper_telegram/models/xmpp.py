@@ -63,7 +63,7 @@ class CredentialsHandler(object):
         credentials['password'] = password
         return credentials
 
-    def _decrypt_password(self, encrypted_pass, key):
+    def _decrypt_password(self, encrypted_password, key):
         f = Fernet(key)
         password = f.decrypt(encrypted_password.encode()).decode()
         return password
@@ -120,7 +120,7 @@ class CredentialsHandler(object):
         path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
         config = configparser.ConfigParser()
         config.read(path)
-        credentials = config['jabber']
+        credentials = dict(config['jabber'])
         return credentials
 
 
