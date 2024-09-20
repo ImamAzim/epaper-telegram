@@ -1,3 +1,4 @@
+import configparser
 import logging
 from threading import Event, Timer
 import os
@@ -7,7 +8,7 @@ from PIL import Image
 
 
 from epaper_telegram.models.xmpp import ImageTransferBot
-from epaper_telegram import DATA_DIR_PATH
+from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
 
 
 class OnlineImgError(Exception):
@@ -45,6 +46,12 @@ class OnlineImg(object):
                 self._img = None
         self._img_received.clear()
 
+        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+        config = configparser.ConfigParser()
+        config.read(path)
+        if credentials['jabber_id'] not in config:
+            logging.info('need to register an account..')
+            raise Exception
         self._image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=self._img_received)
 
     def wait_for_next_update(self):
