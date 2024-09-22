@@ -98,7 +98,7 @@ def draw_tool():
 def online_image_downloader():
     logging.basicConfig(level=logging.DEBUG)
     with Displayer(mock_mode=True) as displayer:
-        with OnlineImageDownloader(displayer, OnlineImg(mock_mode=True)):
+        with OnlineImageDownloader(displayer, ImgTransferBotMock()):
             time.sleep(5)
 
 

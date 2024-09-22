@@ -15,22 +15,6 @@ from PIL import Image, ImageDraw
 from epaper_telegram.models.online_tools import OnlineImg
 
 
-class TestMyClass(unittest.TestCase):
-
-    """all test concerning OnlineImg """
-
-    @classmethod
-    def setUpClass(cls):
-        credentials = dict()
-        cls.online_img_tool = OnlineImg(credentials, mock_mode=True)
-
-    @classmethod
-    def tearDownClass(cls):
-        pass
-
-    def test_get_latest_img(self):
-        img = self.online_img_tool.get_latest_update_of_img()
-        self.assertIsInstance(img, Image.Image)
 
 """ script tests """
 

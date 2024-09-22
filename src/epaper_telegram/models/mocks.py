@@ -11,6 +11,10 @@ class ImgTransferBotMock():
         self._img = None
         self._event = Event()
 
+    @property
+    def img(self):
+        return self._img
+
     def send_img(self, img):
         pass
 
