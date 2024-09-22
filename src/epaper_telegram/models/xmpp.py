@@ -67,13 +67,28 @@ class ImageTransferBot(slixmpp.ClientXMPP):
         except FileNotFoundError:
             self._img = None
 
-    def wait_for_next_update(self):
+    def wait_for_msg(self):
         """block until a new img is received and save it to the disk
         :returns: TODO
 
         """
         self.connect()
         self.loop.run_until_complete(self.disconnected)
+
+    def stop_waiting(self):
+        """stop the blocking wait even if there is no updated img
+
+        """
+        self.disconnect()
+
+    def send(self, img):
+        """send an img to the correspondant
+
+        :img: TODO
+        :returns: TODO
+
+        """
+        pass
 
     async def _start(self, event):
         """
@@ -111,6 +126,7 @@ class ImageTransferBot(slixmpp.ClientXMPP):
                 if header == self._MSG_HEADER:
                     img_str = '.'.join(body.split(':')[1:])
                     with open(self._IMG_FILE_PATH, 'w') as img_file:
+                        "TODO: convert str to img"
                         img_file.write(img_str)
                     self.disconnect()
 
