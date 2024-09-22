@@ -8,7 +8,7 @@ from PIL import Image
 
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
-from epaper_telegram.models.online_tools import OnlineImg
+from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, ImageTransferBot
 
 
 class TestDrawToo(unittest.TestCase):
@@ -62,12 +62,12 @@ class TestOnlineImg(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         credentials = dict()
-        online_img_tool = OnlineImg(credentials, mock_mode=True)
+        img_transfer_bot = ImageTransferBot(credentials, mock_mode=True)
         cls.displayer = Displayer(mock_mode=True)
         cls.displayer.start()
         cls.online_img_down = OnlineImageDownloader(
                 cls.displayer,
-                online_img_tool,
+                img_transfer_bot,
                 )
         cls.online_img_down.start()
 

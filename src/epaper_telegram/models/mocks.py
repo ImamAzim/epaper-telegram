@@ -1,7 +1,25 @@
 import logging
+from threading import Event
 
 
 from PIL import Image
+
+
+class ImgTransferBotMock():
+
+    def __init__(self):
+        self._img = None
+        self._event = Event()
+
+    def send_img(self, img):
+        pass
+
+    def wait_for_msg(self):
+        self._event.clear()
+        self._event.wait()
+
+    def stop_waiting(self):
+        self._event.clear()
 
 
 class EPD2in13Mock():
