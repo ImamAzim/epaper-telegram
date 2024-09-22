@@ -13,7 +13,7 @@ class EpaperTelgramApp(object):
 
     """app to launch the main app of the project"""
 
-    def __init__(self, mock_mode=False):
+    def __init__(self, corresp_jid, mock_mode=False):
         if mock_mode:
             self._GT = GT1151Mock
         else:
@@ -25,7 +25,11 @@ class EpaperTelgramApp(object):
         except FileNotFoundError:
             credential_handler.create_and_save_new_cred()
             credentials = credential_handler.load_credentials()
-        self._online_img_tool = OnlineImg(credentials, mock_mode=mock_mode)
+        self._online_img_tool = OnlineImg(
+                credentials,
+                corresp_jid,
+                mock_mode=mock_mode,
+                )
 
     def start(self):
         """method to start the app.

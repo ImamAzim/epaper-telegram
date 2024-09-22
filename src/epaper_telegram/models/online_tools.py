@@ -24,6 +24,7 @@ class OnlineImg(object):
     """manage online img"""
     def __init__(self,
             credentials,
+            corresp_jid,
             mock_mode=False,
             ):
         """TODO: to be defined.
@@ -54,7 +55,7 @@ class OnlineImg(object):
             register_bot = RegisterBot(**credentials)
             register_bot.connect()
             register_bot.process(forever=False)
-        self._image_transfer_bot = ImageTransferBot(**credentials)
+        self._image_transfer_bot = ImageTransferBot(corresp_jid=corresp_jid, **credentials)
 
     def wait_for_next_update(self):
         """will block until online img is new
