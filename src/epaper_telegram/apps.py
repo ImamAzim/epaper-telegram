@@ -6,7 +6,7 @@ from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.online_tools import OnlineImg
-from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError
+from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, ImageTransferBot
 
 
 class EpaperTelgramApp(object):
@@ -25,10 +25,9 @@ class EpaperTelgramApp(object):
         except FileNotFoundError:
             credential_handler.create_and_save_new_cred()
             credentials = credential_handler.load_credentials()
-        self._online_img_tool = OnlineImg(
-                credentials,
+        self._img_transfer_bot = ImageTransferBot(
+                **credentials,
                 corresp_jid,
-                mock_mode=mock_mode,
                 )
 
     def start(self):
@@ -45,7 +44,7 @@ class EpaperTelgramApp(object):
                     self._GT() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
-                with OnlineImageDownloader(displayer, self._online_img_tool) as online_image_downloader:
+                with OnlineImageDownloader(displayer, self._img_transfer_bot) as online_image_downloader:
                     while True:
                         logging.info('home')
                         gt.wait_for_gesture()
