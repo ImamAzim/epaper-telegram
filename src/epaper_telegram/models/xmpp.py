@@ -84,13 +84,14 @@ class ImageTransferBot(slixmpp.ClientXMPP):
                    how it may be used.
         """
         if msg['type'] in ('chat', 'normal'):
-            body = msg['body']
-            header = body.split(':')[0]
-            if header == self._MSG_HEADER:
-                img_str = '.'.join(body.split(':')[1:])
-                with open(self._IMG_FILE_PATH, 'w') as img_file:
-                    img_file.write(img_str)
-                self.disconnect()
+            if msg['from'] == self._correspondant:
+                body = msg['body']
+                header = body.split(':')[0]
+                if header == self._MSG_HEADER:
+                    img_str = '.'.join(body.split(':')[1:])
+                    with open(self._IMG_FILE_PATH, 'w') as img_file:
+                        img_file.write(img_str)
+                    self.disconnect()
 
 
 class RegisterBot(slixmpp.ClientXMPP):

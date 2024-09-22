@@ -54,7 +54,7 @@ class OnlineImg(object):
             register_bot = RegisterBot(**credentials)
             register_bot.connect()
             register_bot.process(forever=False)
-        self._image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=self._img_received)
+        self._image_transfer_bot = ImageTransferBot(**credentials)
 
     def wait_for_next_update(self):
         """will block until online img is new
