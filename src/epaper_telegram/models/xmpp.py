@@ -88,7 +88,12 @@ class ImageTransferBot(slixmpp.ClientXMPP):
         :returns: TODO
 
         """
-        pass
+        """TODO: convert img to str for a msg"""
+        msg = str(img)
+
+        self.send_message(mto=self._correspondant,
+                          mbody=self.msg,
+                          mtype='chat')
 
     async def _start(self, event):
         """
