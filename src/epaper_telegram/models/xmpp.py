@@ -19,7 +19,7 @@ class ImageTransferBot(object):
 
     """bot that will receive or send img on jabber"""
 
-    def __init__(self, msg_receive_event, jabber_id='', password='', corresp_jid=''):
+    def __init__():
         pass
 
     def send_img(self, img):
@@ -30,6 +30,62 @@ class ImageTransferBot(object):
 
         """
         logging.debug('TODO: send img with xmpp')
+
+
+class ImageTransferBot(slixmpp.ClientXMPP):
+
+    """
+    a bot to save received img or to send one
+    """
+
+    _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
+    _MSG_HEADER = 'img_str'
+
+    def __init__(self, jabber_id, password, corresp_jid=''):
+        slixmpp.ClientXMPP.__init__(self, jabber_id, password)
+
+        self.add_event_handler("session_start", self.start)
+
+        self.add_event_handler("message", self._save_img)
+
+        self._correspondant = corresp_jid
+
+    async def start(self, event):
+        """
+        Process the session_start event.
+
+        Typical actions for the session_start event are
+        requesting the roster and broadcasting an initial
+        presence stanza.
+
+        Arguments:
+            event -- An empty dictionary. The session_start
+                     event does not provide any additional
+                     data.
+        """
+        self.send_presence()
+        await self.get_roster()
+
+    def _save_img(self, msg):
+        """
+        Process incoming message stanzas. Be aware that this also
+        includes MUC messages and error messages. It is usually
+        a good idea to check the messages's type before processing
+        or sending replies.
+
+        Arguments:
+            msg -- The received message stanza. See the documentation
+                   for stanza objects and the Message stanza to see
+                   how it may be used.
+        """
+        if msg['type'] in ('chat', 'normal'):
+            body = msg['body']
+            header = body.split(':')[0]
+            if header == self._MSG_HEADER:
+                img_str = '.'.join(body.split(':')[1:])
+                with open(self._IMG_FILE_PATH, 'w') as img_file:
+                    img_file.write(img_str)
+                self.disconnect()
 
 
 class RegisterBot(slixmpp.ClientXMPP):
