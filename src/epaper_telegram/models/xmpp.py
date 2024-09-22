@@ -52,7 +52,7 @@ class ImageTransferBot(slixmpp.ClientXMPP):
             ):
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
-        self.add_event_handler("session_start", self.start)
+        self.add_event_handler("session_start", self._start)
         self.add_event_handler("message", self._save_img)
 
         self.register_plugin('xep_0030') # Service Discovery
@@ -75,7 +75,7 @@ class ImageTransferBot(slixmpp.ClientXMPP):
         self.connect()
         self.loop.run_until_complete(self.disconnected)
 
-    async def start(self, event):
+    async def _start(self, event):
         """
         Process the session_start event.
 
@@ -88,6 +88,7 @@ class ImageTransferBot(slixmpp.ClientXMPP):
                      event does not provide any additional
                      data.
         """
+        logging.debug('start: send presence and get roster')
         self.send_presence()
         await self.get_roster()
 
