@@ -50,6 +50,11 @@ class ImageTransferBot(slixmpp.ClientXMPP):
 
         self._correspondant = corresp_jid
 
+        self.register_plugin('xep_0030') # Service Discovery
+        self.register_plugin('xep_0004') # Data Forms
+        self.register_plugin('xep_0060') # PubSub
+        self.register_plugin('xep_0199') # XMPP Ping
+
     async def start(self, event):
         """
         Process the session_start event.
