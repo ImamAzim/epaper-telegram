@@ -314,7 +314,7 @@ class OnlineImageDownloader(object):
         while self._running.is_set():
             self._get_latest_img()
             self.display_now()
-            self._online_img_tool.wait_for_next_update()
+            self._img_transfer_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
 

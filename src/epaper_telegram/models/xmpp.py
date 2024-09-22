@@ -143,9 +143,10 @@ class ImageTransferBot(slixmpp.ClientXMPP):
                 header = body.split(':')[0]
                 if header == self._MSG_HEADER:
                     img_str = '.'.join(body.split(':')[1:])
-                    with open(self._IMG_FILE_PATH, 'w') as img_file:
-                        "TODO: convert str to img"
-                        img_file.write(img_str)
+                    "TODO: convert str to img"
+                    img = Image.New()
+                    self._img = img
+                    img.save(self._IMG_FILE_PATH)
                     self.disconnect()
 
 
