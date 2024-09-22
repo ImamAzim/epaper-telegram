@@ -7,6 +7,8 @@ from PIL import Image
 
 class ImgTransferBotMock():
 
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
     def __init__(self):
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._event = Event()
