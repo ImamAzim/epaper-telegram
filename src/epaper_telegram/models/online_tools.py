@@ -37,7 +37,6 @@ class OnlineImg(object):
 
         self._wait_interrupted = False
 
-        self._img_received = Event()
         if self._mock_mode:
             self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         else:
@@ -45,7 +44,6 @@ class OnlineImg(object):
                 self._img = Image.open(self._IMG_FILE_PATH)
             except FileNotFoundError:
                 self._img = None
-        self._img_received.clear()
 
         path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
         config = configparser.ConfigParser()
@@ -61,14 +59,13 @@ class OnlineImg(object):
         """will block until online img is new
 
         """
+        self._image_transfer_bot.connect()
         self._wait_interrupted = False
-        self._img_received.wait()
         if not self._wait_interrupted:
             try:
                 self._img = Image.open(self._IMG_FILE_PATH)
             except FileNotFoundError:
                 self._img = None
-            self._img_received.clear()
 
     def stop_waiting(self):
         """stop the blocking wait even if there is no updated img

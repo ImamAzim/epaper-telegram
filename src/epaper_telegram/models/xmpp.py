@@ -55,6 +55,14 @@ class ImageTransferBot(slixmpp.ClientXMPP):
         self.register_plugin('xep_0060') # PubSub
         self.register_plugin('xep_0199') # XMPP Ping
 
+    def wait_for_next_update(self):
+        """block until a new img is received and save it to the disk
+        :returns: TODO
+
+        """
+        self.connect()
+        self.loop.run_until_complete(self.disconnected)
+
     async def start(self, event):
         """
         Process the session_start event.
