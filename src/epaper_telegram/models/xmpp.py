@@ -81,7 +81,7 @@ class ImageTransferBot(slixmpp.ClientXMPP):
         """
         self.disconnect()
 
-    def send(self, img):
+    def send_img(self, img):
         """send an img to the correspondant
 
         :img: TODO
