@@ -52,11 +52,6 @@ class OnlineImg(object):
         if credentials['jabber_id'] not in config:
             logging.info('need to register an account..')
             register_bot = RegisterBot(**credentials)
-            register_bot.register_plugin('xep_0030') # Service Discovery
-            register_bot.register_plugin('xep_0004') # Data forms
-            register_bot.register_plugin('xep_0066') # Out-of-band Data
-            register_bot.register_plugin('xep_0077') # In-band Registration
-            register_bot['xep_0077'].force_registration = True
             register_bot.connect()
             register_bot.process(forever=False)
         self._image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=self._img_received)

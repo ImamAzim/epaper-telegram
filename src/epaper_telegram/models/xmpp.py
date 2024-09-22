@@ -125,6 +125,12 @@ class RegisterBot(slixmpp.ClientXMPP):
         # for data forms and OOB links that will make that easier.
         self.add_event_handler("register", self.register)
 
+        self.register_plugin('xep_0030') # Service Discovery
+        self.register_plugin('xep_0004') # Data forms
+        self.register_plugin('xep_0066') # Out-of-band Data
+        self.register_plugin('xep_0077') # In-band Registration
+        self['xep_0077'].force_registration = True
+
     async def start(self, event):
         """
         Process the session_start event.
