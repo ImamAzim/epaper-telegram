@@ -103,4 +103,5 @@ def online_image_downloader():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     online_image_downloader()

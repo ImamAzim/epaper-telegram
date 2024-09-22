@@ -25,7 +25,7 @@ class ImgTransferBotMock():
         self._event.wait()
 
     def stop_waiting(self):
-        self._event.clear()
+        self._event.set()
 
 
 class EPD2in13Mock():
