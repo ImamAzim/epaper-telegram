@@ -38,22 +38,34 @@ class ImageTransferBot(slixmpp.ClientXMPP):
     a bot to save received img or to send one
     """
 
+    _IMG_WIDTH = 250
+    _IMG_HEIGHT = 122
     _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
+
     _MSG_HEADER = 'img_str'
 
-    def __init__(self, jabber_id, password, corresp_jid=''):
+    def __init__(
+            self,
+            jabber_id,
+            password,
+            corresp_jid='',
+            ):
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
         self.add_event_handler("session_start", self.start)
-
         self.add_event_handler("message", self._save_img)
-
-        self._correspondant = corresp_jid
 
         self.register_plugin('xep_0030') # Service Discovery
         self.register_plugin('xep_0004') # Data Forms
         self.register_plugin('xep_0060') # PubSub
         self.register_plugin('xep_0199') # XMPP Ping
+
+        self._correspondant = corresp_jid
+
+        try:
+            self._img = Image.open(self._IMG_FILE_PATH)
+        except FileNotFoundError:
+            self._img = None
 
     def wait_for_next_update(self):
         """block until a new img is received and save it to the disk
