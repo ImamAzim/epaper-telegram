@@ -282,7 +282,7 @@ class OnlineImageDownloader(object):
         :img: Image PIL object
 
         """
-        self._img_transfer_bot.send_img()
+        self._img_transfer_bot.send_img(img)
 
     def _adapt_img(self):
         img = self._img.copy()
