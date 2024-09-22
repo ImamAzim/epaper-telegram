@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw
 
 
 from epaper_telegram.models.display import DisplayerError
-from epaper_telegram.models.online_tools import OnlineImgError
+from epaper_telegram.models.xmpp import ImageTransferBotError
 
 
 class DrawToolError(Exception):
@@ -213,14 +213,14 @@ class OnlineImageDownloader(object):
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
 
-    def __init__(self, displayer, online_img_tool):
+    def __init__(self, displayer, img_transfer_bot):
         """
         :displayer: Displayer objet that uses the epd
         :online_img_tool: OnlineImg object to upload and download img
         """
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
-        self._online_img_tool = online_img_tool
+        self._img_transfer_bot = img_transfer_bot
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
@@ -259,7 +259,7 @@ class OnlineImageDownloader(object):
         """
         self._check_started()
         self._running.clear()
-        self._online_img_tool.stop_waiting()
+        self._img_transfer_bot.stop_waiting()
 
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
@@ -282,7 +282,7 @@ class OnlineImageDownloader(object):
         :img: Image PIL object
 
         """
-        Thread(target=self._online_img_tool.upload, args=[img]).start()
+        self._img_transfer_bot.send_img()
 
     def _adapt_img(self):
         img = self._img.copy()
@@ -303,8 +303,8 @@ class OnlineImageDownloader(object):
 
     def _get_latest_img(self):
         try:
-            online_img = self._online_img_tool.get_latest_update_of_img()
-        except OnlineImgError:
+            online_img = self._img_transfer_bot.img
+        except ImageTransferBotError:
             msg = 'could not get a received img'
             logging.exception(msg)
         else:

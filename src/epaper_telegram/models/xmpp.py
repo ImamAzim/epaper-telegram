@@ -10,6 +10,7 @@ import logging
 
 
 import slixmpp
+from PIL import Image
 
 
 from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
@@ -30,6 +31,9 @@ class ImageTransferBot(object):
 
         """
         logging.debug('TODO: send img with xmpp')
+
+class ImageTransferBotError(Exception):
+    pass
 
 
 class ImageTransferBot(slixmpp.ClientXMPP):
@@ -66,6 +70,15 @@ class ImageTransferBot(slixmpp.ClientXMPP):
             self._img = Image.open(self._IMG_FILE_PATH)
         except FileNotFoundError:
             self._img = None
+
+    @property
+    def img(self):
+        if self._img is not None:
+            return self._img
+        else:
+            msg = 'there is not last version of received img'
+            logging.error(msg)
+            raise ImageTransferBotError(msg)
 
     def wait_for_msg(self):
         """block until a new img is received and save it to the disk
