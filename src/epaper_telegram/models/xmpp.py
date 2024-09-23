@@ -11,6 +11,7 @@ import logging
 
 import slixmpp
 from PIL import Image
+from slixmpp.exceptions import IqTimeout, IqError
 
 
 from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
@@ -18,6 +19,7 @@ from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
 
 class ImageTransferBotError(Exception):
     pass
+
 
 class ReceiverBot(slixmpp.ClientXMPP):
 
@@ -42,10 +44,10 @@ class ReceiverBot(slixmpp.ClientXMPP):
         self.add_event_handler("session_start", self._start)
         self.add_event_handler("message", self._save_img)
 
-        self.register_plugin('xep_0030') # Service Discovery
-        self.register_plugin('xep_0004') # Data Forms
-        self.register_plugin('xep_0060') # PubSub
-        self.register_plugin('xep_0199') # XMPP Ping
+        self.register_plugin('xep_0030')  # Service Discovery
+        self.register_plugin('xep_0004')  # Data Forms
+        self.register_plugin('xep_0060')  # PubSub
+        self.register_plugin('xep_0199')  # XMPP Ping
 
         self._correspondant = corresp_jid
 
@@ -76,20 +78,6 @@ class ReceiverBot(slixmpp.ClientXMPP):
 
         """
         self.disconnect()
-
-    def send_img(self, img):
-        """send an img to the correspondant
-
-        :img: TODO
-        :returns: TODO
-
-        """
-        """TODO: convert img to str for a msg"""
-        msg = str(img)
-
-        self.send_message(mto=self._correspondant,
-                          mbody=self.msg,
-                          mtype='chat')
 
     async def _start(self, event):
         """
@@ -158,7 +146,6 @@ class SenderBot(slixmpp.ClientXMPP):
         self.register_plugin('xep_0128')
         self.register_plugin('xep_0363')
 
-
     def send_img(self, img):
         """send an img to the correspondant
 
@@ -168,7 +155,6 @@ class SenderBot(slixmpp.ClientXMPP):
         img.save(self._IMG_FILE_PATH)
         self.connect()
         self.loop.run_until_complete(self.disconnected)
-
 
     async def start(self, event):
         logging.info('Uploading image...')
@@ -229,10 +215,10 @@ class RegisterBot(slixmpp.ClientXMPP):
         # for data forms and OOB links that will make that easier.
         self.add_event_handler("register", self.register)
 
-        self.register_plugin('xep_0030') # Service Discovery
-        self.register_plugin('xep_0004') # Data forms
-        self.register_plugin('xep_0066') # Out-of-band Data
-        self.register_plugin('xep_0077') # In-band Registration
+        self.register_plugin('xep_0030')  # Service Discovery
+        self.register_plugin('xep_0004')  # Data forms
+        self.register_plugin('xep_0066')  # Out-of-band Data
+        self.register_plugin('xep_0077')  # In-band Registration
         self['xep_0077'].force_registration = True
 
     async def start(self, event):
@@ -287,12 +273,13 @@ class RegisterBot(slixmpp.ClientXMPP):
                 config.write(configfile)
             self.disconnect()
         except IqError as e:
-            logging.error("Could not register account: %s" %
-                    e.iq['error']['text'])
+            logging.error(
+                    "Could not register account: %s" % e.iq['error']['text'])
             self.disconnect()
         except IqTimeout:
             logging.error("No response from server.")
             self.disconnect()
+
 
 class CredentialsHandlerError(Exception):
     pass
@@ -310,7 +297,8 @@ class CredentialsHandler(object):
         pass
 
     def create_and_save_new_cred(self):
-        """will create new credentials. uses the user name, host and current day
+        """will create new credentials. uses the user name,
+        host and current day
 
         """
         credentials, key = self._create_new_cred()
@@ -342,7 +330,7 @@ class CredentialsHandler(object):
 
     def _encrypt_password(self, password, key):
         f = Fernet(key)
-        encrypted_pass= f.encrypt(password.encode()).decode()
+        encrypted_pass = f.encrypt(password.encode()).decode()
         del f
         return encrypted_pass
 
@@ -373,12 +361,12 @@ class CredentialsHandler(object):
         if os.path.exists(path):
             msg = 'a key file already existsü'
             raise CredentialsHandlerError(msg)
-        with open (path, 'wb') as keyfile:
+        with open(path, 'wb') as keyfile:
             pickle.dump(key.decode(), keyfile)
 
     def _load_key(self):
         path = os.path.join(DATA_DIR_PATH, self._KEY_FILE)
-        with open (path, 'rb') as keyfile:
+        with open(path, 'rb') as keyfile:
             key = pickle.load(keyfile).encode()
         return key
 
@@ -401,11 +389,4 @@ class CredentialsHandler(object):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    credential_handler = CredentialsHandler()
-    try:
-        credentials = credential_handler.load_credentials()
-    except FileNotFoundError:
-        credential_handler.create_and_save_new_cred()
-        credentials = credential_handler.load_credentials()
-    image_transfer_bot = ImageTransferBot(**credentials, msg_receive_event=None)
+    pass
