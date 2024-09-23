@@ -5,10 +5,16 @@ from threading import Event
 from PIL import Image
 
 
-class ImgTransferBotMock():
+class SenderBot():
+
+    def send_img(self, img):
+        pass
+
+class ReceiverBotMock():
 
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
+
     def __init__(self):
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._event = Event()
@@ -16,9 +22,6 @@ class ImgTransferBotMock():
     @property
     def img(self):
         return self._img
-
-    def send_img(self, img):
-        pass
 
     def wait_for_msg(self):
         self._event.clear()
