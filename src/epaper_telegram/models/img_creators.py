@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw
 
 
 from epaper_telegram.models.display import DisplayerError
-from epaper_telegram.models.xmpp import ImageTransferBotError
+from epaper_telegram.models.xmpp import ImageTransferBotError, ReceiverBot, SenderBot
 
 
 class DrawToolError(Exception):
@@ -226,7 +226,7 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_transfer_bot = img_transfer_bot
-        self.
+        self._receiver_bot = 
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
