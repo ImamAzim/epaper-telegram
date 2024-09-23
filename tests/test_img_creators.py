@@ -69,7 +69,7 @@ class TestOnlineImg(unittest.TestCase):
         cls.online_img_down = OnlineImageDownloader(
                 cls.displayer,
                 credentials,
-                correspondant=None,
+                corresp_jid=None,
                 mock_mode=True,
                 )
         cls.online_img_down.start()
