@@ -106,8 +106,10 @@ class ReceiverBot(slixmpp.ClientXMPP):
                    for stanza objects and the Message stanza to see
                    how it may be used.
         """
+        logging.debug('received msg')
         if msg['type'] in ('chat', 'normal'):
-            if msg['from'] == self._correspondant:
+            jid = slixmpp.JID(msg['from']).bare
+            if self._correspondant == jid:
                 pass
                 # self._img = img
                 # img.save(self._IMG_FILE_PATH)
