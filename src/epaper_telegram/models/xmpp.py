@@ -16,22 +16,6 @@ from PIL import Image
 from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
 
 
-class ImageTransferBot(object):
-
-    """bot that will receive or send img on jabber"""
-
-    def __init__():
-        pass
-
-    def send_img(self, img):
-        """send an img file to the correspondant
-
-        :img: TODO
-        :returns: TODO
-
-        """
-        logging.debug('TODO: send img with xmpp')
-
 class ImageTransferBotError(Exception):
     pass
 
@@ -51,7 +35,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
             self,
             jabber_id,
             password,
-            corresp_jid='',
+            corresp_jid,
             ):
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
@@ -165,7 +149,7 @@ class SenderBot(slixmpp.ClientXMPP):
             self,
             jabber_id,
             password,
-            corresp_jid='',
+            corresp_jid,
             ):
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 

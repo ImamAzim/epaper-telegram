@@ -25,10 +25,7 @@ class EpaperTelgramApp(object):
         except FileNotFoundError:
             credential_handler.create_and_save_new_cred()
             credentials = credential_handler.load_credentials()
-        self._img_transfer_bot = ImageTransferBot(
-                **credentials,
-                corresp_jid,
-                )
+        self._credentials = credentials
 
     def start(self):
         """method to start the app.
@@ -47,7 +44,7 @@ class EpaperTelgramApp(object):
                 with OnlineImageDownloader(
                         displayer,
                         correspondant=self._corresp_jid,
-                        **credentials,
+                        **self._credentials,
                         ) as online_image_downloader:
                     while True:
                         logging.info('home')
