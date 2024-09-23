@@ -5,8 +5,7 @@ from waveshare_touch_epaper.touch_screen import GT1151
 from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
-from epaper_telegram.models.online_tools import OnlineImg
-from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, ImageTransferBot
+from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError
 
 
 class EpaperTelgramApp(object):
@@ -45,7 +44,11 @@ class EpaperTelgramApp(object):
                     self._GT() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
-                with OnlineImageDownloader(displayer, correspondant=self._corresp_jid, **credentials) as online_image_downloader:
+                with OnlineImageDownloader(
+                        displayer,
+                        correspondant=self._corresp_jid,
+                        **credentials,
+                        ) as online_image_downloader:
                     while True:
                         logging.info('home')
                         gt.wait_for_gesture()
