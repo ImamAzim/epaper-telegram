@@ -61,13 +61,17 @@ class TestOnlineImg(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        credentials = dict()
-        img_transfer_bot = ImgTransferBotMock()
+        credentials = dict(
+                jabber_id=None,
+                password=None,
+                )
         cls.displayer = Displayer(mock_mode=True)
         cls.displayer.start()
         cls.online_img_down = OnlineImageDownloader(
                 cls.displayer,
-                img_transfer_bot,
+                **credentials,
+                correspondant=None,
+                mock_mode=True,
                 )
         cls.online_img_down.start()
 
