@@ -5,7 +5,7 @@ import time
 from PIL import Image, ImageDraw
 
 
-from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError
+from epaper_telegram.models.xmpp import CredentialsHandler
 from epaper_telegram.models.xmpp import ReceiverBot, SenderBot
 
 
@@ -27,12 +27,14 @@ def send():
     draw.text(((100, 50), 'salut!'))
     sender.send_img(img)
 
+
 def receive():
     corresp_jid = input('correspondant: ')
     receiver = ReceiverBot(corresp_jid, **credentials)
     receiver.wait_for_msg()
     img = receiver.img
     img.show()
+
 
 def wait():
     corresp_jid = input('correspondant: ')
@@ -44,5 +46,3 @@ def wait():
 
 if __name__ == '__maine__':
     send()
-
-
