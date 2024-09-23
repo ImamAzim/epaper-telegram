@@ -5,15 +5,16 @@ from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerEr
 from epaper_telegram.models.xmpp import ReceiverBot, SenderBot
 
 
+credential_handler = CredentialsHandler()
+try:
+    credentials = credential_handler.load_credentials()
+except FileNotFoundError:
+    credential_handler.create_and_save_new_cred()
+    credentials = credential_handler.load_credentials()
+
+
 def send():
     corresp_jid = input('correspondant: ')
-
-    credential_handler = CredentialsHandler()
-    try:
-        credentials = credential_handler.load_credentials()
-    except FileNotFoundError:
-        credential_handler.create_and_save_new_cred()
-        credentials = credential_handler.load_credentials()
 
     sender = SenderBot(corresp_jid=corresp_jid, **credentials)
 
@@ -21,4 +22,14 @@ def send():
     draw = ImageDraw.Draw(img)
     draw.text(((100, 50), 'salut!'))
     sender.send_img(img)
+
+def receive():
+    corresp_jid = input('correspondant: ')
+    receiver = ReceiverBot(corresp_jid, **credentials)
+    receiver.wait_for_msg()
+    img = receiver.img
+    img.show()
+
+def wait():
+    pass
 
