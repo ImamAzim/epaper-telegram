@@ -226,7 +226,6 @@ class OnlineImageDownloader(object):
         """
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
-        self._img_transfer_bot = img_transfer_bot
         if mock_mode:
             self._receiver_bot = ReceiverBotMock(corresp_jid=corresp_jid, **credentials)
             self._sender_bot = SenderBotMock(corresp_jid=corresp_jid, **credentials)
@@ -271,7 +270,7 @@ class OnlineImageDownloader(object):
         """
         self._check_started()
         self._running.clear()
-        self._img_transfer_bot.stop_waiting()
+        self._receiver_bot.stop_waiting()
 
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
@@ -294,7 +293,7 @@ class OnlineImageDownloader(object):
         :img: Image PIL object
 
         """
-        self._img_transfer_bot.send_img(img)
+        self._sender_bot.send_img(img)
 
     def _adapt_img(self):
         img = self._img.copy()
@@ -315,7 +314,7 @@ class OnlineImageDownloader(object):
 
     def _get_latest_img(self):
         try:
-            online_img = self._img_transfer_bot.img
+            online_img = self._receiver_bot.img
         except ImageTransferBotError:
             msg = 'could not get a received img'
             logging.exception(msg)
@@ -326,7 +325,7 @@ class OnlineImageDownloader(object):
         while self._running.is_set():
             self._get_latest_img()
             self.display_now()
-            self._img_transfer_bot.wait_for_msg()
+            self._receiver_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
 
