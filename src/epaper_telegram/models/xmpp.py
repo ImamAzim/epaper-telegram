@@ -139,12 +139,6 @@ class SenderBot(slixmpp.ClientXMPP):
     a bot to save received img or to send one
     """
 
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
-    _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
-
-    _MSG_HEADER = 'img_str'
-
     def __init__(
             self,
             jabber_id,
@@ -153,98 +147,53 @@ class SenderBot(slixmpp.ClientXMPP):
             ):
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
-        self.add_event_handler("session_start", self._start)
-        self.add_event_handler("message", self._save_img)
-
-        self.register_plugin('xep_0030') # Service Discovery
-        self.register_plugin('xep_0004') # Data Forms
-        self.register_plugin('xep_0060') # PubSub
-        self.register_plugin('xep_0199') # XMPP Ping
-
         self._correspondant = corresp_jid
 
-        try:
-            self._img = Image.open(self._IMG_FILE_PATH)
-        except FileNotFoundError:
-            self._img = None
+        self.add_event_handler("session_start", self.start)
 
-    @property
-    def img(self):
-        if self._img is not None:
-            return self._img
-        else:
-            msg = 'there is not last version of received img'
-            logging.error(msg)
-            raise ImageTransferBotError(msg)
+        self.register_plugin('xep_0066')
+        self.register_plugin('xep_0071')
+        self.register_plugin('xep_0128')
+        self.register_plugin('xep_0363')
 
-    def wait_for_msg(self):
-        """block until a new img is received and save it to the disk
-        :returns: TODO
-
-        """
-        self.connect()
-        self.loop.run_until_complete(self.disconnected)
-
-    def stop_waiting(self):
-        """stop the blocking wait even if there is no updated img
-
-        """
-        self.disconnect()
 
     def send_img(self, img):
         """send an img to the correspondant
 
-        :img: TODO
-        :returns: TODO
+        :img: PIL Image
 
         """
-        """TODO: convert img to str for a msg"""
-        msg = str(img)
+        self._img = img
+        self.connect()
+        self.loop.run_until_complete(self.disconnected)
 
-        self.send_message(mto=self._correspondant,
-                          mbody=self.msg,
-                          mtype='chat')
 
-    async def _start(self, event):
-        """
-        Process the session_start event.
+    async def start(self, event):
+        logging.info('Uploading image...')
+        filename
+        upload_file = self['xep_0363'].upload_file
+        try:
+            url = await upload_file(
+                    self.filename,
+                    timeout=10,
+            )
+        except IqTimeout:
+            raise TimeoutError('Could not send message in time')
+        logging.info('Upload success!')
 
-        Typical actions for the session_start event are
-        requesting the roster and broadcasting an initial
-        presence stanza.
-
-        Arguments:
-            event -- An empty dictionary. The session_start
-                     event does not provide any additional
-                     data.
-        """
-        logging.debug('start: send presence and get roster')
-        self.send_presence()
-        await self.get_roster()
-
-    def _save_img(self, msg):
-        """
-        Process incoming message stanzas. Be aware that this also
-        includes MUC messages and error messages. It is usually
-        a good idea to check the messages's type before processing
-        or sending replies.
-
-        Arguments:
-            msg -- The received message stanza. See the documentation
-                   for stanza objects and the Message stanza to see
-                   how it may be used.
-        """
-        if msg['type'] in ('chat', 'normal'):
-            if msg['from'] == self._correspondant:
-                body = msg['body']
-                header = body.split(':')[0]
-                if header == self._MSG_HEADER:
-                    img_str = '.'.join(body.split(':')[1:])
-                    "TODO: convert str to img"
-                    img = Image.New()
-                    self._img = img
-                    img.save(self._IMG_FILE_PATH)
-                    self.disconnect()
+        logging.info('Sending image to %s', self._correspondant)
+        html = (
+            f'<body xmlns="http://www.w3.org/1999/xhtml">'
+            f'<a href="{url}">{url}</a></body>'
+        )
+        message = self.make_message(
+                mto=self._correspondant,
+                mbody=url,
+                mhtml=html,
+                )
+        message['oob']['url'] = url
+        message.send()
+        self.disconnect()
 
 
 class RegisterBot(slixmpp.ClientXMPP):
