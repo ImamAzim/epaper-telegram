@@ -9,6 +9,7 @@ from PIL import Image, ImageDraw
 
 from epaper_telegram.models.display import DisplayerError
 from epaper_telegram.models.xmpp import ImageTransferBotError, ReceiverBot, SenderBot
+from epaper_telegram.models.mocks import ReceiverBotMock, SenderBotMock
 
 
 class DrawToolError(Exception):
@@ -226,7 +227,12 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_transfer_bot = img_transfer_bot
-        self._receiver_bot = 
+        if mock_mode:
+            self._receiver_bot = ReceiverBotMock(corresp_jid=correspondant, **credentials)
+            self._sender_bot = SenderBotMock(corresp_jid=correspondant, **credentials)
+        else:
+            self._receiver_bot = ReceiverBot(corresp_jid=correspondant, **credentials)
+            self._sender_bot = SenderBot(corresp_jid=correspondant, **credentials)
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
