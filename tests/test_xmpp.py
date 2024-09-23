@@ -1,5 +1,6 @@
 import threading
 import time
+import logging
 
 
 from PIL import Image, ImageDraw
@@ -7,6 +8,9 @@ from PIL import Image, ImageDraw
 
 from epaper_telegram.models.xmpp import CredentialsHandler
 from epaper_telegram.models.xmpp import ReceiverBot, SenderBot
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 credential_handler = CredentialsHandler()
@@ -26,6 +30,7 @@ def send():
     draw = ImageDraw.Draw(img)
     draw.text((100, 50), 'salut!')
     sender.send_img(img)
+    print('next')
 
 
 def receive():
