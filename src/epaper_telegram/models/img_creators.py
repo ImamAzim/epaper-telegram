@@ -217,7 +217,7 @@ class OnlineImageDownloader(object):
     def __init__(self,
             displayer,
             credentials,
-            correspondant,
+            corresp_jid,
             mock_mode=False,
             ):
         """
@@ -228,11 +228,11 @@ class OnlineImageDownloader(object):
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_transfer_bot = img_transfer_bot
         if mock_mode:
-            self._receiver_bot = ReceiverBotMock(corresp_jid=correspondant, **credentials)
-            self._sender_bot = SenderBotMock(corresp_jid=correspondant, **credentials)
+            self._receiver_bot = ReceiverBotMock(corresp_jid=corresp_jid, **credentials)
+            self._sender_bot = SenderBotMock(corresp_jid=corresp_jid, **credentials)
         else:
-            self._receiver_bot = ReceiverBot(corresp_jid=correspondant, **credentials)
-            self._sender_bot = SenderBot(corresp_jid=correspondant, **credentials)
+            self._receiver_bot = ReceiverBot(corresp_jid=corresp_jid, **credentials)
+            self._sender_bot = SenderBot(corresp_jid=corresp_jid, **credentials)
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()

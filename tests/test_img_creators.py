@@ -8,7 +8,6 @@ from PIL import Image
 
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
-from epaper_telegram.models.mocks import ImgTransferBotMock
 
 
 class TestDrawToo(unittest.TestCase):
