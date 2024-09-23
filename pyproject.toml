@@ -22,6 +22,7 @@ dependencies = [
 	'Pillow',
 	'xdg-base-dirs',
 	'slixmpp',
+	'aiohttp',
 ]
 
 [project.optional-dependencies]
