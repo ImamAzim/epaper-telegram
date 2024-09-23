@@ -110,7 +110,8 @@ class ReceiverBot(slixmpp.ClientXMPP):
         if msg['type'] in ('chat', 'normal'):
             jid = slixmpp.JID(msg['from']).bare
             if self._correspondant == jid:
-                pass
+                url = msg['body']
+                print('TODO: get the image from the url')
                 # self._img = img
                 # img.save(self._IMG_FILE_PATH)
                 self.disconnect()
