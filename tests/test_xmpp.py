@@ -1,3 +1,7 @@
+import threading
+import time
+
+
 from PIL import Image, ImageDraw
 
 
@@ -31,5 +35,14 @@ def receive():
     img.show()
 
 def wait():
-    pass
+    corresp_jid = input('correspondant: ')
+    receiver = ReceiverBot(corresp_jid, **credentials)
+    threading.Thread(target=receiver.wait_for_msg).start()
+    time.sleep(3)
+    receiver.stop_waiting()
+
+
+if __name__ == '__maine__':
+    send()
+
 
