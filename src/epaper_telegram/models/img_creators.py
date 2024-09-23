@@ -213,7 +213,12 @@ class OnlineImageDownloader(object):
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
 
-    def __init__(self, displayer, img_transfer_bot):
+    def __init__(self,
+            displayer,
+            credentials,
+            correspondant,
+            mock_mode=False,
+            ):
         """
         :displayer: Displayer objet that uses the epd
         :online_img_tool: OnlineImg object to upload and download img
@@ -221,6 +226,7 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         self._img_transfer_bot = img_transfer_bot
+        self.
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()

@@ -5,7 +5,7 @@ from threading import Event
 from PIL import Image
 
 
-class SenderBot():
+class SenderBotMock():
 
     def send_img(self, img):
         pass
