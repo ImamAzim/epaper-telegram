@@ -24,7 +24,7 @@ def send():
 
     img = Image.new('1', (200, 100), 255)
     draw = ImageDraw.Draw(img)
-    draw.text(((100, 50), 'salut!'))
+    draw.text((100, 50), 'salut!')
     sender.send_img(img)
 
 
