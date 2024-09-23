@@ -139,6 +139,8 @@ class SenderBot(slixmpp.ClientXMPP):
     a bot to save received img or to send one
     """
 
+    _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'to_send.bmp')
+
     def __init__(
             self,
             jabber_id,
@@ -163,18 +165,17 @@ class SenderBot(slixmpp.ClientXMPP):
         :img: PIL Image
 
         """
-        self._img = img
+        img.save(self._IMG_FILE_PATH)
         self.connect()
         self.loop.run_until_complete(self.disconnected)
 
 
     async def start(self, event):
         logging.info('Uploading image...')
-        filename
         upload_file = self['xep_0363'].upload_file
         try:
             url = await upload_file(
-                    self.filename,
+                    self._IMG_FILE_PATH,
                     timeout=10,
             )
         except IqTimeout:
