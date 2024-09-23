@@ -31,8 +31,6 @@ class ReceiverBot(slixmpp.ClientXMPP):
     _IMG_HEIGHT = 122
     _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
 
-    _MSG_HEADER = 'img_str'
-
     def __init__(
             self,
             jabber_id,
@@ -110,15 +108,10 @@ class ReceiverBot(slixmpp.ClientXMPP):
         """
         if msg['type'] in ('chat', 'normal'):
             if msg['from'] == self._correspondant:
-                body = msg['body']
-                header = body.split(':')[0]
-                if header == self._MSG_HEADER:
-                    img_str = '.'.join(body.split(':')[1:])
-                    "TODO: convert str to img"
-                    img = Image.New()
-                    self._img = img
-                    img.save(self._IMG_FILE_PATH)
-                    self.disconnect()
+                pass
+                # self._img = img
+                # img.save(self._IMG_FILE_PATH)
+                self.disconnect()
 
 
 class SenderBot(slixmpp.ClientXMPP):

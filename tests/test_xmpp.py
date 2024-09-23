@@ -35,19 +35,19 @@ def send():
 
 def receive():
     corresp_jid = input('correspondant: ')
-    receiver = ReceiverBot(corresp_jid, **credentials)
+    receiver = ReceiverBot(corresp_jid=corresp_jid, **credentials)
     receiver.wait_for_msg()
     img = receiver.img
     img.show()
 
 
 def wait():
-    corresp_jid = input('correspondant: ')
-    receiver = ReceiverBot(corresp_jid, **credentials)
+    corresp_jid = None
+    receiver = ReceiverBot(corresp_jid=corresp_jid, **credentials)
     threading.Thread(target=receiver.wait_for_msg).start()
     time.sleep(3)
     receiver.stop_waiting()
 
 
 if __name__ == '__main__':
-    send()
+    wait()
