@@ -29,8 +29,9 @@ def send():
     img = Image.new('1', (200, 100), 255)
     draw = ImageDraw.Draw(img)
     draw.text((100, 50), 'salut!')
-    sender.send_img(img)
+    thread = sender.send_img(img)
     print('next')
+    thread.join()
     # time.sleep(5)
 
 
