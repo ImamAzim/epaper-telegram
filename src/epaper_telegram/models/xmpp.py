@@ -7,6 +7,8 @@ import datetime
 import os
 import getpass
 import logging
+import urllib.request
+from urllib.error import URLError
 
 
 import slixmpp
@@ -111,9 +113,15 @@ class ReceiverBot(slixmpp.ClientXMPP):
             jid = slixmpp.JID(msg['from']).bare
             if self._correspondant == jid:
                 url = msg['body']
-                print('TODO: get the image from the url')
-                # self._img = img
-                # img.save(self._IMG_FILE_PATH)
+                try:
+                    urllib.request.urlretrieve(url, self._IMG_FILE_PATH)
+                except URLError:
+                    logging.warning(
+                            'could not download the img.',
+                            'maybe the message did not contain an img url')
+                else:
+                    img = Image.open(self._IMG_FILE_PATH)
+                    self._img = img
                 self.disconnect()
 
 
