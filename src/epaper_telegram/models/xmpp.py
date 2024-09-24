@@ -1,3 +1,4 @@
+import threading
 import configparser
 import pickle
 from cryptography.fernet import Fernet
@@ -158,7 +159,11 @@ class SenderBot(slixmpp.ClientXMPP):
         """
         img.save(self._IMG_FILE_PATH)
         self.connect()
-        self.loop.run_until_complete(self.disconnected)
+        threading.Thread(
+                target=self.loop.run_until_complete,
+                args=(self.disconnected, ),
+                daemon=True,
+                ).start()
 
     async def start(self, event):
         logging.info('Uploading image...')
@@ -169,6 +174,7 @@ class SenderBot(slixmpp.ClientXMPP):
                     timeout=10,
             )
         except IqTimeout:
+            self.disconnect()
             raise TimeoutError('Could not send message in time')
         logging.info('Upload success!')
 

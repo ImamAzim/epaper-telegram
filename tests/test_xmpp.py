@@ -31,6 +31,7 @@ def send():
     draw.text((100, 50), 'salut!')
     sender.send_img(img)
     print('next')
+    time.sleep(5)
 
 
 def receive():
@@ -50,4 +51,4 @@ def wait():
 
 
 if __name__ == '__main__':
-    receive()
+    send()
