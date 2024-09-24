@@ -31,7 +31,7 @@ def send():
     draw.text((100, 50), 'salut!')
     sender.send_img(img)
     print('next')
-    time.sleep(5)
+    # time.sleep(5)
 
 
 def receive():

@@ -159,11 +159,13 @@ class SenderBot(slixmpp.ClientXMPP):
         """
         img.save(self._IMG_FILE_PATH)
         self.connect()
-        threading.Thread(
+        thread = threading.Thread(
                 target=self.loop.run_until_complete,
                 args=(self.disconnected, ),
                 daemon=True,
-                ).start()
+                )
+        thread.start()
+        return thread
 
     async def start(self, event):
         logging.info('Uploading image...')
