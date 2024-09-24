@@ -42,14 +42,20 @@ def receive():
 
 
 def wait():
-    corresp_jid = None
+    corresp_jid = input('correspondant: ')
     receiver = ReceiverBot(corresp_jid=corresp_jid, **credentials)
-    th = threading.Thread(target=receiver.wait_for_msg)
+    flag = threading.Event()
+    flag.set()
+    def wait_in_loop():
+        while flag.is_set():
+            receiver.wait_for_msg()
+    receiver.connect()
+    th = threading.Thread(target=wait_in_loop)
     th.start()
-    # receiver.wait_for_msg()
-    time.sleep(3)
-    receiver.stop_waiting()
+    input()
+    flag.clear()
+    receiver.loop.call_soon_threadsafe(receiver.stop_waiting)
 
 
 if __name__ == '__main__':
-    send()
+    wait()

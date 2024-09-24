@@ -109,7 +109,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
                    for stanza objects and the Message stanza to see
                    how it may be used.
         """
-        logging.debug('received msg')
+        logging.info('received msg')
         if msg['type'] in ('chat', 'normal'):
             jid = slixmpp.JID(msg['from']).bare
             if self._correspondant == jid:
