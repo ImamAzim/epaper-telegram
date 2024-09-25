@@ -1,3 +1,4 @@
+import asyncio
 import threading
 import configparser
 import pickle
@@ -50,6 +51,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
         self.register_plugin('xep_0060')  # PubSub
         self.register_plugin('xep_0199')  # XMPP Ping
 
+        asyncio.set_event_loop(self.loop)
         self._correspondant = corresp_jid
 
         try:
@@ -78,7 +80,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
         """stop the blocking wait even if there is no updated img
 
         """
-        self.disconnect()
+        self.loop.call_soon_threadsafe(self.disconnect)
 
     async def _start(self, event):
         """

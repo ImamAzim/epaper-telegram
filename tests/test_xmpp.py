@@ -49,12 +49,11 @@ def wait():
     def wait_in_loop():
         while flag.is_set():
             receiver.wait_for_msg()
-    receiver.connect()
     th = threading.Thread(target=wait_in_loop)
     th.start()
     input()
     flag.clear()
-    receiver.loop.call_soon_threadsafe(receiver.stop_waiting)
+    receiver.stop_waiting()
 
 
 if __name__ == '__main__':
