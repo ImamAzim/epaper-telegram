@@ -43,8 +43,8 @@ class EpaperTelgramApp(object):
                     ):
                 with OnlineImageDownloader(
                         displayer,
-                        correspondant=self._corresp_jid,
                         self._credentials,
+                        correspondant=self._corresp_jid,
                         ) as online_image_downloader:
                     while True:
                         logging.info('home')
