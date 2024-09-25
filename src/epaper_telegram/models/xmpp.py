@@ -52,7 +52,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
         self.register_plugin('xep_0199')  # XMPP Ping
 
         asyncio.set_event_loop(self.loop)
-        self._correspondant = corresp_jid
+        self._correspondant = corresp_jid.lower()
 
         try:
             self._img = Image.open(self._IMG_FILE_PATH)
