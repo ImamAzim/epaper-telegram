@@ -1,4 +1,4 @@
-from threading import Thread, Event, Timer
+from threading import Thread, Event, Timer, RLock
 from queue import Queue, Empty
 import logging
 import os
@@ -237,6 +237,8 @@ class OnlineImageDownloader(object):
         self._running = Event()
         self._running.set()
 
+        self._xmpp_rlock = RLock()
+
     def _check_started(self):
         if self._thread.is_alive() is not True:
             msg = (
@@ -293,7 +295,11 @@ class OnlineImageDownloader(object):
         :img: Image PIL object
 
         """
-        self._sender_bot.send_img(img)
+        self._receiver_bot.stop_waiting()
+        with self._xmpp_rlock:
+            t = self._sender_bot.send_img(img)
+            t.join()
+
 
     def _adapt_img(self):
         img = self._img.copy()
@@ -325,7 +331,8 @@ class OnlineImageDownloader(object):
         while self._running.is_set():
             self._get_latest_img()
             self.display_now()
-            self._receiver_bot.wait_for_msg()
+            with self._xmpp_rlock:
+                self._receiver_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
 

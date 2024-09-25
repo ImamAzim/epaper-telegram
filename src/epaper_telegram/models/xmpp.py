@@ -118,6 +118,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
                 url = msg['body']
                 try:
                     urllib.request.urlretrieve(url, self._IMG_FILE_PATH)
+                    logging.info('img saved to disk')
                 except URLError:
                     logging.warning(
                             'could not download the img.',
@@ -126,6 +127,10 @@ class ReceiverBot(slixmpp.ClientXMPP):
                     img = Image.open(self._IMG_FILE_PATH)
                     self._img = img
                 self.disconnect()
+            else:
+                logging.warning('msg is was sent by %s', jid)
+        else:
+            logging.warning('msg is %s', msg['type'])
 
 
 class SenderBot(slixmpp.ClientXMPP):
@@ -194,6 +199,7 @@ class SenderBot(slixmpp.ClientXMPP):
                 )
         message['oob']['url'] = url
         message.send()
+        logging.info('msg sent')
         self.disconnect()
 
 

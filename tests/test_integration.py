@@ -1,9 +1,16 @@
+import time
+import logging
+
+
 from PIL import Image, ImageDraw
 
 
 from epaper_telegram.models.xmpp import CredentialsHandler
 from epaper_telegram.models.img_creators import OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
+
+
+logging.basicConfig(level=logging.INFO)
 
 credential_handler = CredentialsHandler()
 try:
@@ -20,10 +27,13 @@ def send_while_check():
                 credentials,
                 corresp_jid=credentials['jabber_id'],
                 ) as online_image_downloader:
+            time.sleep(5)
             img = Image.new('1', (200, 100), 255)
             draw = ImageDraw.Draw(img)
             draw.text((100, 50), 'salut!')
             online_image_downloader.upload(img)
+            time.sleep(5)
+
 
 if __name__ == '__main__':
     send_while_check()
