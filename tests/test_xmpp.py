@@ -35,6 +35,7 @@ def send():
     # time.sleep(5)
 
 
+
 def receive():
     corresp_jid = input('correspondant: ')
     receiver = ReceiverBot(corresp_jid=corresp_jid, **credentials)
