@@ -238,6 +238,7 @@ class OnlineImageDownloader(object):
         self._running.set()
 
         self._xmpp_rlock = RLock()
+        self._upload_thread = None
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
@@ -297,8 +298,7 @@ class OnlineImageDownloader(object):
         """
         self._receiver_bot.stop_waiting()
         with self._xmpp_rlock:
-            t = self._sender_bot.send_img(img)
-            t.join()
+            self._upload_thread = self._sender_bot.send_img(img)
 
 
     def _adapt_img(self):
@@ -332,6 +332,8 @@ class OnlineImageDownloader(object):
             self._get_latest_img()
             self.display_now()
             with self._xmpp_rlock:
+                if self._upload_thread:
+                    self._upload_thread.join()
                 self._receiver_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
