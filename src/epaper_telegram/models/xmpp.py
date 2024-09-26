@@ -174,6 +174,15 @@ class SenderBot(slixmpp.ClientXMPP):
         thread.start()
         return thread
 
+    def terminate(self):
+        """will cancel all tasks for proper shutdown
+        :returns: TODO
+
+        """
+        pending = asyncio.all_tasks(loop=self.loop)
+        for task in pending:
+            task.cancel()
+
     async def start(self, event):
         logging.info('Uploading image...')
         upload_file = self['xep_0363'].upload_file

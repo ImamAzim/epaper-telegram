@@ -1,3 +1,4 @@
+import asyncio
 import time
 from threading import Thread, Event, Timer, RLock
 from queue import Queue, Empty
@@ -279,6 +280,7 @@ class OnlineImageDownloader(object):
         if self._upload_thread:
             self._upload_thread.join()
         self._receiver_bot.stop_waiting()
+        self._sender_bot.terminate()
 
     def display_now(self):
         """a method to use if the display was cleared and we want to redisplay
