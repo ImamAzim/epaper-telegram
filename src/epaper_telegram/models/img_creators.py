@@ -276,9 +276,9 @@ class OnlineImageDownloader(object):
 
         """
         self._check_started()
-        self._running.clear()
         if self._upload_thread:
             self._upload_thread.join()
+        self._running.clear()
         self._receiver_bot.stop_waiting()
         self._sender_bot.terminate()
 

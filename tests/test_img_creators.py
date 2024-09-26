@@ -86,7 +86,8 @@ class TestOnlineImg(unittest.TestCase):
         width = 250
         height = 122
         img = Image.new('1', (width, height), 255)
-        self.online_img_down.upload(img)
+        t = self.online_img_down.upload(img)
+        t.join()
 
 
 def draw_tool():
