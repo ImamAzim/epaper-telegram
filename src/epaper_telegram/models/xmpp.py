@@ -123,6 +123,10 @@ class ReceiverBot(slixmpp.ClientXMPP):
                     logging.warning(
                             'could not download the img.',
                             'maybe the message did not contain an img url')
+                except ValueError:
+                    logging.warning(
+                            'could not read the url of the msg'
+                            )
                 else:
                     img = Image.open(self._IMG_FILE_PATH)
                     self._img = img

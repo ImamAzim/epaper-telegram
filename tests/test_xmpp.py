@@ -32,9 +32,6 @@ def send():
     thread = sender.send_img(img)
     print('next')
     thread.join()
-    # time.sleep(5)
-
-
 
 def receive():
     corresp_jid = input('correspondant: ')
@@ -58,4 +55,4 @@ def wait():
 
 
 if __name__ == '__main__':
-    send()
+    receive()
