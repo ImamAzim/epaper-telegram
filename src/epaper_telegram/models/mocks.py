@@ -13,6 +13,9 @@ class SenderBotMock():
     def send_img(self, img):
         pass
 
+    def terminate(self):
+        pass
+
 class ReceiverBotMock():
 
     _IMG_WIDTH = 250
