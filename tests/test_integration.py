@@ -27,7 +27,7 @@ def send_while_check():
                 credentials,
                 corresp_jid=credentials['jabber_id'],
                 # corresp_jid='nobody',
-                mock_mode=True
+                # mock_mode=True
                 ) as online_image_downloader:
             time.sleep(1)
             img = Image.new('1', (200, 100), 255)

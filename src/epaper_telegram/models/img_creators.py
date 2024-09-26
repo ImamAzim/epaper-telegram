@@ -276,9 +276,9 @@ class OnlineImageDownloader(object):
 
         """
         self._check_started()
+        self._running.clear()
         if self._upload_thread:
             self._upload_thread.join()
-        self._running.clear()
         self._receiver_bot.stop_waiting()
         self._sender_bot.terminate()
 
@@ -348,7 +348,8 @@ class OnlineImageDownloader(object):
             with self._xmpp_rlock:
                 if self._upload_thread:
                     self._upload_thread.join()
-                self._receiver_bot.wait_for_msg()
+                if self._running.is_set():  # if terminate was called before, avoid to be block here
+                    self._receiver_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
 
