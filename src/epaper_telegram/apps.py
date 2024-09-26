@@ -23,6 +23,7 @@ class EpaperTelgramApp(object):
         try:
             credentials = credential_handler.load_credentials()
         except FileNotFoundError:
+            """TODO: remove this. an account must be created before"""
             credential_handler.create_and_save_new_cred()
             credentials = credential_handler.load_credentials()
         self._credentials = credentials
@@ -60,6 +61,20 @@ class EpaperTelgramApp(object):
                         online_image_downloader.display_now()
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
+
+
+def check_account():
+    credential_handler = CredentialsHandler()
+    try:
+        credentials = credential_handler.load_credentials()
+    except FileNotFoundError:
+        """TODO: force even if file already present"""
+        credential_handler.create_and_save_new_cred()
+        credentials = credential_handler.load_credentials()
+        """TODO:
+            look into account created. if jabber is is not there, create an account
+            if no succes raise
+            else return credentials """
 
 
 if __name__ == '__main__':
