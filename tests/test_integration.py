@@ -26,6 +26,7 @@ def send_while_check():
                 displayer,
                 credentials,
                 corresp_jid=credentials['jabber_id'],
+                # corresp_jid='imam@jabber.fr',
                 ) as online_image_downloader:
             time.sleep(1)
             img = Image.new('1', (200, 100), 255)
