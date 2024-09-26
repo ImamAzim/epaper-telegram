@@ -130,7 +130,7 @@ class ReceiverBot(slixmpp.ClientXMPP):
                 else:
                     img = Image.open(self._IMG_FILE_PATH)
                     self._img = img
-                self.disconnect()
+                    self.disconnect()
             else:
                 logging.warning('msg is was sent by %s', jid)
         else:
