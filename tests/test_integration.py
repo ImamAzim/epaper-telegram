@@ -27,13 +27,13 @@ def send_while_check():
                 credentials,
                 corresp_jid=credentials['jabber_id'],
                 # corresp_jid='nobody',
+                mock_mode=True
                 ) as online_image_downloader:
             time.sleep(1)
             img = Image.new('1', (200, 100), 255)
             draw = ImageDraw.Draw(img)
             draw.text((100, 50), 'salut!')
             online_image_downloader.upload(img)
-            time.sleep(1)
 
 
 if __name__ == '__main__':
