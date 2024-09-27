@@ -74,17 +74,14 @@ def check_account():
         credential_handler.create_and_save_new_cred(force=True)
         credentials = credential_handler.load_credentials()
 
-        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
-        config = configparser.ConfigParser()
-        if credentials['jabber_id'] not in config:
-            register_bot = RegisterBot(**credentials)
-            pass
+    path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+    config = configparser.ConfigParser()
+    if credentials['jabber_id'] not in config:
+        register_bot = RegisterBot(**credentials)
+        register_bot.connect()
+        register_bot.process()
 
-
-        """TODO:
-            look into account created. if jabber is is not there, create an account
-            if no succes raise
-            else return credentials """
+    return credentials
 
 
 if __name__ == '__main__':

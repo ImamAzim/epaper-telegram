@@ -232,20 +232,7 @@ class RegisterBot(slixmpp.ClientXMPP):
         self._jabber_id = jabber_id
         slixmpp.ClientXMPP.__init__(self, jabber_id, password)
 
-        # The session_start event will be triggered when
-        # the bot establishes its connection with the server
-        # and the XML streams are ready for use. We want to
-        # listen for this event so that we we can initialize
-        # our roster.
         self.add_event_handler("session_start", self.start)
-
-        # The register event provides an Iq result stanza with
-        # a registration form from the server. This may include
-        # the basic registration fields, a data form, an
-        # out-of-band URL, or any combination. For more advanced
-        # cases, you will need to examine the fields provided
-        # and respond accordingly. Slixmpp provides plugins
-        # for data forms and OOB links that will make that easier.
         self.add_event_handler("register", self.register)
 
         self.register_plugin('xep_0030')  # Service Discovery
