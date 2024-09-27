@@ -24,12 +24,7 @@ class EpaperTelgramApp(object):
         with open(CORRESP_JID_FILE, 'r') as myfile:
             self._corresp_jid = myfile.read()
         credential_handler = CredentialsHandler()
-        try:
-            credentials = credential_handler.load_credentials()
-        except FileNotFoundError:
-            """TODO: remove this. an account must be created before"""
-            credential_handler.create_and_save_new_cred()
-            credentials = credential_handler.load_credentials()
+        credentials = credential_handler.load_credentials()
         self._credentials = credentials
 
     def start(self):
