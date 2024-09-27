@@ -54,6 +54,9 @@ class ConfigureMenu(object):
         """set correspondant
 
         """
+        corresp_jid = input('enter the jabber id of your correspondant:\n')
+        self._vb.corresp_jid = corresp_jid
+        self._corresp_jid = corresp_jid
 
     def case_2(self):
         """activate epaper in crontab
