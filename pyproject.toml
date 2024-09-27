@@ -41,4 +41,4 @@ dev = [
 #"Documentation" = "https://epaper-telegram.readthedocs.io/en/latest/index.html"
 
 [project.scripts]
-epaper-telegram = "epaper_telegram.launchers:launch_epaper_telegram"
+epaper-telegram = "epaper_telegramd.launchers:launch_epaper_telegram"
