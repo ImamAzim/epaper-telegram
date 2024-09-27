@@ -8,20 +8,21 @@ from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, RegisterBot
-from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
+from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE, CORRESP_JID_FILE
 
 
 class EpaperTelgramApp(object):
 
     """app to launch the main app of the project"""
 
-    def __init__(self, corresp_jid, mock_mode=False):
+    def __init__(self, mock_mode=False):
         if mock_mode:
             self._GT = GT1151Mock
         else:
             self._GT = GT1151
         self._mock_mode = mock_mode
-        self._corresp_jid = corresp_jid
+        with open(CORRESP_JID_FILE, 'r') as myfile:
+            self._corresp_jid = myfile.read()
         credential_handler = CredentialsHandler()
         try:
             credentials = credential_handler.load_credentials()
