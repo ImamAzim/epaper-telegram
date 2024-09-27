@@ -13,3 +13,5 @@ ACCOUNTS_CREATED_FILE = 'accounts_created.ini'
 path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
 if not os.path.exists(path):
     open(path, 'w').close()
+
+DAEMON_ENTRY_POINT = '_epaper-telegramd'
