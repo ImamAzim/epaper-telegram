@@ -1,3 +1,8 @@
+from varboxes import VarBox
+
+
+from epaper_telegram import APP_NAME
+
 
 class ConfigureMenu(object):
 
@@ -11,6 +16,11 @@ class ConfigureMenu(object):
                 'q': 'quit',
                 }
         self._running = True
+        self._vb = VarBox(APP_NAME)
+        try:
+            self._corresp_jid = self._vb.corresp_jid
+        except AttributeError:
+            self._corresp_jid = 'None'
 
     def start(self, user_jid):
 
