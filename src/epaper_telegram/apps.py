@@ -1,11 +1,14 @@
 import logging
+import os
+import configparser
 
 
 from waveshare_touch_epaper.touch_screen import GT1151
 from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
-from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError
+from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, RegisterBot
+from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE
 
 
 class EpaperTelgramApp(object):
@@ -68,9 +71,16 @@ def check_account():
     try:
         credentials = credential_handler.load_credentials()
     except FileNotFoundError:
-        """TODO: force even if file already present"""
-        credential_handler.create_and_save_new_cred()
+        credential_handler.create_and_save_new_cred(force=True)
         credentials = credential_handler.load_credentials()
+
+        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+        config = configparser.ConfigParser()
+        if credentials['jabber_id'] not in config:
+            register_bot = RegisterBot(**credentials)
+            pass
+
+
         """TODO:
             look into account created. if jabber is is not there, create an account
             if no succes raise
