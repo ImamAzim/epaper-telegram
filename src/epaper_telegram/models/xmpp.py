@@ -329,14 +329,14 @@ class CredentialsHandler(object):
     def __init__(self):
         pass
 
-    def create_and_save_new_cred(self):
+    def create_and_save_new_cred(self, force=False):
         """will create new credentials. uses the user name,
         host and current day
 
         """
         credentials, key = self._create_new_cred()
-        self._save_key(key)
-        self._save_credentials(credentials)
+        self._save_key(key, force)
+        self._save_credentials(credentials, force)
         logging.info('new credentials created')
 
     def load_credentials(self):
@@ -389,9 +389,9 @@ class CredentialsHandler(object):
                 )
         return credentials, key
 
-    def _save_key(self, key):
+    def _save_key(self, key, force):
         path = os.path.join(DATA_DIR_PATH, self._KEY_FILE)
-        if os.path.exists(path):
+        if os.path.exists(path) and not force:
             msg = 'a key file already existsü'
             raise CredentialsHandlerError(msg)
         with open(path, 'wb') as keyfile:
@@ -403,9 +403,9 @@ class CredentialsHandler(object):
             key = pickle.load(keyfile).encode()
         return key
 
-    def _save_credentials(self, credentials):
+    def _save_credentials(self, credentials, force):
         path = os.path.join(DATA_DIR_PATH, self._CRED_FILE)
-        if os.path.exists(path):
+        if os.path.exists(path) and not force:
             msg = 'a credential file already exists'
             raise CredentialsHandlerError(msg)
         config = configparser.ConfigParser()
