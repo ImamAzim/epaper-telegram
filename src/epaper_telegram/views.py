@@ -1,6 +1,7 @@
 from varboxes import VarBox
 
 
+from epaper_telegram.models.tools import Configurator
 from epaper_telegram import APP_NAME
 
 
@@ -21,6 +22,8 @@ class ConfigureMenu(object):
             self._corresp_jid = self._vb.corresp_jid
         except AttributeError:
             self._corresp_jid = 'None'
+
+        self._configurator = Configurator()
 
     def start(self, user_jid):
 
@@ -62,12 +65,14 @@ class ConfigureMenu(object):
         """activate epaper in crontab
 
         """
+        self._configurator.add_deamon_in_crontab()
         print('===')
 
     def case_3(self):
         """deactivate epaper in crontab
 
         """
+        self._configurator.remove_daemon_from_crontab()
         print('===')
 
     def case_q(self):
