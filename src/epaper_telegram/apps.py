@@ -3,13 +3,16 @@ import os
 import configparser
 
 
+from varboxes import VarBox
+
+
 from waveshare_touch_epaper.touch_screen import GT1151
 from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, RegisterBot
 from epaper_telegram.views import ConfigureMenu
-from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE, CORRESP_JID_FILE
+from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE, APP_NAME
 
 
 class EpaperTelgramApp(object):
@@ -22,8 +25,14 @@ class EpaperTelgramApp(object):
         else:
             self._GT = GT1151
         self._mock_mode = mock_mode
-        with open(CORRESP_JID_FILE, 'r') as myfile:
-            self._corresp_jid = myfile.read()
+
+        vb = VarBox(APP_NAME)
+        try:
+            self._corresp_jid = vb.corresp_jid
+        except AttributeError:
+            logging.warning('no correspondant found! the app will run but cannot send and receive msg')
+            self._corresp_jid = ''
+
         credential_handler = CredentialsHandler()
         credentials = credential_handler.load_credentials()
         self._credentials = credentials

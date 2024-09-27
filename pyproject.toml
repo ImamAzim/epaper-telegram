@@ -23,6 +23,7 @@ dependencies = [
 	'xdg-base-dirs',
 	'slixmpp',
 	'aiohttp',
+	'varboxes',
 ]
 
 [project.optional-dependencies]

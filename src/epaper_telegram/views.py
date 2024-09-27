@@ -13,6 +13,9 @@ class ConfigureMenu(object):
         self._running = True
 
     def start(self, user_jid):
+
+        self._user_jid = user_jid
+
         self._print_welcome()
         while self._running:
             self._print_menu()
@@ -29,7 +32,10 @@ class ConfigureMenu(object):
         print('===')
 
     def _print_menu(self):
-        """TODO: print user jid and correspondant jid"""
+
+        print(f'your jabber id: {self._user_jid}')
+        print(f'correspondant jabber id: {self._corresp_jid}')
+
         for key, value in self._menu.items():
             print(key, value)
         print('===')

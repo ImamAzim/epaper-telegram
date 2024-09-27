@@ -13,8 +13,3 @@ ACCOUNTS_CREATED_FILE = 'accounts_created.ini'
 path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
 if not os.path.exists(path):
     open(path, 'w').close()
-
-CORRESP_JID_FILE = 'correspondant_jid'
-path = os.path.join(DATA_DIR_PATH, CORRESP_JID_FILE)
-if not os.path.exists(path):
-    open(path, 'w').close()
