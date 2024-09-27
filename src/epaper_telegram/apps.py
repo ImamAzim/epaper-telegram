@@ -65,23 +65,37 @@ class EpaperTelgramApp(object):
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
 
+class ConfigEpaperTelegram(object):
 
-def check_account():
-    credential_handler = CredentialsHandler()
-    try:
-        credentials = credential_handler.load_credentials()
-    except FileNotFoundError:
-        credential_handler.create_and_save_new_cred(force=True)
-        credentials = credential_handler.load_credentials()
+    """an app to configure epaper telegram"""
 
-    path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
-    config = configparser.ConfigParser()
-    if credentials['jabber_id'] not in config:
-        register_bot = RegisterBot(**credentials)
-        register_bot.connect()
-        register_bot.process()
+    def __init__(self):
+        pass
 
-    return credentials
+    def start(self):
+        """run the config app in a terminal
+        :returns: TODO
+
+        """
+        user_jid = self._check_account()
+
+    def _check_account(self):
+        credential_handler = CredentialsHandler()
+        try:
+            credentials = credential_handler.load_credentials()
+        except FileNotFoundError:
+            credential_handler.create_and_save_new_cred(force=True)
+            credentials = credential_handler.load_credentials()
+
+        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+        config = configparser.ConfigParser()
+        if credentials['jabber_id'] not in config:
+            register_bot = RegisterBot(**credentials)
+            register_bot.connect()
+            register_bot.process()
+
+        user_jid = credentials['jabber_id']
+        return user_jid
 
 
 if __name__ == '__main__':
