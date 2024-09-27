@@ -4,7 +4,7 @@ import os
 from epaper_telegram import DAEMON_ENTRY_POINT
 
 
-VENV_DIR = os.environ['VIRTUAL_ENV']
+VENV_DIR = os.environ.get('VIRTUAL_ENV')
 SCRIPT_DIR = os.path.join(VENV_DIR, 'bin')
 
 
