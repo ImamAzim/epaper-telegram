@@ -1,7 +1,7 @@
 from varboxes import VarBox
 
 
-from epaper_telegram.models.tools import Configurator
+from epaper_telegram.models.tools import Configurator, ConfiguratorError
 from epaper_telegram import APP_NAME
 
 
@@ -65,7 +65,10 @@ class ConfigureMenu(object):
         """activate epaper in crontab
 
         """
-        self._configurator.add_deamon_in_crontab()
+        try:
+            self._configurator.add_deamon_in_crontab()
+        except ConfiguratorError:
+            print('failed enable the app')
         print('===')
 
     def case_3(self):

@@ -14,4 +14,4 @@ path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
 if not os.path.exists(path):
     open(path, 'w').close()
 
-DAEMON_ENTRY_POINT = '_epaper-telegramd'
+DAEMON_ENTRY_POINT = '_epaper-telegramd'  # Must be present in pyproject.toml!
