@@ -2,7 +2,7 @@ import argparse
 import logging
 
 
-from epaper_telegram.apps import EpaperTelgramApp
+from epaper_telegram.apps import EpaperTelgramApp, ConfigEpaperTelegram
 
 
 def launch_epaper_telegram():
@@ -40,6 +40,14 @@ def launch_epaper_telegram():
             corresp_jid=args.corresp_jid,
             mock_mode=args.mock,
             )
+    app.start()
+
+
+def launch_epaper_config():
+    """launch the config app in a terminal
+
+    """
+    app = ConfigEpaperTelegram()
     app.start()
 
 
