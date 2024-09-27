@@ -8,6 +8,7 @@ from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, RegisterBot
+from epaper_telegram.views import ConfigureMenu
 from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE, CORRESP_JID_FILE
 
 
@@ -66,7 +67,7 @@ class ConfigEpaperTelegram(object):
     """an app to configure epaper telegram"""
 
     def __init__(self):
-        pass
+        self._view = ConfigureMenu()
 
     def start(self):
         """run the config app in a terminal
@@ -74,6 +75,7 @@ class ConfigEpaperTelegram(object):
 
         """
         user_jid = self._check_account()
+        self._view.start(user_jid)
 
     def _check_account(self):
         credential_handler = CredentialsHandler()

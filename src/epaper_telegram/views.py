@@ -3,7 +3,7 @@ class ConfigureMenu(object):
 
     """view in shell with a menu to configure epaper-telegram"""
 
-    def __init__(self, user_jid):
+    def __init__(self):
         self._menu = {
                 '1': 'set correspondant',
                 '2': 'activate epaper-telegram',
@@ -13,7 +13,7 @@ class ConfigureMenu(object):
         self._running = True
         self.config = NewsLoaderConfiguration()
 
-    def start(self):
+    def start(self, user_jid):
         self._print_welcome()
         while self._running:
             self._print_menu()
