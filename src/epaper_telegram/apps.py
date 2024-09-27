@@ -90,9 +90,9 @@ class ConfigEpaperTelegram(object):
         config.read(path)
         if credentials['jabber_id'] not in config:
             print('register a new account...')
-            # register_bot = RegisterBot(**credentials)
-            # register_bot.connect()
-            # register_bot.process(forever=False)
+            register_bot = RegisterBot(**credentials)
+            register_bot.connect()
+            register_bot.process(forever=False)
 
         user_jid = credentials['jabber_id']
         return user_jid

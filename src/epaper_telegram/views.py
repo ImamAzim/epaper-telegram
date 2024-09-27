@@ -11,7 +11,6 @@ class ConfigureMenu(object):
                 'q': 'quit',
                 }
         self._running = True
-        self.config = NewsLoaderConfiguration()
 
     def start(self, user_jid):
         self._print_welcome()
