@@ -31,8 +31,6 @@ class ReceiverBot(slixmpp.ClientXMPP):
     a bot to save received img or to send one
     """
 
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
     _IMG_FILE_PATH = os.path.join(DATA_DIR_PATH, 'received_img.bmp')
 
     def __init__(

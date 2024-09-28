@@ -10,6 +10,7 @@ class ConfigureMenu(object):
     """view in shell with a menu to configure epaper-telegram"""
 
     def __init__(self):
+        # TODO: add menu option to set screen model
         self._menu = {
                 '1': 'set correspondant',
                 '2': 'activate epaper-telegram',

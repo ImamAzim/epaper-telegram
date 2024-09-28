@@ -5,8 +5,8 @@ import configparser
 from varboxes import VarBox
 
 
-from waveshare_touch_epaper.touch_screen import GT1151
-from epaper_telegram.models.mocks import GT1151Mock
+from waveshare_touch_epaper.touch_screen import GT1151  # TODO:other screens
+from epaper_telegram.models.mocks import GT1151Mock  # TODO:other screens
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, RegisterBot

@@ -30,6 +30,7 @@ class Displayer(object):
         if mock_mode:
             self._EPD = EPD2in13Mock
         else:
+            # TODO: import other screen models
             self._EPD = EPD2in13
 
     @property
