@@ -35,29 +35,38 @@ class DrawTool(object):
             '..',
             'pics'
             )
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
-    _MENU_WIDTH = 60
-    _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
-    _BUTTONS_AREAS = dict(
-            send=dict(icon='send.jpg', row=0),
-            erase=dict(icon='erase.bmp', row=1),
-            cancel=dict(icon='cancel.jpg', row=2),
-            )
-    _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS_AREAS)
-    for key, el in _BUTTONS_AREAS.items():
-        el['coordinates'] = (
-                0,
-                int(_BUTTON_HEIGHT * el['row']),
-                int(_MENU_WIDTH),
-                int(_BUTTON_HEIGHT * (el['row'] + 1)),
-                )
 
     def __init__(self, displayer):
         """
         :displayer: Displayer objet that uses the epd
         """
         self._displayer = displayer
+
+        _IMG_WIDTH = 250
+        _IMG_HEIGHT = 122
+        _MENU_WIDTH = 60
+        _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
+        _BUTTONS_AREAS = dict(
+                send=dict(icon='send.jpg', row=0),
+                erase=dict(icon='erase.bmp', row=1),
+                cancel=dict(icon='cancel.jpg', row=2),
+                )
+        _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS_AREAS)
+        for key, el in _BUTTONS_AREAS.items():
+            el['coordinates'] = (
+                    0,
+                    int(_BUTTON_HEIGHT * el['row']),
+                    int(_MENU_WIDTH),
+                    int(_BUTTON_HEIGHT * (el['row'] + 1)),
+                    )
+
+        self._IMG_WIDTH = _IMG_WIDTH
+        self._IMG_HEIGHT = _IMG_HEIGHT
+        self._MENU_WIDTH = _MENU_WIDTH
+        self._DRAW_AREA_COORDINATES = _DRAW_AREA_COORDINATES
+        self._BUTTONS_AREAS = _BUTTONS_AREAS
+        self._BUTTON_HEIGHT = _BUTTON_HEIGHT
+
         self._img = None
 
         self._queue = Queue()
