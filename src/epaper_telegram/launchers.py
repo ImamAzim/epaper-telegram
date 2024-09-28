@@ -1,10 +1,9 @@
 import argparse
-import os
 import logging
 
 
 from epaper_telegram.apps import EpaperTelgramApp, ConfigEpaperTelegram
-from epaper_telegram import DATA_DIR_PATH, LOGFILE
+from epaper_telegram import LOGFILE
 
 
 def launch_epaper_telegram():
@@ -15,8 +14,8 @@ def launch_epaper_telegram():
 
     parser = argparse.ArgumentParser(
             prog='epaper telegram daemon',
-            description='send and receive message on epaper with a rasperry pi',
-            epilog='do no lauch this daemon manually, it will be used by crontab'
+            description='send and receive msg on epaper with a rasperry pi',
+            epilog='only for debug. use epaper-telegram to activate the app'
             )
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-l', '--logfile', action='store_true')
@@ -49,8 +48,12 @@ def launch_epaper_config():
     """
     parser = argparse.ArgumentParser(
             prog='epaper telegram',
-            description='use this to configure and activate the epaper telegram daemon',
+            description=(
+                'use this to configure and',
+                'activate the epaper telegram daemon',
+                ),
             )
+    parser.parse_args()
     app = ConfigEpaperTelegram()
     app.start()
 
