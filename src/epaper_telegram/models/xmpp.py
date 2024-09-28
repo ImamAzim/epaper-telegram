@@ -286,7 +286,7 @@ class RegisterBot(slixmpp.ClientXMPP):
         try:
             await resp.send()
             logging.info("Account created for %s!" % self.boundjid)
-            path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+            path = ACCOUNTS_CREATED_FILE
             config = configparser.ConfigParser()
             config[self._jabber_id] = {}
             with open(path, 'w') as configfile:

@@ -1,8 +1,10 @@
 import argparse
+import os
 import logging
 
 
 from epaper_telegram.apps import EpaperTelgramApp, ConfigEpaperTelegram
+from epaper_telegram import DATA_DIR_PATH, LOGFILE
 
 
 def launch_epaper_telegram():
@@ -34,6 +36,7 @@ def launch_epaper_telegram():
             level=level,
             )
     if args.logfile:
+        path = os.path.join()
         logging_config_kwargs['filename'] = 'epaper-telegram.log'
     logging.basicConfig(**logging_config_kwargs)
 

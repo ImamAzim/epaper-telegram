@@ -94,7 +94,7 @@ class ConfigEpaperTelegram(object):
             credential_handler.create_and_save_new_cred(force=True)
             credentials = credential_handler.load_credentials()
 
-        path = os.path.join(DATA_DIR_PATH, ACCOUNTS_CREATED_FILE)
+        path = ACCOUNTS_CREATED_FILE
         config = configparser.ConfigParser()
         config.read(path)
         if credentials['jabber_id'] not in config:
