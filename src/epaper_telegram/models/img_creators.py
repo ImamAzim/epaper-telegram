@@ -1,4 +1,3 @@
-import asyncio
 import time
 from threading import Thread, Event, Timer, RLock
 from queue import Queue, Empty
@@ -10,7 +9,11 @@ from PIL import Image, ImageDraw
 
 
 from epaper_telegram.models.display import DisplayerError
-from epaper_telegram.models.xmpp import ImageTransferBotError, ReceiverBot, SenderBot
+from epaper_telegram.models.xmpp import (
+        ImageTransferBotError,
+        ReceiverBot,
+        SenderBot,
+        )
 from epaper_telegram.models.mocks import ReceiverBotMock, SenderBotMock
 
 
@@ -216,7 +219,8 @@ class OnlineImageDownloader(object):
     _IMG_WIDTH = 250
     _IMG_HEIGHT = 122
 
-    def __init__(self,
+    def __init__(
+            self,
             displayer,
             credentials,
             corresp_jid,
@@ -229,11 +233,19 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         if mock_mode:
-            self._receiver_bot = ReceiverBotMock(corresp_jid=corresp_jid, **credentials)
-            self._sender_bot = SenderBotMock(corresp_jid=corresp_jid, **credentials)
+            self._receiver_bot = ReceiverBotMock(
+                    corresp_jid=corresp_jid,
+                    **credentials)
+            self._sender_bot = SenderBotMock(
+                    corresp_jid=corresp_jid,
+                    **credentials)
         else:
-            self._receiver_bot = ReceiverBot(corresp_jid=corresp_jid, **credentials)
-            self._sender_bot = SenderBot(corresp_jid=corresp_jid, **credentials)
+            self._receiver_bot = ReceiverBot(
+                    corresp_jid=corresp_jid,
+                    **credentials)
+            self._sender_bot = SenderBot(
+                    corresp_jid=corresp_jid,
+                    **credentials)
 
         self._thread = Thread(target=self._check_online_img)
         self._running = Event()
@@ -308,7 +320,6 @@ class OnlineImageDownloader(object):
         with self._xmpp_rlock:
             self._upload_thread = self._sender_bot.send_img(img)
 
-
     def _adapt_img(self):
         img = self._img.copy()
         draw = ImageDraw.Draw(img)
@@ -348,7 +359,8 @@ class OnlineImageDownloader(object):
             with self._xmpp_rlock:
                 if self._upload_thread:
                     self._upload_thread.join()
-                if self._running.is_set():  # if terminate was called before, avoid to be block here
+                # if terminate was called before, avoid to be block here:
+                if self._running.is_set():
                     self._receiver_bot.wait_for_msg()
 
         logging.info('terminates online image downloader thread')
