@@ -31,6 +31,14 @@ class Displayer(object):
         else:
             self._EPD = EPD2in13
 
+    @property
+    def WIDTH(self):
+        return self._EPD.WIDTH
+
+    @property
+    def HEIGHT(self):
+        return self._EPD.HEIGHT
+
     def _check_started(self):
         if self._thread.is_alive() is not True:
             msg = (
