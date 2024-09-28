@@ -16,6 +16,7 @@ class SenderBotMock():
     def terminate(self):
         pass
 
+
 class ReceiverBotMock():
 
     _IMG_WIDTH = 250
@@ -63,6 +64,7 @@ class EPD2in13Mock():
 
     def deep_sleep(self):
         logging.info('deep_sleep')
+
 
 class GT1151Mock():
 
