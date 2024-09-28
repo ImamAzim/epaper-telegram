@@ -40,6 +40,7 @@ class Configurator(object):
 
         tmp_file = f'/tmp/epaper-telegram_log_{getpass.getuser()}'
         job = cron.new(command=f'{exec_path} -l > {tmp_file} 2>&1', comment=comment)
+        job.every_reboot()
 
         cron.write()
 
