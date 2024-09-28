@@ -223,10 +223,6 @@ class OnlineImageDownloader(object):
     """this class will run a thread continuously and regulary check online
     if a new image is available. when it is, it will send it to the display"""
 
-    _MENU_WIDTH = 60
-    _MENU_HEIGHT = 122
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
 
     def __init__(
             self,
@@ -240,6 +236,12 @@ class OnlineImageDownloader(object):
         :online_img_tool: OnlineImg object to upload and download img
         """
         self._displayer = displayer
+
+        self._MENU_WIDTH = 60
+        self._MENU_HEIGHT = 122
+        self._IMG_WIDTH = 250
+        self._IMG_HEIGHT = 122
+
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         if mock_mode:
             self._receiver_bot = ReceiverBotMock(
