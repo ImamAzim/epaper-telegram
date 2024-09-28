@@ -40,16 +40,11 @@ class ReceiverBotMock():
 
 class EPD2in13Mock():
 
+    WIDTH = 250
+    HEIGHT = 122
+
     def __init__(self):
         logging.info('open connections of edp')
-
-    @property
-    def WIDTH(self):
-        return 250
-
-    @property
-    def HEIGHT(self):
-        return 122
 
     def display(self, img):
         """

@@ -112,4 +112,17 @@ def online_image_downloader():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    online_image_downloader()
+    credentials = dict(
+            jabber_id=None,
+            password=None,
+            )
+    displayer = Displayer(True)
+    displayer.start()
+    print(displayer.WIDTH)
+    # x = OnlineImageDownloader(
+            # displayer,
+            # credentials,
+            # corresp_jid=None,
+            # mock_mode=True,
+            # )
+    # print(x.WIDTH)
