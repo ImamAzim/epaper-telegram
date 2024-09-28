@@ -24,6 +24,7 @@ dependencies = [
 	'slixmpp',
 	'aiohttp',
 	'varboxes',
+	'python-crontab',
 ]
 
 [project.optional-dependencies]
