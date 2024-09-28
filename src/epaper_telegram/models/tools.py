@@ -32,7 +32,7 @@ class Configurator(object):
             print(msg)
             raise ConfiguratorError(msg)
 
-        cron = CronTab(user=getpass.getuser())
+        cron = CronTab(user=True)
         if [el for el in cron.find_comment(comment)]:
             msg = 'epaper-telegram is already activated'
             print(msg)
