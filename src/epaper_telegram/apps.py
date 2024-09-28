@@ -1,5 +1,4 @@
 import logging
-import os
 import configparser
 
 
@@ -10,9 +9,9 @@ from waveshare_touch_epaper.touch_screen import GT1151
 from epaper_telegram.models.mocks import GT1151Mock
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
-from epaper_telegram.models.xmpp import CredentialsHandler, CredentialsHandlerError, RegisterBot
+from epaper_telegram.models.xmpp import CredentialsHandler, RegisterBot
 from epaper_telegram.views import ConfigureMenu
-from epaper_telegram import DATA_DIR_PATH, ACCOUNTS_CREATED_FILE, APP_NAME
+from epaper_telegram import ACCOUNTS_CREATED_FILE, APP_NAME
 
 
 class EpaperTelgramApp(object):
@@ -30,7 +29,12 @@ class EpaperTelgramApp(object):
         try:
             self._corresp_jid = vb.corresp_jid
         except AttributeError:
-            logging.warning('no correspondant found! the app will run but cannot send and receive msg')
+            logging.warning(
+                    (
+                        'no correspondant found!',
+                        'the app will run but cannot send and receive msg',
+                        ),
+                    )
             self._corresp_jid = ''
 
         credential_handler = CredentialsHandler()
@@ -64,12 +68,15 @@ class EpaperTelgramApp(object):
                             to_continue = True
                             while to_continue:
                                 coordinates = gt.input()
-                                to_continue, img = draw_tool.point_to(*coordinates)
+                                to_continue, img = draw_tool.point_to(
+                                        *coordinates,
+                                        )
                             if img is not None:
                                 online_image_downloader.upload(img)
                         online_image_downloader.display_now()
         except KeyboardInterrupt:
             logging.info('app stopped by keyboard interrupt')
+
 
 class ConfigEpaperTelegram(object):
 
