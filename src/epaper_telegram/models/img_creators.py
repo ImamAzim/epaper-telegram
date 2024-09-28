@@ -44,7 +44,7 @@ class DrawTool(object):
 
         _IMG_WIDTH = displayer.WIDTH
         _IMG_HEIGHT = displayer.HEIGHT
-        _MENU_WIDTH = 60
+        _MENU_WIDTH = displayer.MENU_WIDTH
 
         _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
         _BUTTONS_AREAS = dict(
@@ -240,7 +240,7 @@ class OnlineImageDownloader(object):
 
         self._IMG_WIDTH = displayer.WIDTH
         self._IMG_HEIGHT = displayer.HEIGHT
-        self._MENU_WIDTH = 60
+        self._MENU_WIDTH = displayer.MENU_WIDTH
 
         self._MENU_HEIGHT = self._IMG_HEIGHT
 

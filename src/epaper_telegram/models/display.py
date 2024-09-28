@@ -15,6 +15,7 @@ class Displayer(object):
     """object that will take img array and display on epaper (epd waveshare).
     Should be the only one to use this resource"""
     _TIMEOUT = 120
+    _MENU_WIDTH = 60
 
     def __init__(self, mock_mode=False):
         """
@@ -38,6 +39,10 @@ class Displayer(object):
     @property
     def HEIGHT(self):
         return self._EPD.HEIGHT
+
+    @property
+    def MENU_WIDTH(self):
+        return self._MENU_WIDTH
 
     def _check_started(self):
         if self._thread.is_alive() is not True:
