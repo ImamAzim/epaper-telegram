@@ -16,6 +16,7 @@ class ConfiguratorError(Exception):
 class Configurator(object):
 
     """class to configure the epaper-telegram daemon"""
+    _CRONJOB_ID = 'epaper-telegram'
 
     def __init__(self):
         pass
@@ -24,7 +25,6 @@ class Configurator(object):
         """to enable the app
 
         """
-        comment = 'epaper-telegram'
 
         exec_path = os.path.join(sys.exec_prefix, 'bin', DAEMON_ENTRY_POINT)
         if not os.path.exists(exec_path):
@@ -33,13 +33,13 @@ class Configurator(object):
             raise ConfiguratorError(msg)
 
         cron = CronTab(user=True)
-        if [el for el in cron.find_comment(comment)]:
+        if [el for el in cron.find_comment(self._CRONJOB_ID)]:
             msg = 'epaper-telegram is already activated'
             print(msg)
             raise ConfiguratorError
 
         tmp_file = f'/tmp/epaper-telegram_log_{getpass.getuser()}'
-        job = cron.new(command=f'{exec_path} -l > {tmp_file} 2>&1', comment=comment)
+        job = cron.new(command=f'{exec_path} -l > {tmp_file} 2>&1', comment=self._CRONJOB_ID)
         job.every_reboot()
 
         cron.write()
@@ -47,7 +47,8 @@ class Configurator(object):
 
     def remove_daemon_from_crontab(self):
         """to deactivate the app
-        :returns: TODO
 
         """
-        pass
+        cron = CronTab(user=True)
+        cron.remove_all(comment=self._CRONJOB_ID)
+        cron.write()
