@@ -45,6 +45,7 @@ class DrawTool(object):
         _IMG_WIDTH = 250
         _IMG_HEIGHT = 122
         _MENU_WIDTH = 60
+
         _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
         _BUTTONS_AREAS = dict(
                 send=dict(icon='send.jpg', row=0),
@@ -238,9 +239,10 @@ class OnlineImageDownloader(object):
         self._displayer = displayer
 
         self._MENU_WIDTH = 60
-        self._MENU_HEIGHT = 122
         self._IMG_WIDTH = 250
         self._IMG_HEIGHT = 122
+
+        self._MENU_HEIGHT = self._IMG_HEIGHT
 
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         if mock_mode:
