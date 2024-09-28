@@ -31,8 +31,8 @@ class EpaperTelgramApp(object):
         except AttributeError:
             logging.warning(
                     (
-                        'no correspondant found!',
-                        'the app will run but cannot send and receive msg',
+                        'no correspondant found! '
+                        'the app will run but cannot send and receive msg'
                         ),
                     )
             self._corresp_jid = ''
