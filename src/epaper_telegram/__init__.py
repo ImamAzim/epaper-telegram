@@ -10,6 +10,8 @@ if not os.path.exists(DATA_DIR_PATH):
     os.makedirs(DATA_DIR_PATH)
 
 STATE_DIR_PATH = os.path.join(xdg_base_dirs.xdg_state_home(), APP_NAME)
+if not os.path.exists(STATE_DIR_PATH):
+    os.makedirs(STATE_DIR_PATH)
 
 ACCOUNTS_CREATED_FILE = os.path.join(DATA_DIR_PATH, 'accounts_created.ini')
 path = ACCOUNTS_CREATED_FILE
