@@ -39,11 +39,13 @@ class Configurator(object):
             raise ConfiguratorError
 
         tmp_file = f'/tmp/epaper-telegram_log_{getpass.getuser()}'
-        job = cron.new(command=f'{exec_path} -l > {tmp_file} 2>&1', comment=self._CRONJOB_ID)
+        job = cron.new(
+                command=f'{exec_path} -l > {tmp_file} 2>&1',
+                comment=self._CRONJOB_ID,
+                )
         job.every_reboot()
 
         cron.write()
-
 
     def remove_daemon_from_crontab(self):
         """to deactivate the app
