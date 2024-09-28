@@ -46,12 +46,12 @@ def launch_epaper_config():
     """launch the config app in a terminal
 
     """
+    description = (
+            'use this to configure and '
+            'activate the epaper telegram daemon')
     parser = argparse.ArgumentParser(
             prog='epaper telegram',
-            description=(
-                'use this to configure and',
-                'activate the epaper telegram daemon',
-                ),
+            description=description,
             )
     parser.parse_args()
     app = ConfigEpaperTelegram()
