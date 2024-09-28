@@ -68,14 +68,17 @@ class ConfigureMenu(object):
         try:
             self._configurator.add_deamon_in_crontab()
         except ConfiguratorError:
-            print('failed enable the app')
+            pass
         print('===')
 
     def case_3(self):
         """deactivate epaper in crontab
 
         """
-        self._configurator.remove_daemon_from_crontab()
+        try:
+            self._configurator.remove_daemon_from_crontab()
+        except ConfiguratorError:
+            pass
         print('===')
 
     def case_q(self):
