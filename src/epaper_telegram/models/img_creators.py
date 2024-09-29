@@ -8,7 +8,7 @@ import os
 from PIL import Image, ImageDraw
 
 
-from epaper_telegram.models.display import DisplayerError
+from epaper_telegram.models.display import DisplayerError, Displayer
 from epaper_telegram.models.xmpp import (
         ImageTransferBotError,
         ReceiverBot,
@@ -36,7 +36,7 @@ class DrawTool(object):
             'pics'
             )
 
-    def __init__(self, displayer):
+    def __init__(self, displayer: Displayer):
         """
         :displayer: Displayer objet that uses the epd
         """
@@ -227,9 +227,9 @@ class OnlineImageDownloader(object):
 
     def __init__(
             self,
-            displayer,
-            credentials,
-            corresp_jid,
+            displayer: Displayer,
+            credentials: dict,
+            corresp_jid: str,
             mock_mode=False,
             ):
         """
