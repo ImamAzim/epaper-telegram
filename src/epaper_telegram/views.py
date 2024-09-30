@@ -66,7 +66,7 @@ class ConfigureMenu(object):
                 in enumerate(touchscreen_models)}
         for index, model in options.items():
             print(f'{index}: {model}')
-        input(f'chose yoour model (0-{len(options)-1}):\n')
+        index = input(f'chose yoour model (0-{len(options)-1}):\n')
         try:
             model = options[index]
         except KeyError:
