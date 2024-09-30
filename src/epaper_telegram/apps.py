@@ -4,6 +4,7 @@ import configparser
 
 from varboxes import VarBox
 from waveshare_touch_epaper import touchscreen_models
+from waveshare_touch_epaper.touch_screen import BaseTouchScreen
 
 
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
@@ -54,6 +55,7 @@ class EpaperTelgramApp(object):
         logging.debug('debug mode')
 
         try:
+            gt: BaseTouchScreen
             with (
                     touchscreen_models[self._touch_model_name]() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
