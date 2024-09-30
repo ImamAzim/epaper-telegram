@@ -72,7 +72,7 @@ class ConfigureMenu(object):
         except KeyError:
             print('error in your choice')
         else:
-            print('the model used will be {model}')
+            print(f'the model used will be {model}')
             self._vb.touch_model_name = model
 
     def case_1(self):
