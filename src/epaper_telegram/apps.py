@@ -3,9 +3,9 @@ import configparser
 
 
 from varboxes import VarBox
-
-
 from waveshare_touch_epaper import touchscreen_models
+
+
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, RegisterBot

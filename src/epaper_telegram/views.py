@@ -1,6 +1,9 @@
 from varboxes import VarBox
 
 
+from waveshare_touch_epaper import touchscreen_models
+
+
 from epaper_telegram.models.tools import Configurator, ConfiguratorError
 from epaper_telegram import APP_NAME
 
@@ -10,8 +13,8 @@ class ConfigureMenu(object):
     """view in shell with a menu to configure epaper-telegram"""
 
     def __init__(self):
-        # TODO: add menu option to set screen model
         self._menu = {
+                '0': 'set touch screen model',
                 '1': 'set correspondant',
                 '2': 'activate epaper-telegram',
                 '3': 'de-activate epaper-telegram',
@@ -53,6 +56,24 @@ class ConfigureMenu(object):
         for key, value in self._menu.items():
             print(key, value)
         print('===')
+
+    def case_0(self):
+        """set touch screen model
+
+        """
+        options = {
+                str(index): model for index, (model, model_class)
+                in enumerate(touchscreen_models)}
+        for index, model in options.items():
+            print(f'{index}: {model}')
+        input(f'chose yoour model (0-{len(options)-1}):\n')
+        try:
+            model = options[index]
+        except KeyError:
+            print('error in your choice')
+        else:
+            print('the model used will be {model}')
+            self._vb.touch_model_name = model
 
     def case_1(self):
         """set correspondant
