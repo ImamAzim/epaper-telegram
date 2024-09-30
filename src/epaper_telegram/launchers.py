@@ -19,7 +19,6 @@ def launch_epaper_telegram():
             )
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-l', '--logfile', action='store_true')
-    parser.add_argument('-m', '--mock', action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
@@ -37,7 +36,6 @@ def launch_epaper_telegram():
     logging.basicConfig(**logging_config_kwargs)
 
     app = EpaperTelgramApp(
-            mock_mode=args.mock,
             )
     app.start()
 

@@ -5,8 +5,7 @@ import configparser
 from varboxes import VarBox
 
 
-from waveshare_touch_epaper.touch_screen import GT1151  # TODO:other screens
-from epaper_telegram.models.mocks import GT1151Mock  # TODO:other screens
+from waveshare_touch_epaper import touchscreen_models
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
 from epaper_telegram.models.display import Displayer
 from epaper_telegram.models.xmpp import CredentialsHandler, RegisterBot
@@ -18,11 +17,8 @@ class EpaperTelgramApp(object):
 
     """app to launch the main app of the project"""
 
-    def __init__(self, mock_mode=False):
-        if mock_mode:
-            self._GT = GT1151Mock
-        else:
-            self._GT = GT1151
+    def __init__(self):
+        mock_mode = True  # TODO: replace this by epd model in vb
         self._mock_mode = mock_mode
 
         vb = VarBox(APP_NAME)
@@ -36,6 +32,13 @@ class EpaperTelgramApp(object):
                         ),
                     )
             self._corresp_jid = ''
+        try:
+            self._touch_model_name = vb.touch_model_name
+        except AttributeError:
+            logging.warning(
+                    'no touchscreen model define. Use mock mode.'
+                    )
+            self._touch_model_name = 'GT1151Mock'
 
         credential_handler = CredentialsHandler()
         credentials = credential_handler.load_credentials()
@@ -52,7 +55,7 @@ class EpaperTelgramApp(object):
 
         try:
             with (
-                    self._GT() as gt,
+                    touchscreen_models[self._touch_model_name]() as gt,
                     Displayer(mock_mode=self._mock_mode) as displayer,
                     ):
                 with OnlineImageDownloader(
