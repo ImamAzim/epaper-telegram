@@ -62,7 +62,7 @@ class ConfigureMenu(object):
 
         """
         options = {
-                str(index): model for index, (model, model_class)
+                str(index): model for index, model
                 in enumerate(touchscreen_models)}
         for index, model in options.items():
             print(f'{index}: {model}')
