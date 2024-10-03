@@ -40,6 +40,13 @@ class EpaperTelgramApp(object):
                     'no touchscreen model define. Use mock mode.'
                     )
             self._touch_model_name = 'GT1151Mock'
+        try:
+            self._epaper_model_name = vb.epaper_model_name
+        except AttributeError:
+            logging.warning(
+                    'no epaper model defined. Use mock mode.'
+                    )
+            self._epaper_model_name = 'EPD2in13Mock'
 
         credential_handler = CredentialsHandler()
         credentials = credential_handler.load_credentials()
