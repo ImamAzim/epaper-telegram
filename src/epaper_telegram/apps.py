@@ -20,7 +20,7 @@ from epaper_telegram import ACCOUNTS_CREATED_FILE, APP_NAME
 class EpaperTelgramApp(object):
 
     """app to launch the main app of the project"""
-    _INPUT_TIMEOUT = 12
+    _INPUT_TIMEOUT = 300
 
     def __init__(self):
 
