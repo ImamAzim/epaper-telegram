@@ -122,7 +122,7 @@ class Displayer(object):
             if img is None:
                 self._queue.task_done()
             else:
-                with self._EPD as epd:
+                with self._EPD() as epd:
                     epd.display(img)
                     self._queue.task_done()
                     while not sleep_after:
