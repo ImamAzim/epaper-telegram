@@ -3,6 +3,9 @@ import queue
 import logging
 
 
+from waveshare_touch_epaper import epaper_models
+
+
 from epaper_telegram.models.mocks import EPD2in13Mock
 
 
@@ -27,11 +30,7 @@ class Displayer(object):
         self._running = Event()
         self._running.set()
 
-        if mock_mode:
-            self._EPD = EPD2in13Mock
-        else:
-            # TODO: import other screen models
-            self._EPD = EPD2in13
+        self._EPD = epaper_model_name[epaper_model_name]
 
     @property
     def WIDTH(self):
