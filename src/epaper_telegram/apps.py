@@ -4,7 +4,10 @@ import configparser
 
 from varboxes import VarBox
 from waveshare_touch_epaper import touchscreen_models
-from waveshare_touch_epaper.touch_screen import BaseTouchScreen, TouchEpaperException
+from waveshare_touch_epaper.touch_screen import (
+        BaseTouchScreen,
+        TouchEpaperException,
+        )
 
 
 from epaper_telegram.models.img_creators import DrawTool, OnlineImageDownloader
@@ -79,11 +82,13 @@ class EpaperTelgramApp(object):
                             to_continue = True
                             while to_continue:
                                 try:
-                                    coordinates = gt.input(timeout=self._INPUT_TIMEOUT)
+                                    coordinates = gt.input(
+                                            timeout=self._INPUT_TIMEOUT,
+                                            )
                                 except TouchEpaperException:
-                                    msg = 'no input detected, exit the draw mode'
+                                    msg = 'no input detected, exit draw mode'
                                     logging.warning(msg)
-                                    to_contine = False
+                                    to_continue = False
                                     img = None
                                 else:
                                     to_continue, img = draw_tool.point_to(
