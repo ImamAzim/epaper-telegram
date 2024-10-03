@@ -41,21 +41,22 @@ class ConfigureMenu(object):
                 getattr(self, f'case_{choice}')()
             except AttributeError:
                 print('please select a valid option')
+            print('===================================================')
 
     def _print_welcome(self):
         print(
                 'welcome to epaper-telegram configurator menu'
                 )
-        print('===')
 
     def _print_menu(self):
+        print('===================================================')
 
         print(f'your jabber id: {self._user_jid}')
         print(f'correspondant jabber id: {self._corresp_jid}')
 
         for key, value in self._menu.items():
             print(key, value)
-        print('===')
+        print('===================================================')
 
     def case_0(self):
         """set touch screen model
@@ -72,7 +73,8 @@ class ConfigureMenu(object):
         except KeyError:
             print('error in your choice')
         else:
-            print(f'the model used will be {model}')
+            print(f'the model used will be {model}:')
+            print(touchscreen_models[model].__doc__)
             self._vb.touch_model_name = model
 
     def case_1(self):
