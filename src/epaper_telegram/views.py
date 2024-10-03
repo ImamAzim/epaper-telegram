@@ -1,7 +1,7 @@
 from varboxes import VarBox
 
 
-from waveshare_touch_epaper import touchscreen_models
+from waveshare_touch_epaper import touchscreen_models, epaper_models
 
 
 from epaper_telegram.models.tools import Configurator, ConfiguratorError
@@ -14,10 +14,11 @@ class ConfigureMenu(object):
 
     def __init__(self):
         self._menu = {
-                '0': 'set touch screen model',
-                '1': 'set correspondant',
-                '2': 'activate epaper-telegram',
-                '3': 'de-activate epaper-telegram',
+                '0': 'set display model',
+                '1': 'set touch screen model',
+                '2': 'set correspondant',
+                '3': 'activate epaper-telegram',
+                '4': 'de-activate epaper-telegram',
                 'q': 'quit',
                 }
         self._running = True
@@ -64,6 +65,25 @@ class ConfigureMenu(object):
         """
         options = {
                 str(index): model for index, model
+                in enumerate(epaper_models)}
+        for index, model in options.items():
+            print(f'{index}: {model}')
+        index = input(f'chose yoour model (0-{len(options)-1}):\n')
+        try:
+            model = options[index]
+        except KeyError:
+            print('error in your choice')
+        else:
+            print(f'the model used will be {model}:')
+            print(epaper_models[model].__doc__)
+            self._vb.epaper_model_name = model
+
+    def case_1(self):
+        """set display model
+
+        """
+        options = {
+                str(index): model for index, model
                 in enumerate(touchscreen_models)}
         for index, model in options.items():
             print(f'{index}: {model}')
@@ -77,7 +97,7 @@ class ConfigureMenu(object):
             print(touchscreen_models[model].__doc__)
             self._vb.touch_model_name = model
 
-    def case_1(self):
+    def case_2(self):
         """set correspondant
 
         """
@@ -85,7 +105,7 @@ class ConfigureMenu(object):
         self._vb.corresp_jid = corresp_jid
         self._corresp_jid = corresp_jid
 
-    def case_2(self):
+    def case_3(self):
         """activate epaper in crontab
 
         """
@@ -95,7 +115,7 @@ class ConfigureMenu(object):
             pass
         print('===')
 
-    def case_3(self):
+    def case_4(self):
         """deactivate epaper in crontab
 
         """
