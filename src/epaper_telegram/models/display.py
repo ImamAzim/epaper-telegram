@@ -18,7 +18,6 @@ class Displayer(object):
 
     """object that will take img array and display on epaper (epd waveshare).
     Should be the only one to use this resource"""
-    _TIMEOUT = 120
     _MENU_WIDTH = 60
 
     def __init__(self, epaper_model_name: str):
@@ -120,12 +119,7 @@ class Displayer(object):
     def _process_img_loop(self):
         with self._EPD() as epd:
             while self._running.is_set():
-                try:
-                    img, sleep_after = self._queue.get(timeout=self._TIMEOUT)
-                except queue.Empty:
-                    msg = 'no img received for a long time. go to sleep.'
-                    logging.warning(msg)
-                    epd.sleep()
+                img, sleep_after = self._queue.get()
                 else:
                     if img is not None:
                         epd.display(img)
