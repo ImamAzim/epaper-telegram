@@ -17,7 +17,7 @@ class Displayer(object):
     _TIMEOUT = 120
     _MENU_WIDTH = 60
 
-    def __init__(self, mock_mode=False):
+    def __init__(self, epaper_model_name: str):
         """
         :mock_mode: boolean. use a mock epd display if True
         """

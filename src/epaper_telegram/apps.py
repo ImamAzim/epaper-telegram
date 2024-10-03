@@ -19,8 +19,6 @@ class EpaperTelgramApp(object):
     """app to launch the main app of the project"""
 
     def __init__(self):
-        mock_mode = True  # TODO: replace this by epd model in vb
-        self._mock_mode = mock_mode
 
         vb = VarBox(APP_NAME)
         try:
@@ -65,7 +63,7 @@ class EpaperTelgramApp(object):
             gt: BaseTouchScreen
             with (
                     touchscreen_models[self._touch_model_name]() as gt,
-                    Displayer(mock_mode=self._mock_mode) as displayer,
+                    Displayer(self._epaper_model_name) as displayer,
                     ):
                 with OnlineImageDownloader(
                         displayer,
