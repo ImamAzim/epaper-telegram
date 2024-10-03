@@ -30,7 +30,7 @@ class Displayer(object):
         self._running = Event()
         self._running.set()
 
-        self._EPD = epaper_model_name[epaper_model_name]
+        self._EPD = epaper_models[epaper_model_name]
 
     @property
     def WIDTH(self):
