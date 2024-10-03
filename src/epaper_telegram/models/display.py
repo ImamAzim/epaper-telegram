@@ -117,11 +117,16 @@ class Displayer(object):
             self._queue.task_done()
 
     def _process_img_loop(self):
-        with self._EPD() as epd:
-            while self._running.is_set():
-                img, sleep_after = self._queue.get()
-                if img is not None:
-                    epd.display(img)
-                    if sleep_after:
-                        epd.sleep()
+        while self._running.is_set():
+            img, sleep_after = self._queue.get()
+            if img is None:
                 self._queue.task_done()
+            else:
+                with self._EPD as epd:
+                    epd.display(img)
+                    self._queue.task_done()
+                    while not sleep_after:
+                        img, sleep_after = self._queue.get()
+                        if img is not None:
+                            epd.display(img)
+                        self._queue.task_done()
