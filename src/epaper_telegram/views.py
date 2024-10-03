@@ -37,11 +37,11 @@ class ConfigureMenu(object):
         while self._running:
             self._print_menu()
             choice = input('please select:\n')
+            print('===================================================')
             try:
                 getattr(self, f'case_{choice}')()
             except AttributeError:
                 print('please select a valid option')
-            print('===================================================')
 
     def _print_welcome(self):
         print(
