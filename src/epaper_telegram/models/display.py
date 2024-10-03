@@ -120,9 +120,8 @@ class Displayer(object):
         with self._EPD() as epd:
             while self._running.is_set():
                 img, sleep_after = self._queue.get()
-                else:
-                    if img is not None:
-                        epd.display(img)
-                        if sleep_after:
-                            epd.sleep()
-                    self._queue.task_done()
+                if img is not None:
+                    epd.display(img)
+                    if sleep_after:
+                        epd.sleep()
+                self._queue.task_done()
