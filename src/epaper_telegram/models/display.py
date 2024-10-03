@@ -4,6 +4,7 @@ import logging
 
 
 from waveshare_touch_epaper import epaper_models
+from waveshare_touch_epaper.epaper_display import BaseEpaper
 
 
 from epaper_telegram.models.mocks import EPD2in13Mock
@@ -30,6 +31,7 @@ class Displayer(object):
         self._running = Event()
         self._running.set()
 
+        self._EPD: BaseEpaper
         self._EPD = epaper_models[epaper_model_name]
 
     @property
