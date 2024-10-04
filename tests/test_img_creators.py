@@ -18,7 +18,7 @@ class TestDrawToo(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.displayer = Displayer(mock_mode=True)
+        cls.displayer = Displayer('EPD2in13Mock')
         cls.displayer.start()
         cls.draw_tool = DrawTool(cls.displayer)
         cls.draw_tool.start()
@@ -64,7 +64,7 @@ class TestOnlineImg(unittest.TestCase):
                 jabber_id=None,
                 password=None,
                 )
-        cls.displayer = Displayer(mock_mode=True)
+        cls.displayer = Displayer('EPD2in13Mock')
         cls.displayer.start()
         cls.online_img_down = OnlineImageDownloader(
                 cls.displayer,
@@ -91,7 +91,7 @@ class TestOnlineImg(unittest.TestCase):
 
 def draw_tool():
     logging.basicConfig(level=logging.INFO)
-    with Displayer(mock_mode=True) as displayer:
+    with Displayer('EPD2in13Mock') as displayer:
         with DrawTool(displayer) as draw_tool:
             time.sleep(2)
             draw_tool.point_to(125, 61, 9)
@@ -100,7 +100,7 @@ def draw_tool():
 
 def online_image_downloader():
     logging.basicConfig(level=logging.DEBUG)
-    with Displayer(mock_mode=True) as displayer:
+    with Displayer('EPD2in13Mock') as displayer:
         with OnlineImageDownloader(
                 displayer,
                 dict(jabber_id='me', password='pass'),
@@ -116,7 +116,7 @@ if __name__ == "__main__":
             jabber_id=None,
             password=None,
             )
-    displayer = Displayer(True)
+    displayer = Displayer('EPD2in13Mock')
     displayer.start()
     print(displayer.WIDTH)
     # x = OnlineImageDownloader(

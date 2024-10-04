@@ -20,7 +20,8 @@ class TestMyClass(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.displayer = Displayer(mock_mode=True)
+        epd_model = 'EPD2in13Mock'
+        cls.displayer = Displayer(epd_model)
         cls.displayer.start()
 
     @classmethod
@@ -40,7 +41,7 @@ class TestMyClass(unittest.TestCase):
 
 def display_img():
     logging.basicConfig(level=logging.INFO)
-    with Displayer(mock_mode=True) as displayer:
+    with Displayer('EPD2in13Mock') as displayer:
         img = Image.new('1', (250, 122), 255)
         draw = ImageDraw.Draw(img)
         draw.text((8, 12), 'hello world', fill=0)

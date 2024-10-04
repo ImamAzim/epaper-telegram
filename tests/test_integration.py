@@ -21,7 +21,7 @@ except FileNotFoundError:
 
 
 def send_while_check():
-    with Displayer(True) as displayer:
+    with Displayer('EPD2in13Mock') as displayer:
         with OnlineImageDownloader(
                 displayer,
                 credentials,
