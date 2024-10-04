@@ -4,10 +4,7 @@ import logging
 
 
 from waveshare_touch_epaper import epaper_models
-from waveshare_touch_epaper.epaper_display import BaseEpaper
-
-
-from epaper_telegram.models.mocks import EPD2in13Mock
+from waveshare_touch_epaper.epaper_display import BaseEpaper, EpaperException
 
 
 class DisplayerError(Exception):
@@ -30,7 +27,6 @@ class Displayer(object):
         self._running = Event()
         self._running.set()
 
-        self._EPD: BaseEpaper
         self._EPD = epaper_models[epaper_model_name]
 
     @property
@@ -122,11 +118,15 @@ class Displayer(object):
             if img is None:
                 self._queue.task_done()
             else:
+                epd: BaseEpaper
                 with self._EPD() as epd:
-                    epd.display(img)
+                    epd.display(img, full=True, wait=False)
                     self._queue.task_done()
                     while not sleep_after:
                         img, sleep_after = self._queue.get()
                         if img is not None:
-                            epd.display(img)
+                            try:
+                                epd.display(img, full=False, wait=False)
+                            except EpaperException:
+                                epd.display(img, full=True, wait=False)
                         self._queue.task_done()
