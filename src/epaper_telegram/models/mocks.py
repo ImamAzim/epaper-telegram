@@ -19,8 +19,8 @@ class SenderBotMock():
 
 class ReceiverBotMock():
 
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
+    _IMG_WIDTH = 122
+    _IMG_HEIGHT = 250
 
     def __init__(self, jabber_id, password, corresp_jid):
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
