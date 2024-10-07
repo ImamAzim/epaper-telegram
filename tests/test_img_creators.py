@@ -43,7 +43,7 @@ class TestDrawToo(unittest.TestCase):
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, True)
         # cancel button
-        x = int(self._IMG_WIDTH * 5/6)
+        x = int(self._IMG_WIDTH * 1/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
         self.assertIs(img, None)
@@ -94,7 +94,7 @@ def draw_tool():
     with Displayer('EPD2in13Mock') as displayer:
         with DrawTool(displayer) as draw_tool:
             time.sleep(2)
-            draw_tool.point_to(125, 61, 9)
+            draw_tool.point_to(61, 125, 9)
             time.sleep(2)
 
 
@@ -111,18 +111,4 @@ def online_image_downloader():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    credentials = dict(
-            jabber_id=None,
-            password=None,
-            )
-    displayer = Displayer('EPD2in13Mock')
-    displayer.start()
-    print(displayer.WIDTH)
-    # x = OnlineImageDownloader(
-            # displayer,
-            # credentials,
-            # corresp_jid=None,
-            # mock_mode=True,
-            # )
-    # print(x.WIDTH)
+    draw_tool()
