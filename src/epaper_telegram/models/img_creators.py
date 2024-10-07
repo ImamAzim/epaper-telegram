@@ -239,9 +239,9 @@ class OnlineImageDownloader(object):
 
         self._IMG_WIDTH = displayer.WIDTH
         self._IMG_HEIGHT = displayer.HEIGHT
-        self._MENU_WIDTH = displayer.MENU_WIDTH
+        self._MENU_HEIGHT = displayer.MENU_HEIGHT
 
-        self._MENU_HEIGHT = self._IMG_HEIGHT
+        self._MENU_WIDTH = self._IMG_WIDTH
 
         self._img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         if mock_mode:
@@ -340,12 +340,12 @@ class OnlineImageDownloader(object):
                 outline=0,
                 fill=255,
                 )
-        start = self._MENU_WIDTH / 2, 0.9 * self._MENU_HEIGHT
-        end = self._MENU_WIDTH / 2, 0.1 * self._MENU_HEIGHT
+        start = self._MENU_WIDTH * 0.1, 0.5 * self._MENU_HEIGHT
+        end = self._MENU_WIDTH * 0.9, 0.5 * self._MENU_HEIGHT
         draw.line((start, end))
         x1 = end
         x2 = end[0] - 5, end[1] + 5
-        x3 = end[0] + 5, end[1] + 5
+        x3 = end[0] - 5, end[1] - 5
         draw.polygon((x1, x2, x3), fill=0)
         return img
 
