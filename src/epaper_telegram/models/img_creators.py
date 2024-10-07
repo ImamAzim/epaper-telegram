@@ -57,7 +57,7 @@ class DrawTool(object):
             el['coordinates'] = (
                     int(_BUTTON_WIDTH * el['col']),
                     0,
-                    int(_BUTTON_WIDTH * (el['row'] + 1)),
+                    int(_BUTTON_WIDTH * (el['col'] + 1)),
                     int(_MENU_HEIGHT),
                     )
 
@@ -178,18 +178,17 @@ class DrawTool(object):
         img = Image.new('1', (self._IMG_WIDTH, self._IMG_HEIGHT), 255)
         draw = ImageDraw.Draw(img)
         draw.rectangle(self._DRAW_AREA_COORDINATES, fill=255, outline=0)
-        i = 0
         for button_name, button_dict in self._BUTTONS_AREAS.items():
             draw.rectangle(button_dict['coordinates'], fill=255, outline=0)
-            max_size = self._MENU_WIDTH, self._BUTTON_HEIGHT
+            max_size = self._BUTTON_WIDTH, self._MENU_HEIGHT
             path = os.path.join(self._PIC_FOLDER, button_dict['icon'])
             button_img = Image.open(path)
             button_img.thumbnail(max_size)
             w, h = button_img.size
-            center = self._MENU_WIDTH / 2, self._BUTTON_HEIGHT * (i + 1 / 2)
+            col = button_dict['col']
+            center = self._BUTTON_WIDTH * (col + 1 / 2), self._MENU_HEIGHT / 2
             top_left_corner = int(center[0] - w / 2), int(center[1] - h / 2)
             img.paste(button_img, top_left_corner)
-            i += 1
         self._img = img
 
     def _draw_point_on_img(self, x, y, s):
