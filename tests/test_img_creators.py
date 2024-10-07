@@ -55,8 +55,8 @@ class TestDrawToo(unittest.TestCase):
 class TestOnlineImg(unittest.TestCase):
 
     """all test concerning Online Image Downloader. """
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
+    _IMG_WIDTH = 122
+    _IMG_HEIGHT = 250
 
     @classmethod
     def setUpClass(cls):
@@ -83,8 +83,8 @@ class TestOnlineImg(unittest.TestCase):
         self.online_img_down.display_now()
 
     def test_upload(self):
-        width = 250
-        height = 122
+        width = self._IMG_WIDTH
+        height = self._IMG_HEIGHT
         img = Image.new('1', (width, height), 255)
         t = self.online_img_down.upload(img)
 
