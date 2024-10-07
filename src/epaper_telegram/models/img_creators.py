@@ -44,29 +44,29 @@ class DrawTool(object):
 
         _IMG_WIDTH = displayer.WIDTH
         _IMG_HEIGHT = displayer.HEIGHT
-        _MENU_WIDTH = displayer.MENU_WIDTH
+        _MENU_HEIGHT = displayer.MENU_HEIGHT
 
-        _DRAW_AREA_COORDINATES = (_MENU_WIDTH, 0, _IMG_WIDTH, _IMG_HEIGHT)
+        _DRAW_AREA_COORDINATES = (0, _MENU_HEIGHT, _IMG_WIDTH, _IMG_HEIGHT)
         _BUTTONS_AREAS = dict(
-                send=dict(icon='send.jpg', row=0),
-                erase=dict(icon='erase.bmp', row=1),
-                cancel=dict(icon='cancel.jpg', row=2),
+                send=dict(icon='send.jpg', col=2),
+                erase=dict(icon='erase.bmp', col=1),
+                cancel=dict(icon='cancel.jpg', col=0),
                 )
-        _BUTTON_HEIGHT = _IMG_HEIGHT / len(_BUTTONS_AREAS)
+        _BUTTON_WIDTH = _IMG_WIDTH / len(_BUTTONS_AREAS)
         for key, el in _BUTTONS_AREAS.items():
             el['coordinates'] = (
+                    int(_BUTTON_WIDTH * el['col']),
                     0,
-                    int(_BUTTON_HEIGHT * el['row']),
-                    int(_MENU_WIDTH),
-                    int(_BUTTON_HEIGHT * (el['row'] + 1)),
+                    int(_BUTTON_WIDTH * (el['row'] + 1)),
+                    int(_MENU_HEIGHT),
                     )
 
         self._IMG_WIDTH = _IMG_WIDTH
         self._IMG_HEIGHT = _IMG_HEIGHT
-        self._MENU_WIDTH = _MENU_WIDTH
+        self._MENU_HEIGHT = _MENU_HEIGHT
         self._DRAW_AREA_COORDINATES = _DRAW_AREA_COORDINATES
         self._BUTTONS_AREAS = _BUTTONS_AREAS
-        self._BUTTON_HEIGHT = _BUTTON_HEIGHT
+        self._BUTTON_WIDTH = _BUTTON_WIDTH
 
         self._img = None
 
