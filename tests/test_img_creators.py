@@ -13,8 +13,8 @@ from epaper_telegram.models.display import Displayer
 class TestDrawToo(unittest.TestCase):
 
     """all test concerning Draw Tool. """
-    _IMG_WIDTH = 250
-    _IMG_HEIGHT = 122
+    _IMG_WIDTH = 122
+    _IMG_HEIGHT = 250
 
     @classmethod
     def setUpClass(cls):
@@ -32,18 +32,18 @@ class TestDrawToo(unittest.TestCase):
         center = self._IMG_WIDTH / 2, self._IMG_HEIGHT / 2
         to_continue, img = self.draw_tool.point_to(*center, 1)
         self.assertIs(to_continue, True)
-        x = 0
+        y = 0
         # send button
-        y = int(self._IMG_HEIGHT * 1/6)
+        x = int(self._IMG_WIDTH * 5/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
         self.assertIsInstance(img, Image.Image)
         # erase button
-        y = int(self._IMG_HEIGHT * 3/6)
+        x = int(self._IMG_WIDTH * 3/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, True)
         # cancel button
-        y = int(self._IMG_HEIGHT * 5/6)
+        x = int(self._IMG_WIDTH * 5/6)
         to_continue, img = self.draw_tool.point_to(x, y, 1)
         self.assertIs(to_continue, False)
         self.assertIs(img, None)
