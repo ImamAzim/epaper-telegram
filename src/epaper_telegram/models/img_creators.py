@@ -183,6 +183,7 @@ class DrawTool(object):
             max_size = self._BUTTON_WIDTH, self._MENU_HEIGHT
             path = os.path.join(self._PIC_FOLDER, button_dict['icon'])
             button_img = Image.open(path)
+            button_img = button_img.rotate(-90, expand=True)
             button_img.thumbnail(max_size)
             w, h = button_img.size
             col = button_dict['col']
