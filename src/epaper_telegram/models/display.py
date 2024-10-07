@@ -120,13 +120,13 @@ class Displayer(object):
             else:
                 epd: BaseEpaper
                 with self._EPD() as epd:
-                    epd.display(img, full=True, wait=False)
+                    epd.display(img)
                     self._queue.task_done()
                     while not sleep_after:
                         img, sleep_after = self._queue.get()
                         if img is not None:
                             try:
-                                epd.display(img, full=False, wait=False)
+                                epd.display(img, full_refresh=False)
                             except EpaperException:
-                                epd.display(img, full=True, wait=False)
+                                epd.display(img)
                         self._queue.task_done()

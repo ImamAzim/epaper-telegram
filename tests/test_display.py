@@ -42,7 +42,7 @@ class TestMyClass(unittest.TestCase):
 def display_img():
     logging.basicConfig(level=logging.INFO)
     with Displayer('EPD2in13Mock') as displayer:
-        img = Image.new('1', (250, 122), 255)
+        img = Image.new('1', (122, 250), 255)
         draw = ImageDraw.Draw(img)
         draw.text((8, 12), 'hello world', fill=0)
         displayer.display_img(img, sleep_after=False)
