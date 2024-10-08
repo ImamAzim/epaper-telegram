@@ -26,6 +26,7 @@ dependencies = [
 	'varboxes',
 	'python-crontab',
 	'inputimeout',
+	'cryptography',
 ]
 
 [project.optional-dependencies]
