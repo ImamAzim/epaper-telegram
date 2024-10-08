@@ -25,6 +25,7 @@ dependencies = [
 	'aiohttp',
 	'varboxes',
 	'python-crontab',
+	'inputimeout',
 ]
 
 [project.optional-dependencies]
