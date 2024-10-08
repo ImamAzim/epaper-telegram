@@ -1,15 +1,15 @@
 import os
 
 
-import xdg_base_dirs
+import xdg
 
 
 APP_NAME = 'epaper-telegram'
-DATA_DIR_PATH = os.path.join(xdg_base_dirs.xdg_data_home(), APP_NAME)
+DATA_DIR_PATH = os.path.join(xdg.xdg_data_home(), APP_NAME)
 if not os.path.exists(DATA_DIR_PATH):
     os.makedirs(DATA_DIR_PATH)
 
-STATE_DIR_PATH = os.path.join(xdg_base_dirs.xdg_state_home(), APP_NAME)
+STATE_DIR_PATH = os.path.join(xdg.xdg_state_home(), APP_NAME)
 if not os.path.exists(STATE_DIR_PATH):
     os.makedirs(STATE_DIR_PATH)
 
