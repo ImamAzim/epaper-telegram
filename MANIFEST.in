@@ -1,1 +1,1 @@
-include src/epaper_telegram/pics
+graft src/epaper_telegram/pics
