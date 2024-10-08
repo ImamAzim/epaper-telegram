@@ -27,6 +27,7 @@ dependencies = [
 	'python-crontab',
 	'inputimeout',
 	'cryptography',
+	'waveshare-touch-epaper',
 ]
 
 [project.optional-dependencies]

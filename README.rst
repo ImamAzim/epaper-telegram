@@ -4,22 +4,22 @@ epaper telegram
 ===================
 
 communicate between 2 rasperry pi with a touch epaper display (waveshare). Draw something nice, and it will be sent to the other device!
-
+in development
 
 Installation
 ============
 
-run install.sh
-* clone
-* env
-* pip
-* create env
-* activate
-* pip install
-* symbolic link in bin
-* crontab at startup
-(method to pair a device?)
-(cloud, link? pass?)
+pre
+1. spi
+2. i2c
+3. pyenv
+
+1. clone
+2. create env
+3. activate
+4. pip install
+5. run epaper-telegram to configure
+
 
 hardware requirements
 =======================
