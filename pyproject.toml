@@ -20,7 +20,7 @@ classifiers = [
 description = "send and receive message on a rpi with epaper display"
 dependencies = [
 	'Pillow',
-	'xdg-base-dirs',
+	'xdg',
 	'slixmpp',
 	'aiohttp',
 	'varboxes',
