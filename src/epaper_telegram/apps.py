@@ -76,7 +76,7 @@ class EpaperTelgramApp(object):
                         ) as online_image_downloader:
                     while True:
                         logging.info('home')
-                        gt.wait_for_gesture()
+                        gt.wait_for_gesture('right_slide')
                         logging.info('open draw mode...')
                         with DrawTool(displayer) as draw_tool:
                             to_continue = True
