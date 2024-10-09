@@ -14,16 +14,39 @@ hardware requirements
 Installation
 ============
 
-pre
-1. spi
-2. i2c
-3. pyenv
 
-1. clone
-2. create env
-3. activate
-4. pip install
-5. run epaper-telegram to configure
+connect the epaper touch display to each raspberry pi. Make sur the raspberry pies are connected to the internet. Then on each raspberry pi you have to do the following steps:
+
+
+be sure that you have activated the spi and i2c interface. On the raspberry pi:
+
+.. code-block:: bash
+
+    sudo raspi-config nonint do_spi 1
+    sudo raspi-config nonint do_i2c 1
+
+make sure you can create a virtual environment:
+
+.. code-block:: bash
+
+    sudo apt-get install python3-pip
+    sudo apt-get install python3-venv
+
+create a virtual environement and install the package:
+
+.. code-block:: bash
+   python3 -m venv epaper-telegram
+   source epaper-telegram/bin/activate
+   pip install git+https://github.com/ImamAzim/epaper-telegram.git
+
+run the script to configure the app::
+
+.. code-block:: bash
+   epaper-telegram
+
+configuration
+______________
+
 
 
 hardware requirements
