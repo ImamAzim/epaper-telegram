@@ -1,10 +1,15 @@
-in development
-
 epaper telegram
 ===================
 
-communicate between 2 rasperry pi with a touch epaper display (waveshare). Draw something nice, and it will be sent to the other device!
-in development
+Communicate between 2 `waveshare touch epaper device <https://www.waveshare.com/wiki/2.13inch_Touch_e-Paper_HAT_Manual#Overview>`_!  One party draws a sketch or write a msg on the epaper display and can send it to its partner, which receive it immediately! Both devices need to be connected to internet.
+
+TODO: add some pictures
+
+hardware requirements
+=======================
+
+- a pair of waveshare touch epaper display (currently only the 2.13 inch is supported)
+- a pair of raspberry pi
 
 Installation
 ============
