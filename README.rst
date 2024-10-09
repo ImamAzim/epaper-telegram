@@ -43,6 +43,7 @@ create a virtual environement and install the package:
 run the script to configure the app and follow all the steps (next section):
 
 .. code-block:: bash
+
    epaper-telegram
 
 
