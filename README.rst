@@ -35,6 +35,7 @@ make sure you can create a virtual environment:
 create a virtual environement and install the package:
 
 .. code-block:: bash
+
    python3 -m venv epaper-telegram
    source epaper-telegram/bin/activate
    pip install git+https://github.com/ImamAzim/epaper-telegram.git
