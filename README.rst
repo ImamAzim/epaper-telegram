@@ -56,15 +56,16 @@ after you launch epaper-telegram to configure it, you see a menu and you have to
 3. activate epaper-telegram. After this you need to reboot the device, and it is done!
 
 Usage
-=====
+======
 
-
+1. Slide your finger or your stylus along to arrow to wake up the display.
+2. draw something nice. you can use the erase or cancel button if necessary
+3. tap the mail to send it to your correspondant. He will receive and see it immediately!
 
 Features
 ========
 
-* receive messages
-* draw and send
+* send and receive nice drawings between 2 epaper display
 
 
 License
