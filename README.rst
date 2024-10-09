@@ -39,20 +39,21 @@ create a virtual environement and install the package:
    source epaper-telegram/bin/activate
    pip install git+https://github.com/ImamAzim/epaper-telegram.git
 
-run the script to configure the app::
+run the script to configure the app and follow all the steps (next section):
 
 .. code-block:: bash
    epaper-telegram
 
+
 configuration
-______________
+=================
 
+after you launch epaper-telegram to configure it, you see a menu and you have to follow the steps to use the app:
 
-
-hardware requirements
-=======================
-* rpi
-* waveshare
+0. set the display: select the display you have (currently only 2.13 inch supported. you can also use a mock
+1. set the touch screen: select the touch screen you have (currently only GT1151 from 2.13 inch display is supported. you can also use a mock
+2. set correspondant: enter here the jabber id of the other device. You can see it when you launch this menu on the other device.
+3. activate epaper-telegram. After this you need to reboot the device, and it is done!
 
 Usage
 =====
